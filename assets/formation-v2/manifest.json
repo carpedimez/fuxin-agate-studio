@@ -1,0 +1,36 @@
+{
+  "type": "AI-generated conceptual geological visualization",
+  "generator": "built-in image_gen",
+  "frames": [
+    {
+      "stage": 1,
+      "title": "岩石留空",
+      "image": "stage-01.webp",
+      "thumbnail": "stage-01-thumb.webp"
+    },
+    {
+      "stage": 2,
+      "title": "富硅流体",
+      "image": "stage-02.webp",
+      "thumbnail": "stage-02-thumb.webp"
+    },
+    {
+      "stage": 3,
+      "title": "结晶成纹",
+      "image": "stage-03.webp",
+      "thumbnail": "stage-03-thumb.webp"
+    },
+    {
+      "stage": 4,
+      "title": "因色构形",
+      "image": "stage-04.webp",
+      "thumbnail": "stage-04-thumb.webp"
+    }
+  ],
+  "limitations": "Not real specimen photos, not a physically simulated geological process, not continuous footage of the same specimen. Based on common cavity-filling concepts; no universal age or Fuxin provenance claim.",
+  "sources": [
+    "https://naturalhistory.si.edu/explore/collections/geogallery/10026005",
+    "https://doi.org/10.3390/min10111037"
+  ],
+  "processing": "Original PNG preserved in workspace; proportional WebP compression for website."
+}
