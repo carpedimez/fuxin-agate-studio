@@ -6,7 +6,12 @@
     "license": "CC BY-SA 2.5",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.5/",
     "source": "https://commons.wikimedia.org/wiki/File:Agate1_hg.jpg",
-    "origin": "公开玛瑙切片样本，来源页未标产地；非阜新原料证明"
+    "origin": "公开玛瑙切片样本，来源页未标产地；非阜新原料证明",
+    "galleryFiles": [
+      "photos/agate-bands.webp",
+      "photos/agate-bands-thumb.webp"
+    ],
+    "changes": "实物图鉴版本等比缩放、转为 WebP；缩略图在页面容器中裁切展示，未改变图像内容或颜色。原始 JPEG 存于初始材料/实物照片。"
   },
   {
     "file": "agate-nodule.jpg",
@@ -15,6 +20,67 @@
     "license": "CC BY 2.0",
     "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
     "source": "https://commons.wikimedia.org/wiki/File:Agate_2_(31731816833).jpg",
-    "origin": "公开玛瑙结核样本；非阜新原料证明"
+    "origin": "公开玛瑙结核样本；非阜新原料证明",
+    "galleryFiles": [
+      "photos/agate-nodule.webp",
+      "photos/agate-nodule-thumb.webp"
+    ],
+    "changes": "实物图鉴版本等比缩放、转为 WebP；缩略图在页面容器中裁切展示，未改变图像内容或颜色。原始 JPEG 存于初始材料/实物照片。"
+  },
+  {
+    "file": "photos/agate-crystal.webp",
+    "original": "Agate6 hg.jpg",
+    "author": "Hannes Grobe",
+    "license": "CC BY-SA 2.5",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.5/",
+    "source": "https://commons.wikimedia.org/wiki/File:Agate6_hg.jpg",
+    "origin": "透光玛瑙切片标本，来源未标产地；非阜新原料证明",
+    "galleryFiles": [
+      "photos/agate-crystal.webp",
+      "photos/agate-crystal-thumb.webp"
+    ],
+    "changes": "实物图鉴版本等比缩放、转为 WebP；缩略图在页面容器中裁切展示，未改变图像内容或颜色。原始 JPEG 存于初始材料/实物照片。"
+  },
+  {
+    "file": "photos/agate-moss-pendant.webp",
+    "original": "Moosachat hg.jpg",
+    "author": "Hannes Grobe",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "source": "https://commons.wikimedia.org/wiki/File:Moosachat_hg.jpg",
+    "origin": "苔藓玛瑙吊坠，来源未标产地；非阜新作品证明",
+    "galleryFiles": [
+      "photos/agate-moss-pendant.webp",
+      "photos/agate-moss-pendant-thumb.webp"
+    ],
+    "changes": "实物图鉴版本等比缩放、转为 WebP；缩略图在页面容器中裁切展示，未改变图像内容或颜色。原始 JPEG 存于初始材料/实物照片。"
+  },
+  {
+    "file": "photos/agate-libation-cup.webp",
+    "original": "Libation Cup / 1920.425",
+    "author": "Cleveland Museum of Art / Gary Kirchenbauer",
+    "license": "CC0 1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "source": "https://www.clevelandart.org/art/1920.425",
+    "origin": "中国清代（1644–1911）玛瑙杯，克利夫兰艺术博物馆藏；非阜新作品证明",
+    "galleryFiles": [
+      "photos/agate-libation-cup.webp",
+      "photos/agate-libation-cup-thumb.webp"
+    ],
+    "changes": "实物图鉴版本等比缩放、转为 WebP；缩略图在页面容器中裁切展示，未改变图像内容或颜色。原始 JPEG 存于初始材料/实物照片。"
+  },
+  {
+    "file": "photos/agate-carnelian-cup.webp",
+    "original": "Cup / 02.18.882",
+    "author": "The Metropolitan Museum of Art",
+    "license": "CC0 1.0 / Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "source": "https://www.metmuseum.org/art/collection/search/44144",
+    "origin": "中国18世纪红玉髓玛瑙杯，大都会艺术博物馆藏；非阜新作品证明",
+    "galleryFiles": [
+      "photos/agate-carnelian-cup.webp",
+      "photos/agate-carnelian-cup-thumb.webp"
+    ],
+    "changes": "实物图鉴版本等比缩放、转为 WebP；缩略图在页面容器中裁切展示，未改变图像内容或颜色。原始 JPEG 存于初始材料/实物照片。"
   }
 ]
