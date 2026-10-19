@@ -14,7 +14,7 @@ await build({
   builder.onResolve({filter:/^three\/addons\/controls\/OrbitControls\.js$/},()=>({path:path.join(root,'vendor/OrbitControls.js')}));
  }}]
 });
-const cssFiles=['styles.css','experience.css','expansion.css','playground.css','music.css','mineral.css','gallery.css','formation.css'];
+const cssFiles=['styles.css','experience.css','expansion.css','playground.css','music.css','mineral.css','gallery.css','formation.css','journey.css'];
 const css=(await Promise.all(cssFiles.map(name=>readFile(path.join(root,name),'utf8')))).join('\n');
 const compiled=await transform(css,{loader:'css',minify:true,target:'es2022',legalComments:'eof'});
 await writeFile(path.join(root,'site.bundle.css'),compiled.code);

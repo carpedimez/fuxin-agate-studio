@@ -1,0 +1,21 @@
+{
+  "mode": "built-in image_gen",
+  "images": [
+    {
+      "file": "hero.webp",
+      "type": "AI-generated editorial scene, not a real view of the named location",
+      "bytes": 209434
+    },
+    {
+      "file": "craft.webp",
+      "type": "AI-generated editorial scene, not a real view of the named location",
+      "bytes": 224244
+    },
+    {
+      "file": "water.webp",
+      "type": "AI-generated editorial scene, not a real view of the named location",
+      "bytes": 376884
+    }
+  ],
+  "notes": "Illustrative craft and rural scenes, no claim to depict actual Shijiazi buildings, workshops, artisans or Babao Lake."
+}

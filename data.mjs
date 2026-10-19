@@ -1,4 +1,5 @@
 export const sources=[
+ {id:'journey-city',title:'阜新市推出2026春季四大精品旅游线路',publisher:'阜新市人民政府网站 · 阜新日报 · 2026-04-22',url:'https://www.fuxin.gov.cn/content/2026/1065588.html',note:'核对玛瑙文化与文旅线路的公开背景。历史节庆安排未当作当前活动发布；本站三种行程为可编辑的研学构想，不是已确认的官方旅游产品。'},
  {id:'formation-museum',title:'Agate · 玛瑙的常见产状与材质',publisher:'史密森尼国家自然历史博物馆',url:'https://naturalhistory.si.edu/explore/collections/geogallery/10026005',note:'形成图解的入门依据：火山岩空隙、富硅水与玛瑙层纹。图解为概念模型，不是特定阜新原石的成因鉴定。'},
  {id:'formation-review',title:'Mineralogy, Geochemistry and Genesis of Agate—A Review',publisher:'Götze、Möckel、Pan · Minerals 2020, 10(11), 1037',url:'https://doi.org/10.3390/min10111037',note:'补充不同地质成因、二氧化硅结晶与自组织、结构和杂质分布对条带和颜色的影响；不把每一条带等同于一次进水。'},
  {id:'heritage',title:'阜新玛瑙雕 · 国家级非遗项目名录',publisher:'中国非物质文化遗产网',url:'https://www.ihchina.cn/project_details/14006/',note:'核对项目名称、2006年第一批名录身份、编号Ⅶ-30、材质与工艺特点。页面包含历史材料，人物年龄等动态信息未采用。'},
