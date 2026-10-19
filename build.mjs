@@ -3,6 +3,7 @@ import {readFile,writeFile,stat} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import path from 'node:path';
 const root=path.dirname(fileURLToPath(import.meta.url));
+const {version}=JSON.parse(await readFile(path.join(root,'package.json'),'utf8'));
 await build({
  absWorkingDir:root,
  stdin:{contents:"import './app.mjs'; import './music.mjs'; import './mineral.mjs';",resolveDir:root,sourcefile:'site-entry.mjs'},
@@ -21,6 +22,6 @@ let html=await readFile(path.join(root,'index.source.html'),'utf8');
 html=html.replace(/<link rel="stylesheet"[^>]*>/g,'').replace(/<script type="importmap">[\s\S]*?<\/script>/g,'');
 html=html.replace('</head>','<link rel="stylesheet" href="./site.bundle.css"></head>');
 html=html.replace(/<script type="module" src="\.\/(?:app|music|mineral)\.mjs"><\/script>/g,'');
-html=html.replace('</body>','<script type="module" src="./site.bundle.js"></script></body>');
+html=html.replace('</body>',`<script type="module" src="./site.bundle.js?v=${encodeURIComponent(version)}"></script></body>`);
 await writeFile(path.join(root,'index.html'),html);
 console.log(JSON.stringify({jsBytes:(await stat(path.join(root,'site.bundle.js'))).size,cssBytes:(await stat(path.join(root,'site.bundle.css'))).size,criticalScripts:1,stylesheets:1}));
