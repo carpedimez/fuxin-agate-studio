@@ -1,9 +1,12 @@
 export const sources=[
+ {id:'formation-museum',title:'Agate · 玛瑙的常见产状与材质',publisher:'史密森尼国家自然历史博物馆',url:'https://naturalhistory.si.edu/explore/collections/geogallery/10026005',note:'形成图解的入门依据：火山岩空隙、富硅水与玛瑙层纹。图解为概念模型，不是特定阜新原石的成因鉴定。'},
+ {id:'formation-review',title:'Mineralogy, Geochemistry and Genesis of Agate—A Review',publisher:'Götze、Möckel、Pan · Minerals 2020, 10(11), 1037',url:'https://doi.org/10.3390/min10111037',note:'补充不同地质成因、二氧化硅结晶与自组织、结构和杂质分布对条带和颜色的影响；不把每一条带等同于一次进水。'},
  {id:'heritage',title:'阜新玛瑙雕 · 国家级非遗项目名录',publisher:'中国非物质文化遗产网',url:'https://www.ihchina.cn/project_details/14006/',note:'核对项目名称、2006年第一批名录身份、编号Ⅶ-30、材质与工艺特点。页面包含历史材料，人物年龄等动态信息未采用。'},
  {id:'town',title:'阜新市 · 玛瑙特色小镇景区',publisher:'辽宁省文化和旅游厅 · 2025-11-21',url:'https://whly.ln.gov.cn/whly/wlzt/sjly/ajjq/2025112116121250991/index.shtml',note:'核对十家子镇文旅场景与玛瑙体验、专业市场、八宝海湿地、辽代闾州塔等资源。'},
  {id:'rural',title:'“阜新玛瑙工匠”获评省级劳务品牌',publisher:'阜新市人力资源和社会保障局 · 2026-01-15',url:'https://rsj.fuxin.gov.cn/content/2026/1037027.html',note:'核对工匠工作室、研学体验、数字推广与农户参与产业链的应用背景。'}
 ];
 export const knowledge=[
+ {title:'玛瑙如何形成',keys:['形成','成因','怎么来','地质','富硅','空隙','结晶'],text:'以常见的火山岩空隙充填路径为例，富硅流体进入岩石空隙，二氧化硅在适宜条件下沉淀与结晶。结构、孔隙与杂质分布的差异可形成可见层纹。玛瑙也存在其他地质成因；不能把每一条纹都等同于一次进水，也没有适用于所有玛瑙的统一形成时长。',source:'formation-review'},
  {title:'国家级非遗身份',keys:['非遗','国家','名录','时候','哪年','2006','身份','级别'],text:'阜新玛瑙雕于2006年入选第一批国家级非物质文化遗产代表性项目名录，项目编号为Ⅶ-30，类别为传统美术。',source:'heritage'},
  {title:'材质与工艺特点',keys:['工艺','特点','材料','纹色','色彩','条带','绝活','流程','雕刻'],text:'玛瑙的天然色彩和条带为设计提供线索。官方项目资料介绍了选料、设计、雕琢与抛光等任务，并列举素活、掏膛、活环与透雕等技艺。具体作品的工序与方案需结合材料判断。',source:'heritage'},
  {title:'十家子镇文旅场景',keys:['十家子','旅游','乡土','哪里','位置','景区','湿地','闾州','市场'],text:'玛瑙特色小镇位于阜新蒙古族自治县十家子镇。省文旅厅介绍其玛瑙文化、专业市场以及八宝海湿地、辽代闾州塔等资源，可为文化与自然相连的研学构想提供场景。实际开放和接待需向当地确认。',source:'town'},
