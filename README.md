@@ -1,12 +1,16 @@
 # 石里有境 · 阜新玛瑙互动工坊
 
+在线体验：https://carpedimez.github.io/fuxin-agate-studio/
+
 以辽宁阜新玛瑙文化为主题的静态交互网站，面向智慧文旅与乡村振兴场景。
 
 包含纹色分析、借色构形、手绘轮廓与刻线、三维成器、纹样与落款、文创搭配、方案导入导出、纪念海报、文化资料查询和背景音乐。
 
 ## 运行与发布
 
-纯静态网页，HTML、CSS、JavaScript模块与素材全部在仓库内。无需安装依赖，通过任意静态HTTP服务器访问 `index.html`，或在GitHub Pages设置中选择 `main` 分支及根目录发布。
+纯静态网页，HTML、CSS、JavaScript模块与素材全部在仓库内。运行已发布网页无需安装依赖，通过任意静态HTTP服务器访问 `index.html`，或在GitHub Pages设置中选择 `main` 分支及根目录发布。
+
+为减少首次加载请求，页面使用合并后的 `site.bundle.js` 与 `site.bundle.css`。原始模块及样式仍在仓库内，页面模板为 `index.source.html`。修改源码后执行 `npm ci`、`npm run build`，提交生成文件再推送 `main` 即可更新。
 
 内置Three.js和样本，不依赖外部CDN。原料照片、作品收藏及研学意向仅保存在当前浏览器；更换网站地址不会自动同步旧站数据，可导出完整JSON方案后在新站导入。
 

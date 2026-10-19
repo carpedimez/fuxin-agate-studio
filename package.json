@@ -1,0 +1,11 @@
+{
+  "devDependencies": {
+    "esbuild": "0.28.2"
+  },
+  "name": "fuxin-agate-studio-pages",
+  "version": "0.4.2",
+  "private": true,
+  "scripts": {
+    "build": "node build.mjs"
+  }
+}
