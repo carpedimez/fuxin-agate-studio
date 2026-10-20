@@ -1,0 +1,55 @@
+{
+  "title": "阜新玛瑙 · 从纹色到手艺",
+  "sourceTitle": "看见阜新：从文明摇篮到生态新城",
+  "publisher": "中央广电总台国际在线",
+  "provider": "阜新市委宣传部",
+  "sourceUrl": "https://ln.cri.cn/2025-12-30/a1722ea1-33f5-4c40-8dad-1179ce4bb0bc.html",
+  "sourcePublished": "2025-12-30",
+  "sourceResolution": [
+    800,
+    480
+  ],
+  "sourceDuration": 281.821,
+  "loopDuration": 20.2,
+  "loopSegments": [
+    {
+      "start": 109.2,
+      "duration": 2.2,
+      "content": "玛瑙雕件"
+    },
+    {
+      "start": 115.3,
+      "duration": 4,
+      "content": "雕刻手艺"
+    },
+    {
+      "start": 120.3,
+      "duration": 4,
+      "content": "玛瑙成器"
+    },
+    {
+      "start": 130,
+      "duration": 4,
+      "content": "玛瑙市场"
+    },
+    {
+      "start": 214,
+      "duration": 8,
+      "content": "阜新水岸"
+    }
+  ],
+  "crossfadeSeconds": 0.5,
+  "storyRange": {
+    "start": 109.2,
+    "end": 143,
+    "duration": 33.8
+  },
+  "changes": "主题选段、交叉淡化、静音短循环、原声主题篇首尾淡化、H.264压缩、实景封面截帧；未放大声称高清，未标记为本站原创拍摄。",
+  "rights": "第三方宣传影像；未查到明确开放许可，不声明为CC或本站原创。公开转载、剪辑与参赛使用范围尚待权利方确认。",
+  "scope": "仅玛瑙雕件、雕刻、玛瑙市场与阜新水岸；水岸不标称十家子或八宝海。",
+  "files": {
+    "agate-loop.mp4": 3978519,
+    "agate-story.mp4": 5089143,
+    "poster.webp": 25466
+  }
+}

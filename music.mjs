@@ -5,7 +5,7 @@ document.querySelector('.header').append(root);
 const $=s=>root.querySelector(s),audio=document.createElement('audio');
 audio.id='background-music';audio.src='./assets/background-we-never.mp3';audio.preload='none';audio.loop=true;document.body.append(audio);
 const readVolume=()=>{try{const v=JSON.parse(localStorage.getItem('agate-music-volume'));return typeof v==='number'&&Number.isFinite(v)?Math.max(0,Math.min(1,v)):.25;}catch{return .25;}};
-audio.volume=readVolume();let attempting=false,lastVolume=audio.volume||.25,requestId=0,audioTask=null,objectUrl=null,autoArmed=true;
+audio.volume=readVolume();let attempting=false,lastVolume=audio.volume||.25,requestId=0,audioTask=null,objectUrl=null,autoArmed=true,mediaHeld=false;
 async function prepareAudio(){if(objectUrl)return;if(!audioTask)audioTask=fetch(new URL('./assets/background-we-never.mp3',import.meta.url)).then(r=>{if(!r.ok)throw Error('Audio unavailable');return r.blob();}).then(blob=>{objectUrl=URL.createObjectURL(blob);audio.src=objectUrl;}).catch(e=>{audioTask=null;throw e;});await audioTask;}
 function volumeUI(){$('#music-volume').value=Math.round(audio.volume*100);$('#music-volume-value').value=Math.round(audio.volume*100)+'%';const muted=audio.muted||audio.volume===0;$('#music-mute').setAttribute('aria-pressed',String(muted));$('#music-mute').setAttribute('aria-label',muted?'取消静音':'静音');$('#music-mute').textContent=muted?'×':'♪';}
 const time=n=>Number.isFinite(n)?Math.floor(n/60)+':'+String(Math.floor(n%60)).padStart(2,'0'):'0:00';
@@ -17,7 +17,7 @@ function disarmAuto(){
  document.removeEventListener('keydown',onFirstInteraction,true);
 }
 async function startMusic(){
- if(attempting||!audio.paused)return;
+ if(mediaHeld||attempting||!audio.paused)return;
  const id=++requestId;attempting=true;
  $('#music-label').textContent='正在加载';$('#music-status').textContent='正在准备音乐…';
  try{
@@ -42,6 +42,7 @@ async function startMusic(){
 }
 function toggle(){
  disarmAuto();
+ if(mediaHeld)return;
  if(attempting||!audio.paused){
   requestId++;attempting=false;audio.pause();playbackUI();root.dataset.autoplay='paused';
   $('#music-status').textContent='音乐已暂停，轻点音符继续。';
@@ -71,4 +72,11 @@ audio.addEventListener('timeupdate',()=>{$('#music-current').textContent=time(au
 audio.addEventListener('volumechange',volumeUI);
 audio.addEventListener('error',()=>{$('#music-status').textContent='音乐暂不可用，请点击音符重试。';playbackUI();});
 fetch('./assets/music.json').then(r=>{if(!r.ok)throw Error();return r.json();}).then(meta=>{$('#music-title').textContent=meta.title;$('#music-artist').textContent=meta.artist;$('#music-toggle').title=meta.title+' · '+meta.artist;}).catch(()=>{$('#music-title').textContent='用户指定背景音乐';});
-volumeUI();window.agateMusic={audio,toggle};startMusic();
+function suspendForFilm(){
+ const resumeWanted=!audio.paused||attempting;
+ mediaHeld=true;requestId++;attempting=false;disarmAuto();audio.pause();playbackUI();
+ $('#music-label').textContent='观影中';$('#music-status').textContent='宣传片播放期间，背景音乐暂时暂停。';
+ let released=false;
+ return ()=>{if(released)return;released=true;mediaHeld=false;playbackUI();if(resumeWanted)startMusic();};
+}
+volumeUI();window.agateMusic={audio,toggle,suspendForFilm};startMusic();
