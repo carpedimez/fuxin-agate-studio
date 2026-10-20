@@ -1,24 +1,22 @@
 import media from './assets/home-film/playback.json';
 const hero=document.querySelector('#home-film'),background=document.querySelector('#home-film-video');
-const toggle=document.querySelector('#home-film-toggle'),status=document.querySelector('#home-film-status'),progress=document.querySelector('#home-film-progress'),qualitySelect=document.querySelector('#home-film-quality');
+const toggle=document.querySelector('#home-film-toggle'),status=document.querySelector('#home-film-status'),progress=document.querySelector('#home-film-progress');
 const motion=matchMedia('(prefers-reduced-motion: reduce)'),header=document.querySelector('.header');
 new ResizeObserver(()=>hero.style.setProperty('--film-header-height',`${header.getBoundingClientRect().height}px`)).observe(header);
 const sourceUrl=media.sourceUrl;
 const dialog=document.createElement('dialog');dialog.className='home-film-dialog';dialog.id='home-film-dialog';dialog.setAttribute('aria-labelledby','home-full-film-title');
-dialog.innerHTML=`<div class="home-film-dialog-top"><div><p>FUXIN · AGATE CULTURE & CRAFT</p><h2 id="home-full-film-title">阜新玛瑙 · 从纹色到手艺</h2></div><button id="home-film-close" class="home-film-close" aria-label="关闭玛瑙主题片">×</button></div><video id="home-full-film" class="home-full-film" controls playsinline preload="none" poster="./assets/home-film/poster-clean-4k.webp" aria-label="阜新玛瑙文化与手艺主题选段，保留原声"></video><p id="home-full-film-status" class="home-full-film-status" role="status"></p><div class="home-film-dialog-footer"><p>玛瑙主题选段 · 约 ${Math.round(media.story4k.duration)} 秒 · 保留原声<br>原片《阜新玛瑙——刀刃上的大地瑰宝》<br>辽宁发布 / 辽宁卫视《黑土地》 · 省政府网站发布</p><a href="${sourceUrl}" target="_blank" rel="noopener">查看完整原片与出处 ↗</a><span class="film-key-hint">ESC / CLOSE</span></div>`;
+dialog.innerHTML=`<div class="home-film-dialog-top"><div><p>FUXIN · AGATE CULTURE & CRAFT</p><h2 id="home-full-film-title">阜新玛瑙 · 从纹色到手艺</h2></div><button id="home-film-close" class="home-film-close" aria-label="关闭玛瑙主题片">×</button></div><video id="home-full-film" class="home-full-film" controls playsinline preload="none" poster="./assets/home-film/poster-smooth-1080.webp" aria-label="阜新玛瑙文化与手艺主题选段，保留原声"></video><p id="home-full-film-status" class="home-full-film-status" role="status"></p><div class="home-film-dialog-footer"><p>玛瑙主题选段 · 约 ${Math.round(media.story4k.duration)} 秒 · 保留原声<br>原片《阜新玛瑙——刀刃上的大地瑰宝》<br>辽宁发布 / 辽宁卫视《黑土地》 · 省政府网站发布</p><a href="${sourceUrl}" target="_blank" rel="noopener">查看完整原片与出处 ↗</a><span class="film-key-hint">ESC / CLOSE</span></div>`;
 document.body.append(dialog);
 const film=dialog.querySelector('video'),filmStatus=dialog.querySelector('#home-full-film-status');
 let releaseMusic=null,filmEpoch=0;
 const gate=document.querySelector('#entry-gate'),gateStatus=document.querySelector('#entry-status'),gateBar=document.querySelector('#entry-progress'),gateFill=document.querySelector('#entry-progress-fill'),gatePercent=document.querySelector('#entry-percent'),gateQuality=document.querySelector('#entry-quality'),gateHelp=document.querySelector('#entry-help'),gateActions=document.querySelector('#entry-actions'),retry=document.querySelector('#entry-retry'),skip=document.querySelector('#entry-skip');
 const root=document.documentElement,inertBefore=new Map();
-const variants=Object.fromEntries(media.variants.map(v=>[v.width===3840?'4k':'hd',v]));
-const fast=Object.fromEntries(media.fastVariants.map(v=>[v.height,v]));
 const onHome=()=>!location.hash||location.hash==='#home';
 const canRun=()=>onHome()&&inView&&!document.hidden&&!dialog.open&&!userPaused;
-let selectedQuality='auto',rendition=null,loadEpoch=0,playEpoch=0,controller=null,preparing=false,hasData=false,ready=false,inView=true,userPaused=false,awaitingTap=false,gateEpoch=0,helpTimer,entryTimer,stallTimer;
-let entryRevealed=!root.classList.contains('film-entering'),revealing=false,pendingSeek=media.initialTime||0,lowerAuto=false;
-const qualityLabel=()=>selectedQuality==='auto'?`智能流畅 · ${rendition?.height||1080}P`:selectedQuality==='4k'?'4K 增强影像':'高清影像';
-const choose=key=>key==='auto'?fast[lowerAuto||innerWidth<1000||navigator.connection?.saveData?720:1080]:variants[key];
+let selectedQuality='1080p',rendition=null,loadEpoch=0,playEpoch=0,controller=null,preparing=false,hasData=false,ready=false,inView=true,userPaused=false,awaitingTap=false,gateEpoch=0,helpTimer,entryTimer,stallTimer;
+let entryRevealed=!root.classList.contains('film-entering'),revealing=false,pendingSeek=media.initialTime||0;
+const qualityLabel=()=>'1080P 流畅';
+const choose=()=>media.smooth1080;
 let cursor=-.5;
 const chapters=media.loopSegments.map(segment=>{const time=Math.max(0,cursor);cursor+=segment.duration-media.crossfadeSeconds;return {time,chapter:segment.chapter};});
 function bufferedAhead(){
@@ -37,11 +35,12 @@ function gateProgress(percent,message){
  gateFill.style.width=`${value}%`;gatePercent.textContent=`${value}%`;gateBar.setAttribute('aria-valuenow',String(value));
  if(message)gateStatus.textContent=message;
 }
+window.addEventListener('agate:film-progress',event=>{const d=event.detail;if(!entryRevealed&&!revealing)gateProgress(d.received/d.total*94,'正在准备流畅影像');});
 function showGate(){
  if(entryRevealed||revealing)return;
  gateEpoch++;gate.classList.remove('leaving');gate.hidden=false;root.classList.add('film-entering');gate.dataset.state='preparing';
  gateHelp.hidden=true;gateActions.hidden=true;retry.textContent='重新准备';skip.disabled=false;
- gateQuality.textContent='只准备开场画面，无需等待整段下载';gateProgress(0,'正在点亮第一帧');
+ gateQuality.textContent='轻量 1080P · 准备好后流畅循环';gateProgress(0,'正在点亮第一帧');
  document.querySelectorAll('body>.header,body>main,body>footer,.home-screen-nav').forEach(el=>{if(!inertBefore.has(el))inertBefore.set(el,el.inert);el.inert=true;});
  gate.setAttribute('tabindex','-1');gate.focus({preventScroll:true});
  if(!entryTimer)entryTimer=setTimeout(()=>{entryTimer=0;reveal('slow-network');},media.entranceMaxWaitMs);
@@ -64,8 +63,7 @@ function gateFailure(message,tap=false){
  if(entryRevealed||revealing)return;
  gate.dataset.state=tap?'awaiting-play':'error';gateStatus.textContent=message;gateHelp.textContent=tap?'影像已准备好，点击播放或直接进入。':'可以重新准备，也可以直接进入浏览。';gateHelp.hidden=false;gateActions.hidden=false;retry.textContent=tap?'进入并播放':'重新准备';skip.disabled=false;
 }
-// The browser fetches MP4 ranges and starts from the fast-start index. Do not
-// fetch the entire file or construct a Blob before allowing playback.
+// A small validated local clip prevents network stalls during playback.
 function waitForPlayable(signal,token){
  return new Promise((resolve,reject)=>{
   const events=['loadedmetadata','loadeddata','canplay','progress','seeked','timeupdate'];let sought=false;
@@ -77,7 +75,7 @@ function waitForPlayable(signal,token){
    if(background.readyState>=1&&!sought){sought=true;const target=Math.min(pendingSeek,Math.max(0,background.duration-.1));pendingSeek=0;if(target>0&&Math.abs(background.currentTime-target)>.1)background.currentTime=target;}
    const ahead=bufferedAhead(),target=Math.min(media.startupBufferSeconds,Math.max(.05,background.duration-background.currentTime));
    hero.dataset.bufferedAhead=ahead.toFixed(2);
-   if(!entryRevealed&&!revealing)gateProgress(Number.isFinite(target)?Math.min(94,ahead/target*94):0,'正在准备开场画面');
+   if(!entryRevealed&&!revealing)gateProgress(98,'正在唤醒流畅画面');
    const alreadyPlaying=!background.paused&&background.currentTime>0;
    if(sought&&!background.seeking&&background.readyState>=2&&(ahead>=target-.04||alreadyPlaying)){cleanup();resolve();}
   };
@@ -103,19 +101,19 @@ async function startAndReveal(token){
  if(!canRun())pauseBackground();
 }
 async function prepare(key=selectedQuality,force=false){
- const token=++loadEpoch;playEpoch++;controller?.abort();controller=new AbortController();clearTimeout(stallTimer);selectedQuality=key;qualitySelect.value=key;rendition=choose(key);ready=false;hasData=false;preparing=true;awaitingTap=false;userPaused=false;
- hero.dataset.firstFrame='false';hero.dataset.playbackMode='progressive';showGate();updateUI();
- const path=new URL(`./assets/home-film/${rendition.file}`,document.baseURI).href;
+ const token=++loadEpoch;playEpoch++;controller?.abort();controller=new AbortController();clearTimeout(stallTimer);selectedQuality='1080p';rendition=choose();ready=false;hasData=false;preparing=true;awaitingTap=false;userPaused=false;
+ hero.dataset.firstFrame='false';hero.dataset.playbackMode='cached-1080p';showGate();updateUI();
  try{
+  const complete=await window.agateFilmLoader.load(force);if(token!==loadEpoch)return;
+  hero.dataset.downloadComplete=String(complete.complete);hero.dataset.downloadBytes=String(complete.received);hero.dataset.cacheSource=complete.source;
   background.muted=true;background.defaultMuted=true;background.preload='auto';background.loop=true;
-  if(background.src!==path||force){background.pause();hero.classList.remove('video-ready');background.src=path;background.load();}
+  if(background.src!==complete.url){background.pause();hero.classList.remove('video-ready');background.src=complete.url;background.load();}
   await waitForPlayable(controller.signal,token);if(token!==loadEpoch)return;
   hasData=true;await startAndReveal(token);
  }catch(error){
   if(token!==loadEpoch||error.name==='AbortError')return;
   preparing=false;updateUI();
   if(error.name==='NotAllowedError'){gateFailure('开场画面已准备好',true);return;}
-  if(key==='4k'&&error.name==='NotSupportedError'){pendingSeek=background.currentTime||0;prepare('auto');return;}
   gateFailure('实景影像暂未准备完成');
  }
 }
@@ -132,7 +130,6 @@ window.agateEntrance={
  skip(){reveal('skipped');}
 };
 toggle.onclick=()=>{if(awaitingTap&&hasData){window.agateEntrance.retry();return;}if(!ready){prepare(selectedQuality,true);return;}if(!background.paused){userPaused=true;pauseBackground();}else{userPaused=false;resumeBackground();}};
-qualitySelect.onchange=()=>{pendingSeek=background.currentTime||0;try{localStorage.setItem('agate-film-quality-v2',qualitySelect.value);}catch{}prepare(qualitySelect.value);};
 hero.querySelectorAll('[data-film-chapter]').forEach(button=>button.onclick=()=>{
  const first=chapters.find(c=>c.chapter===Number(button.dataset.filmChapter));if(!first)return;
  if(!ready){pendingSeek=first.time;prepare(selectedQuality);return;}background.currentTime=first.time;
@@ -143,11 +140,7 @@ background.addEventListener('timeupdate',()=>{
  progress.style.width=Number.isFinite(background.duration)?`${t/background.duration*100}%`:'0%';
 });
 background.addEventListener('playing',()=>{clearTimeout(stallTimer);updateUI();});background.addEventListener('pause',updateUI);
-background.addEventListener('waiting',()=>{
- if(!ready||!canRun())return;
- status.textContent='正在缓冲，画面就绪后继续';clearTimeout(stallTimer);
- if(selectedQuality==='auto'&&rendition.height>720)stallTimer=setTimeout(()=>{if(canRun()&&bufferedAhead()<.25){lowerAuto=true;pendingSeek=background.currentTime;prepare('auto');}},3500);
-});
+background.addEventListener('waiting',()=>{if(ready&&canRun())status.textContent='1080P · 正在恢复画面';});
 new IntersectionObserver(entries=>{inView=entries[0].isIntersecting;sync();},{threshold:.12}).observe(hero);
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&dialog.open)film.pause();sync();});
 window.addEventListener('hashchange',()=>{
@@ -168,7 +161,7 @@ function showFilm(){
  if(dialog.open)return;
  filmEpoch++;pauseBackground();releaseMusic=window.agateMusic?.suspendForFilm?.()||null;
  filmStatus.textContent='正在准备玛瑙主题片…';dialog.showModal();
- const path=selectedQuality==='4k'?`./assets/home-film/${media.story4k.file}`:`./assets/home-film/${media.storyHd.file}`;
+ const path=`./assets/home-film/${media.storySmooth?.file||media.storyHd.file}`;
  if(film.getAttribute('src')!==path){film.src=path;film.load();}
  film.currentTime=0;film.muted=false;film.volume=1;
  const token=filmEpoch;
@@ -181,8 +174,7 @@ dialog.addEventListener('click',event=>{if(event.target===dialog){const r=dialog
 film.addEventListener('playing',()=>{if(!dialog.open)film.pause();else filmStatus.textContent='';});
 film.addEventListener('error',()=>{filmStatus.textContent='主题片暂未载入，可通过下方来源观看原片。';});
 film.addEventListener('ended',()=>{filmStatus.textContent='主题片已结束，可重播或关闭继续创作。';});
-try{const saved=localStorage.getItem('agate-film-quality-v2');selectedQuality=['auto','hd','4k'].includes(saved)?saved:'auto';}catch{}
-qualitySelect.value=selectedQuality;rendition=choose(selectedQuality);updateUI();
+rendition=choose();updateUI();
 if(onHome()){
  if(motion.matches){userPaused=true;showGate();hero.querySelector('.home-film-poster').decode().catch(()=>{}).finally(()=>{status.textContent='减少动态效果已启用 · 可手动播放';reveal('reduced-motion');});}
  else prepare(selectedQuality);
