@@ -1,0 +1,52 @@
+/* A quiet orientation page, followed by a separate chapter for learning. */
+.header>nav{gap:clamp(17px,2.3vw,35px)}
+.header>nav a{white-space:nowrap}
+.culture-page{display:block;padding:0 4.5%;overflow:clip}
+.snap-home .culture-page{overflow:clip}
+.home-overview{display:flex;flex-direction:column;justify-content:center;padding:52px 2.7% 32px;isolation:isolate}
+.home-overview:before{content:'';position:absolute;inset:0 -5vw;z-index:-1;background:radial-gradient(ellipse at 90% 2%,#a76c3626,transparent 52%),linear-gradient(140deg,#1b120ff7,#211610f5);pointer-events:none}
+.overview-heading{display:grid;grid-template-columns:1.15fr 1fr;gap:7%;align-items:end;margin-bottom:31px}
+.overview-heading .eyebrow{font-size:9px;letter-spacing:2.5px;color:#caad84;margin:0 0 15px}
+.overview-heading h2{font:clamp(28px,3vw,46px)/1.45 var(--serif);letter-spacing:3px;margin:0;color:#f1dfc3}
+.overview-intro{padding:0 0 5px 25px;border-left:1px solid #cfaa6f40}
+.overview-index{font:19px var(--serif);letter-spacing:8px;color:#d7ba8f}
+.overview-intro p{font-size:12px;line-height:2.1;color:#bcaa92;margin:13px 0 0}
+.home-entry-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.home-entry-card{display:block;border:1px solid #cda87338;background:#2c201680;overflow:hidden;transition:transform .35s,border-color .35s,background .35s;min-width:0}
+.home-entry-card:hover{transform:translateY(-6px);border-color:#d7b37e99;background:#3a291c90}
+.home-entry-card:focus-visible{outline:2px solid #e5c38b;outline-offset:5px}
+.entry-card-photo{height:clamp(135px,18vh,230px);position:relative;overflow:hidden;background:#36251c}
+.entry-card-photo:after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,#110b0855,transparent 45%,#1b120f99)}
+.entry-card-photo img{width:100%;height:100%;object-fit:cover;transition:transform .65s ease;filter:saturate(.8)}
+.home-entry-card:nth-child(1) .entry-card-photo img{object-position:65% 50%}
+.home-entry-card:nth-child(2) .entry-card-photo img{object-position:62% 50%}
+.home-entry-card:hover .entry-card-photo img{transform:scale(1.045)}
+.entry-card-number,.entry-card-tag{position:absolute;z-index:1;left:22px;font-size:9px;letter-spacing:2px;color:#f1ddbe;text-shadow:0 1px 9px #000}
+.entry-card-number{top:18px;font-family:monospace}
+.entry-card-tag{bottom:16px;letter-spacing:3px}
+.entry-card-copy{padding:23px 23px 19px}
+.entry-card-kicker{font-size:9px;letter-spacing:3px;color:#c8a675}
+.entry-card-copy h3{font:clamp(20px,1.75vw,28px)/1.5 var(--serif);letter-spacing:1px;margin:8px 0 11px;color:#f1dfc3}
+.entry-card-copy p{font-size:11px;line-height:2;color:#baa68e;margin:0 0 21px}
+.entry-card-link{display:flex;align-items:center;justify-content:space-between;padding-top:13px;border-top:1px solid #d0ad7933;font-size:11px;letter-spacing:1px;color:#e1bf8d}
+.entry-card-link i{font-style:normal;font-size:22px;transition:transform .3s}
+.home-entry-card:hover .entry-card-link i{transform:translate(3px,-3px)}
+.overview-footer{display:flex;justify-content:space-between;align-items:center;gap:20px;padding-top:23px}
+.overview-footer p{display:flex;gap:13px;align-items:center;font-size:10px;letter-spacing:1px;color:#aa9373;margin:0}
+.overview-footer p i{font:12px monospace;color:#796043}
+.overview-footer p a{color:#e0be8c}
+.overview-footer .source-open{font-size:9px;color:#9f896d}
+.home-stone-study .hero-copy h1{font:clamp(29px,3vw,46px)/1.6 var(--serif);letter-spacing:4px;margin:20px 0;color:#f1dfc3}
+.learn-section-links{display:flex;gap:17px;flex-wrap:wrap;margin:24px 0 18px}
+.learn-section-links button{padding:0 0 8px;border-bottom:1px solid #c9a67150;font-size:11px;letter-spacing:1px;color:#d9ba8e}
+.learn-section-links button span{margin-left:8px;color:#9d7e55}
+.learn-section-links button:hover{border-color:#ebcf9f;color:#f5dfb9}
+.culture-page .home-study-actions{display:none}
+.learn-next{display:flex;gap:24px;align-items:center;flex-wrap:wrap;margin-top:4px}
+.learn-next .text-button{font-size:11px}
+@media(min-width:1600px){.culture-page{padding-left:max(4.5%,calc((100vw - 1510px)/2));padding-right:max(4.5%,calc((100vw - 1510px)/2))}.home-overview{padding-left:0;padding-right:0}}
+@media(min-width:851px) and (max-width:1200px){.header{gap:15px}.header>nav{gap:17px}.header>nav a{font-size:11px;letter-spacing:1px}.header>.source-open{font-size:9px;gap:5px}.brand{font-size:20px}.brand small{font-size:6px;letter-spacing:1.5px}}
+@media(max-width:1000px){.home-overview{padding-left:0;padding-right:0}.home-entry-grid{gap:15px}.entry-card-copy{padding:20px 17px 16px}.entry-card-photo{height:165px}.overview-intro p{font-size:11px}.overview-footer{gap:10px}.overview-footer p{gap:8px;letter-spacing:0}}
+@media(max-width:850px){.header>nav{gap:10px}.culture-page{padding:0 5%}.home-overview{padding-top:38px;padding-bottom:30px}.overview-heading{gap:5%;margin-bottom:25px}.overview-heading h2{font-size:30px;letter-spacing:2px}.overview-heading .eyebrow{font-size:8px;letter-spacing:1px}.overview-intro{padding-left:18px}.overview-index{font-size:17px}.entry-card-copy h3{font-size:21px}.entry-card-copy p{font-size:10px}.entry-card-number,.entry-card-tag{left:16px;letter-spacing:1px}.overview-footer{align-items:flex-start;flex-direction:column;gap:14px}.home-stone-study .hero-copy h1{font-size:29px;letter-spacing:2px}.learn-section-links{gap:12px}.learn-section-links button{font-size:10px}.learn-next{gap:16px}}
+@media(max-width:560px){.header>nav{gap:4px}.header>nav a{font-size:11px;letter-spacing:.5px}.home-overview{padding:34px 0 28px}.overview-heading{grid-template-columns:1fr;gap:19px;margin-bottom:24px}.overview-heading h2{font-size:30px}.overview-intro{padding-left:15px}.overview-intro p{font-size:11px;margin-top:10px}.overview-intro p br{display:none}.overview-index{font-size:15px;letter-spacing:6px}.home-entry-grid{grid-template-columns:1fr;gap:15px}.home-entry-card{display:grid;grid-template-columns:34% minmax(0,1fr)}.entry-card-photo{height:100%;min-height:210px}.entry-card-copy{padding:19px 16px 15px}.entry-card-copy h3{font-size:21px;letter-spacing:0;margin:7px 0 10px}.entry-card-copy p{font-size:10px;margin-bottom:13px;line-height:1.95}.entry-card-number{left:11px;top:14px;font-size:8px;letter-spacing:0}.entry-card-tag{left:11px;bottom:15px;font-size:9px;letter-spacing:1px}.entry-card-kicker{font-size:9px;letter-spacing:2px}.entry-card-link{font-size:10px;padding-top:10px}.entry-card-link i{font-size:19px}.overview-footer p{font-size:9px;gap:7px}.overview-footer{padding-top:20px}.home-stone-study .hero-copy h1{font-size:29px;margin:16px 0}.learn-section-links{margin:20px 0 10px;gap:20px}.culture-page .hero-description{font-size:11px}.learn-next{flex-direction:column;align-items:flex-start;gap:20px}.snap-home #home-story{padding-bottom:110px}.home-entry-card:hover{transform:none}}
+@media(prefers-reduced-motion:reduce){.home-entry-card,.entry-card-photo img,.entry-card-link i{transition:none}.home-entry-card:hover,.home-entry-card:hover .entry-card-photo img{transform:none}}

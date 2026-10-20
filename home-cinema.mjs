@@ -208,4 +208,4 @@ rendition=choose();updateUI();
 if(onHome()){
  if(motion.matches){userPaused=true;showGate();hero.querySelector('.home-film-poster').decode().catch(()=>{}).finally(()=>{status.textContent='减少动态效果已启用 · 可手动播放';reveal('reduced-motion');});}
  else prepare(selectedQuality);
-}
+}else gate.hidden=true;

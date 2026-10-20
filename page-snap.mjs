@@ -1,17 +1,19 @@
 // Native snapping remains the fallback. The spring only enhances explicit
 // wheel, keyboard and mouse-drag navigation outside the interactive tools.
 const root=document.documentElement,header=document.querySelector('.header');
-const panels=[document.querySelector('#home-film'),document.querySelector('.home-stone-study'),document.querySelector('.formation-teaser'),document.querySelector('#agate-gallery'),document.querySelector('#home-story')];
-const titles=['观石入境','读懂纹色','石的来历','实物图鉴','非遗手艺'];
+const groups={
+ home:{label:'首页体验导览',panels:['#home-film','#home-overview'],titles:['实景开场','体验导览']},
+ learn:{label:'观石识艺章节导航',panels:['.home-stone-study','.formation-teaser','#agate-gallery','#home-story'],titles:['读懂纹色','石的来历','实物图鉴','非遗手艺']}
+};
 const reduce=matchMedia('(prefers-reduced-motion: reduce)');
-panels.forEach((panel,i)=>{panel.classList.add('home-snap-panel');panel.dataset.snapPanel=String(i);});
-const nav=document.createElement('nav');nav.className='home-screen-nav';nav.setAttribute('aria-label','首页章节导航');
-nav.innerHTML=titles.map((title,i)=>`<button data-screen="${i}" aria-label="第${i+1}屏：${title}"><i aria-hidden="true"></i><span>${String(i+1).padStart(2,'0')} / ${title}</span></button>`).join('')+'<small aria-hidden="true">SCROLL / DRAG</small>';
-document.body.append(nav);
+Object.values(groups).forEach(group=>{group.panels=group.panels.map(selector=>document.querySelector(selector));group.panels.forEach((panel,i)=>{panel.classList.add('home-snap-panel');panel.dataset.snapPanel=String(i);});});
+let panels=[],titles=[];
+const nav=document.createElement('nav');nav.className='home-screen-nav';document.body.append(nav);
 const interactive='a,button,input,select,textarea,label,canvas,video,dialog,[contenteditable="true"],[role="slider"],.photo-viewport';
 let animation=0,drag=null,lastActive=-1,scrollFrame=0,scrollTimer,wheelTotal=0,wheelTime=0,gestureBusy=false,entryAnimation=null;
-const isHome=()=>!location.hash||location.hash==='#home';
-const blocked=()=>!isHome()||root.classList.contains('film-entering')||!!document.querySelector('dialog[open]');
+const activeGroup=()=>groups[location.hash.slice(1)||'home'];
+const isPaged=()=>!!activeGroup();
+const blocked=()=>!isPaged()||root.classList.contains('film-entering')||!!document.querySelector('dialog[open]');
 const headerHeight=()=>header.getBoundingClientRect().height;
 const available=()=>innerHeight-headerHeight();
 const maximum=()=>Math.max(0,document.documentElement.scrollHeight-innerHeight);
@@ -25,7 +27,7 @@ function measure(){root.style.setProperty('--snap-header-height',`${headerHeight
 new ResizeObserver(measure).observe(header);measure();
 function cancelSpring(){if(animation)cancelAnimationFrame(animation);animation=0;root.classList.remove('snap-in-motion');}
 function updateActive(animate=false){
- if(!isHome())return;
+ if(!isPaged())return;
  const current=panelAt(scrollY+Math.min(available()*.35,150));
  nav.querySelectorAll('[data-screen]').forEach((button,i)=>{if(i===current)button.setAttribute('aria-current','step');else button.removeAttribute('aria-current');});
  if(current!==lastActive){
@@ -62,7 +64,8 @@ function adjacent(direction){
  return direction>0?positions.find(p=>p>scrollY+4)??maximum():[...positions].reverse().find(p=>p<scrollY-4)??0;
 }
 function navigate(direction){if(blocked()||canReadInside(direction))return false;springTo(adjacent(direction));return true;}
-nav.querySelectorAll('[data-screen]').forEach(button=>button.onclick=()=>springTo(topFor(panels[Number(button.dataset.screen)])));
+nav.addEventListener('click',event=>{const button=event.target.closest('[data-screen]');if(button&&!blocked())springTo(topFor(panels[Number(button.dataset.screen)]));});
+document.addEventListener('click',event=>{const button=event.target.closest('[data-panel-link]');if(button&&!blocked()){const panel=panels[Number(button.dataset.panelLink)];if(panel)springTo(topFor(panel));}});
 window.addEventListener('wheel',event=>{
  if(blocked()||event.ctrlKey||event.metaKey||Math.abs(event.deltaX)>Math.abs(event.deltaY)||event.target.closest(interactive))return;
  const direction=Math.sign(event.deltaY);if(!direction)return;
@@ -113,13 +116,22 @@ function finishDrag(event){
 }
 document.addEventListener('pointerup',finishDrag);document.addEventListener('pointercancel',finishDrag);
 window.addEventListener('scroll',()=>{
- if(!isHome())return;
+ if(!isPaged())return;
  if(!scrollFrame)scrollFrame=requestAnimationFrame(()=>{scrollFrame=0;updateActive();});
  clearTimeout(scrollTimer);scrollTimer=setTimeout(()=>{if(!animation&&!drag)updateActive(true);},130);
 },{passive:true});
 window.addEventListener('resize',()=>{measure();updateActive();});
 function refresh(){
- cancelSpring();drag=null;root.classList.remove('snap-dragging');root.classList.toggle('snap-home',isHome());nav.hidden=!isHome();lastActive=-1;
- if(isHome())requestAnimationFrame(()=>{window.scrollTo({top:0,behavior:'instant'});updateActive();});
+ cancelSpring();drag=null;wheelTotal=0;wheelTime=0;gestureBusy=false;entryAnimation?.cancel();root.classList.remove('snap-dragging');const group=activeGroup();panels=group?.panels||[];titles=group?.titles||[];root.classList.toggle('snap-home',!!group);nav.hidden=!group;lastActive=-1;
+ if(group){nav.setAttribute('aria-label',group.label);nav.innerHTML=titles.map((title,i)=>`<button data-screen="${i}" aria-label="第${i+1}屏：${title}"><i aria-hidden="true"></i><span>${String(i+1).padStart(2,'0')} / ${title}</span></button>`).join('')+'<small aria-hidden="true">SCROLL / DRAG</small>';}else nav.replaceChildren();
+ if(isPaged())requestAnimationFrame(()=>{window.scrollTo({top:0,behavior:'instant'});updateActive();});
 }
 window.addEventListener('hashchange',refresh);refresh();
+
+// Start secondary photography after the video entrance has released its bandwidth.
+function loadOverviewImages(){
+ if((location.hash&&location.hash!=='#home')||root.classList.contains('film-entering'))return;
+ document.querySelectorAll('#home-overview img[data-entry-src]').forEach(img=>{img.src=img.dataset.entrySrc;delete img.dataset.entrySrc;});
+}
+window.addEventListener('agate:entry-ready',loadOverviewImages,{once:true});
+window.addEventListener('hashchange',loadOverviewImages);loadOverviewImages();
