@@ -26,10 +26,11 @@ export function revealGuide(){
  run(overview.querySelector('.overview-heading .eyebrow'),40,{distance:12,duration:580});
  run(overview.querySelector('#home-overview-title'),210,{distance:25,duration:850});
  run(overview.querySelector('.overview-intro'),540,{distance:18,duration:750});
- run(overview.querySelector('.guide-replay-row'),760,{distance:10,duration:550});
- cards.filter(visible).forEach((card,index)=>showCard(card,1050+index*360));
- run(overview.querySelector('.overview-footer'),2150,{distance:16,duration:650});
- const token=epoch;timers.push(setTimeout(()=>{if(epoch===token){playing=false;label();}},3700));
+ run(overview.querySelector('.guide-film-feature'),760,{distance:22,duration:760});
+ run(overview.querySelector('.guide-replay-row'),960,{distance:10,duration:550});
+ cards.filter(visible).forEach((card,index)=>showCard(card,1250+index*360));
+ run(overview.querySelector('.overview-footer'),2400,{distance:16,duration:650});
+ const token=epoch;timers.push(setTimeout(()=>{if(epoch===token){playing=false;label();}},4000));
 }
 // Each offscreen mobile card unfolds when it enters the viewport.
 const observer=new IntersectionObserver(entries=>{
@@ -45,4 +46,4 @@ window.addEventListener('hashchange',routeChanged);
 if(location.hash==='#guide')routeChanged();
 reduce.addEventListener('change',()=>{if(reduce.matches)completeGuide();});
 // Focusing a card never leaves its controls hidden behind an unfinished reveal.
-overview.addEventListener('focusin',event=>{const card=event.target.closest('.home-entry-card');if(!card)return;seen.add(card);animations.forEach(animation=>{const target=animation.effect?.target;if(target===card||card.contains(target))try{animation.finish();}catch{}});unlockCard(card);});
+overview.addEventListener('focusin',event=>{const feature=event.target.closest('.guide-film-feature');if(feature){animations.forEach(animation=>{if(animation.effect?.target===feature)try{animation.finish();}catch{}});return;}const card=event.target.closest('.home-entry-card');if(!card)return;seen.add(card);animations.forEach(animation=>{const target=animation.effect?.target;if(target===card||card.contains(target))try{animation.finish();}catch{}});unlockCard(card);});

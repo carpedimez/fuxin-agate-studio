@@ -69,7 +69,7 @@ dialog:not(.formation-dialog):not(.home-film-dialog):not(.photo-dialog){backgrou
 [data-explore-sound][aria-pressed=false]{opacity:.65}
 .guide-replay-row{display:flex;align-items:center;justify-content:space-between;gap:15px;margin:-7px 0 26px;color:#a3845d;font-size:9px;letter-spacing:1.5px}
 .guide-replay-row button{font-size:10px;color:#a06f43;border-bottom:1px solid #b58b5b50;padding:4px 0;letter-spacing:.5px}
-.guide-preparing :is(.overview-heading,.guide-replay-row,.overview-footer){opacity:0}
+.guide-preparing :is(.overview-heading,.guide-film-feature,.guide-replay-row,.overview-footer){opacity:0}
 .guide-card-pending{opacity:0;pointer-events:none}.guide-card-entering{pointer-events:none}
 .guide-preparing .home-entry-grid:before{transform:scaleX(0)}
 .home-entry-card:focus-visible{outline:2px solid #a96b3d;outline-offset:5px}
@@ -96,7 +96,7 @@ body:has(#home-film:is(:hover)) .home-screen-nav>small{color:#a58354}
 #journey .journey-craft-image .journey-image-label{color:#efd4a8}
 @media(max-width:850px){.agate-veiling{background:linear-gradient(90deg,#f8f2e8f5,#f6eddfd6 60%,#f4e3c49c)}.overview-footer-actions{gap:15px}.guide-replay-row{letter-spacing:.5px}}
 @media(max-width:560px){.home-film-shade{background:linear-gradient(90deg,#30251cb8,#38291b75 65%,#634a2f33),linear-gradient(0deg,#2b2218d9,transparent 58%)}.explore-caption{gap:12px}.explore-caption [data-explore-sound]{font-size:8px;padding-left:12px}.home-overview{padding-top:33px}.guide-replay-row{margin:0 0 27px;font-size:8px;gap:8px}.guide-replay-row button{font-size:9px}.home-entry-card:hover{transform:none}#home-story:before{background-image:linear-gradient(180deg,#f9f2e6f7,#f8ecd9e8 25%,#f5e2c7a6 70%,#f5e8d5e8),url('./assets/backgrounds/craft.webp');background-position:center,68% 50%}.real-backdrop-caption{font-size:8px}}
-@media(prefers-reduced-motion:reduce){.guide-card-pending{opacity:1;pointer-events:auto}.guide-card-entering{pointer-events:auto}.guide-preparing :is(.overview-heading,.guide-replay-row,.overview-footer){opacity:1}.home-entry-card{transition:none}.home-entry-grid:before{transition:none}}
+@media(prefers-reduced-motion:reduce){.guide-card-pending{opacity:1;pointer-events:auto}.guide-card-entering{pointer-events:auto}.guide-preparing :is(.overview-heading,.guide-film-feature,.guide-replay-row,.overview-footer){opacity:1}.home-entry-card{transition:none}.home-entry-grid:before{transition:none}}
 
 /* Readable small labels on the lighter paper; disabled controls keep their state. */
 .header nav a{color:#7d6651}.header>.source-open{color:#7f6449}.entry-card-kicker{color:#91663d}.overview-heading .eyebrow{color:#94673b}.guide-replay-row{color:#846246}.guide-replay-row button{color:#8e5b34}.overview-footer-actions [data-explore-sound]{color:#855d37}.craft-stepper .active b{color:#fff3d9}.specimen-label{padding:9px 13px;background:#fff6e5d6;border:1px solid #c49c6a30;border-radius:3px;box-shadow:0 7px 18px #6e452812}.specimen-label small{color:#846447}.overview-footer .source-open{color:#846246}
@@ -107,7 +107,7 @@ body:has(#home:not([hidden]))>footer{display:none}
 .home-opening-note{font-size:9px;letter-spacing:2px;color:#f4e2c3}
 .home-film-side{top:58px;right:3.3%;display:flex;flex-direction:column;align-items:center;gap:16px;writing-mode:horizontal-tb;padding:19px 11px;border:1px solid #fff7e6d9;border-radius:24px;background:linear-gradient(180deg,#fff8eaeF,#f4dfbce8);color:#75472b;font:600 clamp(13px,.95vw,16px)/1.4 var(--serif);letter-spacing:.28em;box-shadow:0 9px 30px #39231720;text-shadow:0 1px 0 #fff9e9;backdrop-filter:blur(8px)}
 .home-film-side>span{writing-mode:vertical-rl}.home-film-side>i{display:block;height:17px;width:1px;background:#a6754566}
-.guide-page{padding:0 4.5%;isolation:isolate}
+.guide-page{position:relative;padding:0 4.5%;isolation:isolate;overflow-x:clip}
 .guide-page-topbar{position:sticky;top:0;z-index:18;display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:62px;padding:10px 2.7%;border-bottom:1px solid #b38a5930;background:#faf5ebf2;backdrop-filter:blur(14px)}
 .guide-home-link{display:inline-flex;align-items:center;gap:12px;padding:9px 15px 9px 12px;border:1px solid #ad7d4b66;color:#8c5833;background:#fffaf0ce;font-size:12px;letter-spacing:1px;transition:background .25s,border-color .25s}
 .guide-home-link>span{font-size:19px;line-height:1;transition:transform .25s}.guide-home-link:hover{background:#f2e3c9;border-color:#a77848}.guide-home-link:hover>span{transform:translateX(-3px)}
@@ -130,3 +130,25 @@ body:has(#home:not([hidden]))>footer{display:none}
 #journey .module-guide-back>span{color:inherit}
 @media(max-width:560px){.module-guide-back{font-size:11px;margin-bottom:18px;padding:9px 13px;gap:9px}.home-stone-study .hero-copy>.module-guide-back{margin-bottom:14px}}
 @media(prefers-reduced-motion:reduce){.module-guide-back,.module-guide-back>span{transition:none}}
+
+/* A prominent film invitation before the four exploration entries. */
+.guide-film-feature{display:grid;grid-template-columns:220px minmax(0,1fr) auto;align-items:center;gap:30px;width:100%;padding:0 30px 0 0;margin:0 0 28px;overflow:hidden;position:relative;text-align:left;color:#75482e;background:linear-gradient(110deg,#fffaf0,#f3e2c5);border:1px solid #c49b675e;border-radius:5px;box-shadow:0 9px 26px #a16d3210;transition:border-color .3s,box-shadow .3s,transform .3s}
+.guide-film-cover{display:block;position:relative;align-self:stretch;min-height:144px;overflow:hidden;background:#705036}
+.guide-film-cover img{display:block;width:100%;height:100%;position:absolute;inset:0;object-fit:cover;object-position:64% 50%;transition:transform .6s}
+.guide-film-cover:after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,#352417a6,transparent 65%)}
+.guide-film-cover-label{position:absolute;left:17px;bottom:12px;z-index:1;font-size:9px;letter-spacing:2px;color:#fff0d3}
+.guide-film-copy{display:flex;flex-direction:column;align-items:flex-start;gap:10px;min-width:0;padding:22px 0}
+.guide-film-copy>small{font-size:9px;letter-spacing:2px;color:#9d7247}
+.guide-film-copy>strong{display:flex;align-items:center;gap:20px;flex-wrap:wrap;font:28px/1.4 var(--serif);letter-spacing:3px;color:#714329}
+.guide-film-copy>strong>span{font-size:18px;letter-spacing:2px;color:#94704b;padding-left:20px;border-left:1px solid #b98b5847}
+.guide-film-description{font-size:11px;line-height:1.9;color:#8b6d50}
+.guide-film-action{display:flex;align-items:center;gap:15px;white-space:nowrap;font-size:12px;letter-spacing:1px;color:#895631}
+.guide-film-play{display:flex;align-items:center;justify-content:center;width:58px;height:58px;padding-left:3px;border-radius:50%;font-size:17px;background:#a96d42;color:#fff3d8;box-shadow:0 0 0 7px #b8874b13;transition:transform .3s,background .3s,box-shadow .3s}
+.guide-film-feature:hover{color:#75482e;border-color:#ad7548;box-shadow:0 13px 35px #9c652523;transform:translateY(-2px)}
+.guide-film-feature:hover .guide-film-cover img{transform:scale(1.045)}
+.guide-film-feature:hover .guide-film-play{transform:scale(1.06);background:#955b35;box-shadow:0 0 0 10px #b8874b17}
+.guide-film-feature:focus-visible{outline:2px solid #a96b3d;outline-offset:5px}
+@media(max-width:1000px){.guide-film-feature{grid-template-columns:170px minmax(0,1fr) auto;gap:22px;padding-right:23px}.guide-film-copy>strong{font-size:25px;gap:12px}.guide-film-copy>strong>span{font-size:15px;padding-left:12px}.guide-film-action{gap:12px;font-size:11px}.guide-film-play{width:50px;height:50px;font-size:15px}}
+@media(max-width:650px){.guide-film-feature{grid-template-columns:104px minmax(0,1fr) 40px;gap:15px;padding-right:17px;margin-bottom:26px}.guide-film-cover{min-height:150px}.guide-film-cover-label{left:10px;bottom:12px;font-size:8px;letter-spacing:1px;writing-mode:vertical-rl}.guide-film-copy{gap:9px;padding:19px 0}.guide-film-copy>small{font-size:7px;letter-spacing:1px}.guide-film-copy>strong{display:block;font-size:23px;letter-spacing:2px}.guide-film-copy>strong>span{display:block;padding:0;border:0;font-size:12px;margin-top:4px;letter-spacing:1px}.guide-film-description{font-size:9px;line-height:1.85}.guide-film-action{gap:0}.guide-film-action>span:last-child{display:none}.guide-film-play{width:38px;height:38px;font-size:12px;box-shadow:0 0 0 5px #b8874b13}}
+@media(max-width:370px){.guide-film-feature{grid-template-columns:88px minmax(0,1fr) 34px;gap:12px;padding-right:14px}.guide-film-copy>strong{font-size:21px}.guide-film-play{width:34px;height:34px}}
+@media(prefers-reduced-motion:reduce){.guide-film-feature,.guide-film-cover img,.guide-film-play{transition:none}}
