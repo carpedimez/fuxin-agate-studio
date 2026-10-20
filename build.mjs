@@ -6,7 +6,7 @@ const root=path.dirname(fileURLToPath(import.meta.url));
 const {version}=JSON.parse(await readFile(path.join(root,'package.json'),'utf8'));
 await build({
  absWorkingDir:root,
- stdin:{contents:"import './app.mjs'; import './music.mjs'; import './mineral.mjs'; import './home-cinema.mjs';",resolveDir:root,sourcefile:'site-entry.mjs'},
+ stdin:{contents:"import './app.mjs'; import './music.mjs'; import './mineral.mjs'; import './home-cinema.mjs'; import './page-snap.mjs';",resolveDir:root,sourcefile:'site-entry.mjs'},
  bundle:true,format:'esm',platform:'browser',target:'es2022',minify:true,splitting:false,
  outfile:path.join(root,'site.bundle.js'),legalComments:'eof',charset:'utf8',
  plugins:[{name:'local-three',setup(builder){
@@ -14,7 +14,7 @@ await build({
   builder.onResolve({filter:/^three\/addons\/controls\/OrbitControls\.js$/},()=>({path:path.join(root,'vendor/OrbitControls.js')}));
  }}]
 });
-const cssFiles=['styles.css','experience.css','expansion.css','playground.css','music.css','mineral.css','gallery.css','formation.css','journey.css','home-cinema.css'];
+const cssFiles=['styles.css','experience.css','expansion.css','playground.css','music.css','mineral.css','gallery.css','formation.css','journey.css','home-cinema.css','page-snap.css'];
 const css=(await Promise.all(cssFiles.map(name=>readFile(path.join(root,name),'utf8')))).join('\n');
 const compiled=await transform(css,{loader:'css',minify:true,target:'es2022',legalComments:'eof'});
 await writeFile(path.join(root,'site.bundle.css'),compiled.code);

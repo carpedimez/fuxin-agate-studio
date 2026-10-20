@@ -1,0 +1,33 @@
+html.snap-home{scroll-snap-type:y mandatory;scroll-padding-top:var(--snap-header-height,100px);overscroll-behavior-y:none}
+html.snap-home.snap-in-motion,html.snap-home.snap-dragging{scroll-snap-type:none!important;scroll-behavior:auto!important}
+.snap-home body>.header{position:sticky;top:0;z-index:25}
+.snap-home .home-page{overflow:clip}
+.home-snap-panel{scroll-snap-align:start;scroll-snap-stop:always;min-height:calc(100svh - var(--snap-header-height,100px));position:relative}
+.snap-home .home-film{max-height:none}
+.snap-home .home-stone-study{padding-top:35px;padding-bottom:35px}
+.snap-home .home-stone-study .hero-scene{height:clamp(340px,56vh,620px)}
+.snap-home .formation-teaser{margin:0;grid-template-rows:1fr auto;align-content:stretch}
+.snap-home .formation-mini{min-height:355px}
+.snap-home .formation-mini img{position:absolute;inset:0;height:100%;width:100%;object-fit:cover}
+.snap-home .formation-teaser-copy{padding-top:45px;padding-bottom:45px}
+.snap-home .agate-gallery{display:flex;flex-direction:column;justify-content:center;padding-top:45px;padding-bottom:45px}
+.snap-home .story-strip{align-content:center;padding-top:70px;padding-bottom:70px}
+.snap-home footer{scroll-snap-align:end;scroll-snap-stop:always}
+.home-screen-nav{position:fixed;right:18px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;gap:9px;height:auto;width:22px;z-index:20}
+.home-screen-nav button{position:relative;display:flex;align-items:center;justify-content:center;width:22px;height:24px;padding:0;flex-shrink:0;cursor:pointer}
+.home-screen-nav button i{display:block;width:4px;height:4px;border-radius:50%;background:#cfb18a70;transition:height .35s,background .35s,box-shadow .35s}
+.home-screen-nav button[aria-current="step"] i{height:19px;border-radius:4px;background:#ecd0a6;box-shadow:0 0 16px #e8bd7c40}
+.home-screen-nav button span{position:absolute;right:31px;top:50%;transform:translate(6px,-50%);opacity:0;pointer-events:none;white-space:nowrap;font-size:10px;letter-spacing:2px;color:#f2dbba;padding:6px 11px;background:#221610ee;border:1px solid #c69c6233;transition:opacity .25s,transform .25s}
+.home-screen-nav button:hover span,.home-screen-nav button:focus-visible span{opacity:1;transform:translate(0,-50%)}
+.home-screen-nav>small{margin-top:18px;writing-mode:vertical-rl;letter-spacing:3px;font:7px/1.5 monospace;color:#b59a75;white-space:nowrap;pointer-events:none}
+.snap-dragging,.snap-dragging body{cursor:grabbing!important;user-select:none!important}
+.snap-dragging .home-snap-panel{cursor:grabbing}
+.snap-home .home-film,.snap-home .home-stone-study,.snap-home #home-story{cursor:grab}
+.snap-home .home-snap-panel :is(h1,h2,h3,p,small){cursor:auto}
+.snap-home .home-snap-panel :is(button,a){cursor:pointer}
+.snap-home .home-snap-panel canvas{cursor:grab}
+@media(max-width:850px){.home-screen-nav{right:7px}.home-screen-nav button{width:18px}.home-screen-nav button span{right:25px}.snap-home .home-stone-study{padding-top:25px;padding-bottom:25px}.snap-home .home-stone-study .hero-scene{height:clamp(300px,50vh,460px)}}
+@media(max-width:560px){.home-screen-nav{right:3px;gap:5px;width:14px}.home-screen-nav button{width:14px;height:24px}.home-screen-nav button i{width:3px}.home-screen-nav>small{display:none}.home-screen-nav button span{right:20px}.snap-home .home-stone-study{justify-content:center;padding-top:25px;padding-bottom:25px}.snap-home .home-stone-study .hero-scene{height:320px;flex-shrink:0}.snap-home .home-stone-study .hero-copy{padding-top:0}.snap-home .formation-mini{min-height:235px}.snap-home .formation-teaser-copy{padding-top:25px;padding-bottom:25px}.snap-home .agate-gallery{padding-top:35px;padding-bottom:35px}.snap-home .story-strip{padding-top:45px;padding-bottom:45px}}
+@media(pointer:coarse){.snap-home .home-film,.snap-home .home-stone-study,.snap-home #home-story{cursor:auto}}
+@media(max-width:560px){.home-screen-nav button span{display:none}}
+@media(prefers-reduced-motion:reduce){.home-screen-nav button i,.home-screen-nav button span{transition:none}}

@@ -44,12 +44,47 @@
     "end": 143,
     "duration": 33.8
   },
-  "changes": "主题选段、交叉淡化、静音短循环、原声主题篇首尾淡化、H.264压缩、实景封面截帧；未放大声称高清，未标记为本站原创拍摄。",
+  "changes": "主题选段、交叉淡化、静音短循环、原声主题篇首尾淡化、H.264压缩、实景封面截帧；未放大声称高清，未标记为本站原创拍摄。 本版首页改用四幅原片实景截帧轮播，旧短循环文件保留兼容，不再由首页加载。",
   "rights": "第三方宣传影像；未查到明确开放许可，不声明为CC或本站原创。公开转载、剪辑与参赛使用范围尚待权利方确认。",
   "scope": "仅玛瑙雕件、雕刻、玛瑙市场与阜新水岸；水岸不标称十家子或八宝海。",
   "files": {
     "agate-loop.mp4": 3978519,
     "agate-story.mp4": 5089143,
     "poster.webp": 25466
-  }
+  },
+  "homepageMode": "looping still images, 6500ms per slide, 1100ms crossfade; no automatic background video requests",
+  "slides": [
+    {
+      "file": "slide-stone.webp",
+      "sourceTime": 110,
+      "theme": "观石",
+      "alt": "阜新宣传影像中的玛瑙雕件",
+      "chapter": 0,
+      "bytes": 41752
+    },
+    {
+      "file": "slide-craft.webp",
+      "sourceTime": 117.1,
+      "theme": "知艺",
+      "alt": "阜新宣传影像中的手工雕刻",
+      "chapter": 1,
+      "bytes": 29294
+    },
+    {
+      "file": "slide-vessel.webp",
+      "sourceTime": 123,
+      "theme": "成器",
+      "alt": "阜新宣传影像中的雕刻器物",
+      "chapter": 1,
+      "bytes": 29928
+    },
+    {
+      "file": "slide-water.webp",
+      "sourceTime": 216.5,
+      "theme": "入乡",
+      "alt": "阜新宣传影像中的乡野水岸，不作十家子或八宝海实景证明",
+      "chapter": 2,
+      "bytes": 86056
+    }
+  ]
 }
