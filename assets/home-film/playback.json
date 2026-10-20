@@ -1,5 +1,5 @@
 {
-  "version": "0.11.0",
+  "version": "0.11.1",
   "homepageMode": "Native progressive MP4: lightweight automatic rendition; buffer opening seconds and confirm first decoded playing frame, without waiting for complete download. Bounded entrance fallback preserves access on slow networks.",
   "sourceResolution": [
     2560,
@@ -125,5 +125,6 @@
   ],
   "startupBufferSeconds": 1.25,
   "defaultQuality": "auto",
-  "entranceMaxWaitMs": 6000
+  "entranceMaxWaitMs": 6000,
+  "startupPolicy": "Use1.25s opening buffer when paused; if native autoplay is already rendering, confirm the next actual frame and enter immediately without waiting for extra buffered seconds."
 }

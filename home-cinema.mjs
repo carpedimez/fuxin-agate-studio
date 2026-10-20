@@ -78,7 +78,8 @@ function waitForPlayable(signal,token){
    const ahead=bufferedAhead(),target=Math.min(media.startupBufferSeconds,Math.max(.05,background.duration-background.currentTime));
    hero.dataset.bufferedAhead=ahead.toFixed(2);
    if(!entryRevealed&&!revealing)gateProgress(Number.isFinite(target)?Math.min(94,ahead/target*94):0,'正在准备开场画面');
-   if(sought&&!background.seeking&&background.readyState>=2&&ahead>=target-.04){cleanup();resolve();}
+   const alreadyPlaying=!background.paused&&background.currentTime>0;
+   if(sought&&!background.seeking&&background.readyState>=2&&(ahead>=target-.04||alreadyPlaying)){cleanup();resolve();}
   };
   const timeout=setTimeout(()=>{cleanup();reject(new Error('Opening buffer timed out'));},45000);
   events.forEach(n=>background.addEventListener(n,check));background.addEventListener('error',failed);signal.addEventListener('abort',aborted,{once:true});check();
