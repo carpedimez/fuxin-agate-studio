@@ -52,7 +52,7 @@
     "agate-story.mp4": 5089143,
     "poster.webp": 25466
   },
-  "homepageMode": "looping still images, 6500ms per slide, 1100ms crossfade; no automatic background video requests",
+  "homepageMode": "v0.9.0 real moving video from new 1440p source, enhanced 4K, full prefetch before entrance",
   "slides": [
     {
       "file": "slide-stone.webp",
@@ -86,5 +86,7 @@
       "chapter": 2,
       "bytes": 86056
     }
-  ]
+  ],
+  "currentPlaybackManifest": "playback.json",
+  "legacySourceNotice": "以下旧片源、循环与截图字段为历史版本归档；当前片源、画质及镜头以playback.json为准。"
 }

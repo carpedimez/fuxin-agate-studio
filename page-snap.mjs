@@ -11,7 +11,7 @@ document.body.append(nav);
 const interactive='a,button,input,select,textarea,label,canvas,video,dialog,[contenteditable="true"],[role="slider"],.photo-viewport';
 let animation=0,drag=null,lastActive=-1,scrollFrame=0,scrollTimer,wheelTotal=0,wheelTime=0,gestureBusy=false,entryAnimation=null;
 const isHome=()=>!location.hash||location.hash==='#home';
-const blocked=()=>!isHome()||!!document.querySelector('dialog[open]');
+const blocked=()=>!isHome()||root.classList.contains('film-entering')||!!document.querySelector('dialog[open]');
 const headerHeight=()=>header.getBoundingClientRect().height;
 const available=()=>innerHeight-headerHeight();
 const maximum=()=>Math.max(0,document.documentElement.scrollHeight-innerHeight);

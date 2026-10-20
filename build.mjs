@@ -19,6 +19,8 @@ const css=(await Promise.all(cssFiles.map(name=>readFile(path.join(root,name),'u
 const compiled=await transform(css,{loader:'css',minify:true,target:'es2022',legalComments:'eof'});
 await writeFile(path.join(root,'site.bundle.css'),compiled.code);
 let html=await readFile(path.join(root,'index.source.html'),'utf8');
+const entranceCss=await transform(await readFile(path.join(root,'entrance-critical.css'),'utf8'),{loader:'css',minify:true,target:'es2022'});
+html=html.replace(/<style id="entrance-critical">[\s\S]*?<\/style>/,`<style id="entrance-critical">${entranceCss.code}</style>`);
 html=html.replace(/<link rel="stylesheet"[^>]*>/g,'').replace(/<script type="importmap">[\s\S]*?<\/script>/g,'');
 html=html.replace('</head>',`<link rel="stylesheet" href="./site.bundle.css?v=${encodeURIComponent(version)}"></head>`);
 html=html.replace(/<script type="module" src="\.\/(?:app|music|mineral)\.mjs"><\/script>/g,'');

@@ -5,7 +5,7 @@ document.querySelector('.header').append(root);
 const $=s=>root.querySelector(s),audio=document.createElement('audio');
 audio.id='background-music';audio.src='./assets/background-we-never.mp3';audio.preload='none';audio.loop=true;document.body.append(audio);
 const readVolume=()=>{try{const v=JSON.parse(localStorage.getItem('agate-music-volume'));return typeof v==='number'&&Number.isFinite(v)?Math.max(0,Math.min(1,v)):.25;}catch{return .25;}};
-audio.volume=readVolume();let attempting=false,lastVolume=audio.volume||.25,requestId=0,audioTask=null,objectUrl=null,autoArmed=true,mediaHeld=false;
+audio.volume=readVolume();let attempting=false,lastVolume=audio.volume||.25,requestId=0,audioTask=null,objectUrl=null,autoArmed=true,mediaHeld=false,entryWaiting=document.documentElement.classList.contains('film-entering');
 async function prepareAudio(){if(objectUrl)return;if(!audioTask)audioTask=fetch(new URL('./assets/background-we-never.mp3',import.meta.url)).then(r=>{if(!r.ok)throw Error('Audio unavailable');return r.blob();}).then(blob=>{objectUrl=URL.createObjectURL(blob);audio.src=objectUrl;}).catch(e=>{audioTask=null;throw e;});await audioTask;}
 function volumeUI(){$('#music-volume').value=Math.round(audio.volume*100);$('#music-volume-value').value=Math.round(audio.volume*100)+'%';const muted=audio.muted||audio.volume===0;$('#music-mute').setAttribute('aria-pressed',String(muted));$('#music-mute').setAttribute('aria-label',muted?'取消静音':'静音');$('#music-mute').textContent=muted?'×':'♪';}
 const time=n=>Number.isFinite(n)?Math.floor(n/60)+':'+String(Math.floor(n%60)).padStart(2,'0'):'0:00';
@@ -17,7 +17,7 @@ function disarmAuto(){
  document.removeEventListener('keydown',onFirstInteraction,true);
 }
 async function startMusic(){
- if(mediaHeld||attempting||!audio.paused)return;
+ if(entryWaiting||mediaHeld||attempting||!audio.paused)return;
  const id=++requestId;attempting=true;
  $('#music-label').textContent='正在加载';$('#music-status').textContent='正在准备音乐…';
  try{
@@ -79,4 +79,5 @@ function suspendForFilm(){
  let released=false;
  return ()=>{if(released)return;released=true;mediaHeld=false;playbackUI();if(resumeWanted)startMusic();};
 }
-volumeUI();window.agateMusic={audio,toggle,suspendForFilm};startMusic();
+volumeUI();window.agateMusic={audio,toggle,suspendForFilm};
+if(entryWaiting){$('#music-label').textContent='入境后播放';window.addEventListener('agate:entry-ready',()=>{entryWaiting=false;startMusic();},{once:true});}else startMusic();
