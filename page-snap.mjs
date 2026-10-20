@@ -2,7 +2,6 @@
 // wheel, keyboard and mouse-drag navigation outside the interactive tools.
 const root=document.documentElement,header=document.querySelector('.header');
 const groups={
- home:{label:'首页体验导览',panels:['#home-film','#home-overview'],titles:['实景开场','体验导览']},
  learn:{label:'观石识艺章节导航',panels:['.home-stone-study','.formation-teaser','#agate-gallery','#home-story'],titles:['读懂纹色','石的来历','实物图鉴','非遗手艺']}
 };
 const reduce=matchMedia('(prefers-reduced-motion: reduce)');
@@ -130,15 +129,8 @@ window.addEventListener('hashchange',refresh);refresh();
 
 // Start secondary photography after the video entrance has released its bandwidth.
 function loadOverviewImages(){
- if((location.hash&&location.hash!=='#home')||root.classList.contains('film-entering'))return;
+ if(location.hash!=='#guide')return;
  document.querySelectorAll('#home-overview img[data-entry-src]').forEach(img=>{const reveal=()=>{if(img.naturalWidth>1)img.decode().catch(()=>{}).then(()=>img.parentElement.classList.add('photo-ready'));};img.addEventListener('load',reveal);img.loading='eager';img.fetchPriority='high';img.src=img.dataset.entrySrc;delete img.dataset.entrySrc;reveal();});
 }
 window.addEventListener('agate:entry-ready',loadOverviewImages,{once:true});
 window.addEventListener('hashchange',loadOverviewImages);loadOverviewImages();
-
-export function goToHomePanel(index,{instant=false}={}){
- if(location.hash&&location.hash!=='#home')return;
- const panel=groups.home.panels[index];if(!panel)return;
- cancelSpring();const destination=topFor(panel);
- if(instant){window.scrollTo({top:destination,behavior:'instant'});updateActive();}else springTo(destination);
-}

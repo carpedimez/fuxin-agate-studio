@@ -48,5 +48,5 @@ function toggle(){generation++;muted=!muted;try{localStorage.setItem(preference,
 controls().forEach(button=>button.addEventListener('click',toggle));paint();
 window.agateMusic?.audio.addEventListener('volumechange',()=>{const music=window.agateMusic.audio;if(music.muted||music.volume===0){generation++;active?.stop();active=null;}});
 document.addEventListener('visibilitychange',()=>{if(document.hidden){generation++;active?.stop();active=null;}});
-window.addEventListener('hashchange',()=>{generation++;active?.stop();active=null;});
+window.addEventListener('hashchange',event=>{if(event.agateExploration)return;generation++;active?.stop();active=null;});
 window.agateSound={getState(){let rms=0;if(analyser){const values=new Float32Array(analyser.fftSize);analyser.getFloatTimeDomainData(values);rms=Math.sqrt(values.reduce((sum,n)=>sum+n*n,0)/values.length);}return{muted,contextState:context?.state||'uncreated',plays,rms};}};

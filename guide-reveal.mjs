@@ -37,8 +37,12 @@ const observer=new IntersectionObserver(entries=>{
  entries.filter(entry=>entry.isIntersecting).forEach(entry=>showCard(entry.target,90));
 },{threshold:.12});cards.forEach(card=>observer.observe(card));
 replay.onclick=()=>{if(playing)completeGuide();else{prepareGuide();revealGuide();}};
-window.addEventListener('hashchange',completeGuide);
+function routeChanged(event){
+ if(event?.agateExploration)return;
+ if(location.hash==='#guide'){prepareGuide();requestAnimationFrame(()=>{if(location.hash==='#guide')revealGuide();});}else completeGuide();
+}
+window.addEventListener('hashchange',routeChanged);
+if(location.hash==='#guide')routeChanged();
 reduce.addEventListener('change',()=>{if(reduce.matches)completeGuide();});
 // Focusing a card never leaves its controls hidden behind an unfinished reveal.
 overview.addEventListener('focusin',event=>{const card=event.target.closest('.home-entry-card');if(!card)return;seen.add(card);animations.forEach(animation=>{const target=animation.effect?.target;if(target===card||card.contains(target))try{animation.finish();}catch{}});unlockCard(card);});
-export function guideHasStarted(){return started;}
