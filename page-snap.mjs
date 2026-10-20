@@ -9,6 +9,13 @@ Object.values(groups).forEach(group=>{group.panels=group.panels.map(selector=>do
 let panels=[],titles=[];
 const nav=document.createElement('nav');nav.className='home-screen-nav';document.body.append(nav);
 const interactive='a,button,input,select,textarea,label,canvas,video,dialog,[contenteditable="true"],[role="slider"],.photo-viewport';
+function isInteractive(event,extra=''){
+ const target=event.target.closest(interactive+extra);if(!target)return false;
+ if(target.tagName==='CANVAS'&&typeof target.agateHitTest==='function'&&['wheel','pointerdown'].includes(event.type)){
+  return event.agateStoneHit??target.agateHitTest(event.clientX,event.clientY);
+ }
+ return true;
+}
 let animation=0,drag=null,lastActive=-1,scrollFrame=0,scrollTimer,wheelTotal=0,wheelTime=0,gestureBusy=false,entryAnimation=null;
 const activeGroup=()=>Object.hasOwn(groups,location.hash.slice(1)||'home')?groups[location.hash.slice(1)||'home']:null;
 const isPaged=()=>!!activeGroup();
@@ -66,7 +73,7 @@ function navigate(direction){if(blocked()||canReadInside(direction))return false
 nav.addEventListener('click',event=>{const button=event.target.closest('[data-screen]');if(button&&!blocked())springTo(topFor(panels[Number(button.dataset.screen)]));});
 document.addEventListener('click',event=>{const button=event.target.closest('[data-panel-link]');if(button&&!blocked()){const panel=panels[Number(button.dataset.panelLink)];if(panel)springTo(topFor(panel));}});
 window.addEventListener('wheel',event=>{
- if(blocked()||event.ctrlKey||event.metaKey||Math.abs(event.deltaX)>Math.abs(event.deltaY)||event.target.closest(interactive))return;
+ if(blocked()||event.defaultPrevented||event.ctrlKey||event.metaKey||Math.abs(event.deltaX)>Math.abs(event.deltaY)||isInteractive(event))return;
  const direction=Math.sign(event.deltaY);if(!direction)return;
  const now=performance.now(),gap=now-wheelTime;wheelTime=now;
  if(animation||(gestureBusy&&gap<180)){event.preventDefault();return;}
@@ -84,7 +91,7 @@ document.addEventListener('keydown',event=>{
  if(direction&&navigate(direction))event.preventDefault();
 });
 document.addEventListener('pointerdown',event=>{
- if(blocked()||event.pointerType!=='mouse'||event.button!==0||event.ctrlKey||event.metaKey||event.target.closest(interactive+',h1,h2,h3,p,small,strong'))return;
+ if(blocked()||event.pointerType!=='mouse'||event.button!==0||event.ctrlKey||event.metaKey||isInteractive(event,',h1,h2,h3,p,small,strong'))return;
  const panel=event.target.closest('.home-snap-panel');if(!panel)return;
  cancelSpring();drag={id:event.pointerId,panel,startY:event.clientY,startX:event.clientX,scroll:scrollY,at:panelAt(),previousY:event.clientY,previousTime:performance.now(),velocity:0,active:false};
 });

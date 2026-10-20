@@ -234,3 +234,11 @@ body:has(#home:not([hidden]))>footer{display:none}
  .guide-page .entry-card-result{font-size:10px;margin-bottom:12px}
  .guide-page .entry-card-copy .entry-card-link{font-size:12px;padding-top:11px}
 }
+
+/* Decorative labels do not intercept stone or page gestures. */
+#hero-scene .specimen-label,#hero-scene .scene-coordinate{pointer-events:none}
+#hero-scene .specimen-label{transition:border-color .2s,box-shadow .2s}
+#hero-scene.stone-hover .specimen-label{border-color:#b07b4d88;box-shadow:0 7px 22px #82502524}
+#hero-scene .stone-navigation-hint{margin-top:4px;color:#8c6b4b;font-size:8px}
+@media(pointer:coarse){#hero-scene .stone-navigation-hint{display:none}}
+@media(prefers-reduced-motion:reduce){#hero-scene .specimen-label{transition:none}}

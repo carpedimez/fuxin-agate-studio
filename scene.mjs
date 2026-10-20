@@ -2,6 +2,44 @@ import {createDisplay} from './showcase.mjs';
 import {motifOutline} from './core.mjs';
 import * as THREE from 'three';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+// The transparent hero canvas shares its empty area with chapter navigation.
+// Cache each event's hit before OrbitControls moves the camera.
+function bindStoneInput(container,canvas,camera,stone,controls){
+ const ray=new THREE.Raycaster(),point=new THREE.Vector2(),pointers=new Set();let hoverFrame=0;
+ function hitTest(x,y){
+  const rect=canvas.getBoundingClientRect();
+  if(!rect.width||!rect.height||x<rect.left||x>rect.right||y<rect.top||y>rect.bottom)return false;
+  point.set((x-rect.left)/rect.width*2-1,1-(y-rect.top)/rect.height*2);
+  camera.updateMatrixWorld();stone.updateWorldMatrix(true,false);ray.setFromCamera(point,camera);
+  return ray.intersectObject(stone,false).length>0;
+ }
+ canvas.agateHitTest=hitTest;
+ function hover(x,y){const over=hitTest(x,y);container.classList.toggle('stone-hover',over);canvas.style.cursor=pointers.size?'grabbing':over?'grab':'inherit';}
+ function wheel(event){
+  const over=hitTest(event.clientX,event.clientY);event.agateStoneHit=over;
+  controls.enabled=true;controls.enableZoom=over&&!event.ctrlKey&&!event.metaKey;
+  if(pointers.size)event.preventDefault();
+ }
+ function down(event){
+  // Keep existing single/two-finger touch controls in the 3D viewport.
+  const over=event.pointerType!=='mouse'||pointers.size>0||hitTest(event.clientX,event.clientY);
+  event.agateStoneHit=over;controls.enabled=over;
+  if(over){pointers.add(event.pointerId);canvas.style.cursor='grabbing';}
+ }
+ function move(event){
+  if(event.pointerType!=='mouse'||pointers.size)return;
+  cancelAnimationFrame(hoverFrame);hoverFrame=requestAnimationFrame(()=>hover(event.clientX,event.clientY));
+ }
+ function leave(){if(!pointers.size){container.classList.remove('stone-hover');canvas.style.cursor='inherit';}}
+ function finish(event){
+  if(!pointers.delete(event.pointerId))return;
+  if(!pointers.size)queueMicrotask(()=>{controls.enabled=true;controls.enableZoom=true;hover(event.clientX,event.clientY);});
+ }
+ canvas.addEventListener('wheel',wheel,{capture:true,passive:false});
+ canvas.addEventListener('pointerdown',down,true);canvas.addEventListener('pointermove',move);canvas.addEventListener('pointerleave',leave);
+ window.addEventListener('pointerup',finish,true);window.addEventListener('pointercancel',finish,true);
+ return ()=>{cancelAnimationFrame(hoverFrame);delete canvas.agateHitTest;container.classList.remove('stone-hover');canvas.removeEventListener('wheel',wheel,true);canvas.removeEventListener('pointerdown',down,true);canvas.removeEventListener('pointermove',move);canvas.removeEventListener('pointerleave',leave);window.removeEventListener('pointerup',finish,true);window.removeEventListener('pointercancel',finish,true);};
+}
 export function createAgateScene(container,{hero=false}={}){
  const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,preserveDrawingBuffer:true});renderer.setPixelRatio(Math.min(devicePixelRatio,1.7));renderer.setClearColor(0x000000,0);renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.15;container.appendChild(renderer.domElement);
  const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(35,1,.1,100);camera.position.set(0,.2,7.0);const controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.enablePan=false;controls.minDistance=4.5;controls.maxDistance=9;controls.autoRotate=hero&&!matchMedia('(prefers-reduced-motion: reduce)').matches;controls.autoRotateSpeed=.65;
@@ -18,9 +56,10 @@ export function createAgateScene(container,{hero=false}={}){
  const stone=new THREE.Mesh(geometry,material);stone.rotation.set(-.15,-.2,-.22);scene.add(stone);const key=new THREE.DirectionalLight(0xffe8c8,4.2);key.position.set(-3,4,5);scene.add(key);const fill=new THREE.DirectionalLight(0xc8e0d0,1.8);fill.position.set(4,1,2);scene.add(fill);const rim=new THREE.DirectionalLight(0xffa247,2);rim.position.set(1,-1,-3);scene.add(rim);scene.add(new THREE.AmbientLight(0xd2c19d,.5));
  const shadowCanvas=document.createElement('canvas');shadowCanvas.width=256;shadowCanvas.height=256;const cx=shadowCanvas.getContext('2d'),g=cx.createRadialGradient(128,128,0,128,128,128);g.addColorStop(0,'rgba(0,0,0,.65)');g.addColorStop(.5,'rgba(0,0,0,.22)');g.addColorStop(1,'transparent');cx.fillStyle=g;cx.fillRect(0,0,256,256);const shadowTexture=new THREE.CanvasTexture(shadowCanvas),shadow=new THREE.Mesh(new THREE.PlaneGeometry(4.5,2),new THREE.MeshBasicMaterial({map:shadowTexture,transparent:true,depthWrite:false}));shadow.position.set(0,-1.7,-.6);shadow.rotation.x=-.5;scene.add(shadow);
  const resize=()=>{const r=container.getBoundingClientRect();if(r.width<1||r.height<1)return;renderer.setSize(r.width,r.height);camera.aspect=r.width/r.height;camera.updateProjectionMatrix();};const observer=new ResizeObserver(resize);observer.observe(container);resize();let active=true,inViewport=false;const renderFrame=()=>{if(!active||document.hidden||!inViewport||container.offsetParent===null)return;controls.update();renderer.render(scene,camera);};const syncRendering=()=>{const running=active&&inViewport&&!document.hidden;renderer.setAnimationLoop(running?renderFrame:null);container.dataset.rendering=String(running);};const viewportObserver=new IntersectionObserver(entries=>{inViewport=entries[0].isIntersecting;syncRendering();},{threshold:.01});viewportObserver.observe(container);document.addEventListener('visibilitychange',syncRendering);let currentTexture=null,currentNormal=null,currentKind=null;const display=createDisplay(scene,stone);
+ const releaseStoneInput=hero?bindStoneInput(container,renderer.domElement,camera,stone,controls):null;
  return {renderer,stone,controls,resize,setTexture(canvas,{kind,normalCanvas,polish=.72,light='left',thickness=.24,presentation}={}){custom=false;
  const geometryKey=kind+':'+thickness+':'+JSON.stringify(motifOutline(kind));if(kind&&geometryKey!==currentKind){const outline=motifOutline(kind),shape=new THREE.Shape();outline.forEach(([x,y],i)=>i?shape.lineTo(x*1.4,-y*1.4):shape.moveTo(x*1.4,-y*1.4));shape.closePath();const next=new THREE.ExtrudeGeometry(shape,{depth:thickness,bevelEnabled:true,bevelThickness:.07,bevelSize:.055,bevelSegments:4,curveSegments:24,steps:1});const positions=next.attributes.position,uv=next.attributes.uv;for(let i=0;i<positions.count;i++)uv.setXY(i,(positions.getX(i)/1.4+1)/2,(positions.getY(i)/1.4+1)/2);next.center();next.computeVertexNormals();next.userData.kind=kind;geometry.dispose();geometry=next;stone.geometry=geometry;stone.rotation.set(-.10,-.24,kind==='leaf'?-.30:0);controls.autoRotate=false;currentKind=geometryKey;}
  currentTexture?.dispose();currentTexture=new THREE.CanvasTexture(canvas);currentTexture.colorSpace=THREE.SRGBColorSpace;currentTexture.anisotropy=renderer.capabilities.getMaxAnisotropy();material.map=currentTexture;currentNormal?.dispose();if(normalCanvas){currentNormal=new THREE.CanvasTexture(normalCanvas);material.normalMap=currentNormal;material.normalScale.set(.65,.65);}else material.normalMap=null;
  material.color.set(0xffffff);material.roughness=.70-polish*.59;material.clearcoat=polish;material.clearcoatRoughness=.32-polish*.23;material.transmission=.04+polish*.12;material.onBeforeCompile=()=>{};material.needsUpdate=true;key.position.x=light==='right'?3:-3;fill.position.x=light==='right'?-4:4;display.update(presentation);
- },setOrientation(view){controls.autoRotate=false;controls.reset();stone.rotation.set(0,view==='back'?Math.PI:view==='side'?Math.PI/2:0,0);camera.position.set(0,.2,7);controls.update();renderer.render(scene,camera);},capture(){renderer.render(scene,camera);return renderer.domElement.toDataURL('image/png');},setAuto(v){controls.autoRotate=v;},dispose(){active=false;renderer.setAnimationLoop(null);viewportObserver.disconnect();document.removeEventListener('visibilitychange',syncRendering);observer.disconnect();controls.dispose();display.dispose();geometry.dispose();material.dispose();env.dispose();currentTexture?.dispose();currentNormal?.dispose();shadowTexture.dispose();shadow.material.dispose();shadow.geometry.dispose();renderer.dispose();renderer.domElement.remove();}};
+ },setOrientation(view){controls.autoRotate=false;controls.reset();stone.rotation.set(0,view==='back'?Math.PI:view==='side'?Math.PI/2:0,0);camera.position.set(0,.2,7);controls.update();renderer.render(scene,camera);},capture(){renderer.render(scene,camera);return renderer.domElement.toDataURL('image/png');},setAuto(v){controls.autoRotate=v;},dispose(){active=false;releaseStoneInput?.();renderer.setAnimationLoop(null);viewportObserver.disconnect();document.removeEventListener('visibilitychange',syncRendering);observer.disconnect();controls.dispose();display.dispose();geometry.dispose();material.dispose();env.dispose();currentTexture?.dispose();currentNormal?.dispose();shadowTexture.dispose();shadow.material.dispose();shadow.geometry.dispose();renderer.dispose();renderer.domElement.remove();}};
 }
