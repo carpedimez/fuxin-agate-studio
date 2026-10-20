@@ -11,9 +11,9 @@ let panels=[],titles=[];
 const nav=document.createElement('nav');nav.className='home-screen-nav';document.body.append(nav);
 const interactive='a,button,input,select,textarea,label,canvas,video,dialog,[contenteditable="true"],[role="slider"],.photo-viewport';
 let animation=0,drag=null,lastActive=-1,scrollFrame=0,scrollTimer,wheelTotal=0,wheelTime=0,gestureBusy=false,entryAnimation=null;
-const activeGroup=()=>groups[location.hash.slice(1)||'home'];
+const activeGroup=()=>Object.hasOwn(groups,location.hash.slice(1)||'home')?groups[location.hash.slice(1)||'home']:null;
 const isPaged=()=>!!activeGroup();
-const blocked=()=>!isPaged()||root.classList.contains('film-entering')||!!document.querySelector('dialog[open]');
+const blocked=()=>!isPaged()||(root.classList.contains('film-entering')||root.classList.contains('explore-crossing'))||!!document.querySelector('dialog[open]');
 const headerHeight=()=>header.getBoundingClientRect().height;
 const available=()=>innerHeight-headerHeight();
 const maximum=()=>Math.max(0,document.documentElement.scrollHeight-innerHeight);
@@ -135,3 +135,10 @@ function loadOverviewImages(){
 }
 window.addEventListener('agate:entry-ready',loadOverviewImages,{once:true});
 window.addEventListener('hashchange',loadOverviewImages);loadOverviewImages();
+
+export function goToHomePanel(index,{instant=false}={}){
+ if(location.hash&&location.hash!=='#home')return;
+ const panel=groups.home.panels[index];if(!panel)return;
+ cancelSpring();const destination=topFor(panel);
+ if(instant){window.scrollTo({top:destination,behavior:'instant'});updateActive();}else springTo(destination);
+}
