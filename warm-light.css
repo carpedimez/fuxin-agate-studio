@@ -118,3 +118,15 @@ body:has(#home:not([hidden]))>footer{display:none}
 @media(max-width:560px){.home-film-side{display:none}.home-opening-note{font-size:8px;letter-spacing:1.5px}.guide-home-link{font-size:11px;padding:8px 12px 8px 10px;gap:9px}.guide-page-location{font-size:9px;letter-spacing:1px}.guide-page-location i{margin:0 6px}.guide-page-topbar{gap:10px}.guide-page .home-overview{padding-top:28px}}
 @media(max-width:560px) and (max-height:720px){#home-film .home-film-content{padding-top:24px;padding-bottom:108px}#home-film .eyebrow{margin-bottom:18px}#home-film h1{margin-top:17px;margin-bottom:12px}#home-film .home-film-subtitle{margin-bottom:24px}.home-film-bottom{bottom:14px;gap:13px}}
 @media(prefers-reduced-motion:reduce){.guide-home-link,.guide-home-link>span{transition:none}}
+
+/* Each exploration destination has an explicit way back to the guide. */
+.module-guide-back{display:inline-flex;align-items:center;gap:10px;min-height:44px;margin:0 0 22px;padding:9px 15px 9px 12px;border:1px solid #ad7d4b66;border-radius:4px;background:#fffaf0ed;color:#80502f;font-size:12px;line-height:1.5;letter-spacing:1px;box-shadow:0 3px 12px #79502a08;transition:background .2s,border-color .2s}
+.module-guide-back>span{font-size:19px;line-height:1;transition:transform .2s}
+.module-guide-back:hover{background:#f2e3c9;border-color:#a77848;color:#754323}
+.module-guide-back:hover>span{transform:translateX(-3px)}
+.module-guide-back:focus-visible{outline:2px solid #a96c3d;outline-offset:4px}
+.home-stone-study .hero-copy>.module-guide-back{margin-bottom:18px}
+#journey .journey-hero-copy>.module-guide-back{background:#fff8eaf2;border-color:#f3dbb7c9;color:#754b2f;box-shadow:0 4px 18px #30201618}
+#journey .module-guide-back>span{color:inherit}
+@media(max-width:560px){.module-guide-back{font-size:11px;margin-bottom:18px;padding:9px 13px;gap:9px}.home-stone-study .hero-copy>.module-guide-back{margin-bottom:14px}}
+@media(prefers-reduced-motion:reduce){.module-guide-back,.module-guide-back>span{transition:none}}
