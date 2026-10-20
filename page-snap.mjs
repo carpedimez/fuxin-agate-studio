@@ -131,7 +131,7 @@ window.addEventListener('hashchange',refresh);refresh();
 // Start secondary photography after the video entrance has released its bandwidth.
 function loadOverviewImages(){
  if((location.hash&&location.hash!=='#home')||root.classList.contains('film-entering'))return;
- document.querySelectorAll('#home-overview img[data-entry-src]').forEach(img=>{img.src=img.dataset.entrySrc;delete img.dataset.entrySrc;});
+ document.querySelectorAll('#home-overview img[data-entry-src]').forEach(img=>{const reveal=()=>{if(img.naturalWidth>1)img.decode().catch(()=>{}).then(()=>img.parentElement.classList.add('photo-ready'));};img.addEventListener('load',reveal);img.loading='eager';img.fetchPriority='high';img.src=img.dataset.entrySrc;delete img.dataset.entrySrc;reveal();});
 }
 window.addEventListener('agate:entry-ready',loadOverviewImages,{once:true});
 window.addEventListener('hashchange',loadOverviewImages);loadOverviewImages();

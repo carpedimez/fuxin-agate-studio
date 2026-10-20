@@ -1,0 +1,17 @@
+{
+  "source": "https://www.ln.gov.cn/web/sqgk/whly/sjft/q/2026020611181587017/index.shtml",
+  "author": "辽宁发布 / 辽宁卫视《黑土地》",
+  "processing": "从原视频相同时刻抽取单帧，等比缩至640×360并编码WebP；未进行生成式重绘；继承原实景影像来源及使用范围。",
+  "frames": [
+    {
+      "file": "craft.webp",
+      "sourceTime": 118.3,
+      "bytes": 15668
+    },
+    {
+      "file": "market.webp",
+      "sourceTime": 228.1,
+      "bytes": 38952
+    }
+  ]
+}
