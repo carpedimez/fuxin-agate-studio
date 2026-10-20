@@ -11,3 +11,6 @@
 @media(max-width:560px){.home-video-footer{gap:12px}.home-quality-label{gap:5px}.home-quality-label select{font-size:9px;padding:3px 4px}.home-video-footer>small{max-width:210px}}
 .home-quality-label{flex-shrink:0;white-space:nowrap}
 #home-film-title:focus{outline:none}
+
+/* Only fully cached decoded layers are shown. Opening remains under the crossfade. */
+#home-film-upgrade{opacity:0}#home-film-opening-video{pointer-events:none}

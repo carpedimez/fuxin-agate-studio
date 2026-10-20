@@ -89,6 +89,6 @@
   ],
   "currentPlaybackManifest": "playback.json",
   "legacySourceNotice": "以下旧片源、循环与截图字段为历史版本归档；当前片源、画质及镜头以playback.json为准。",
-  "currentPlaybackVersion": "0.12.0",
-  "currentMode": "Fixed1080p24fps compact cached loop; current source in playback.json"
+  "currentPlaybackVersion": "0.13.0",
+  "currentMode": "High-quality1080p cached short opening and decoded full-loop promotion; current manifest playback.json"
 }

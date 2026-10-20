@@ -1,6 +1,6 @@
 {
-  "version": "0.12.0",
-  "homepageMode": "Fixed1080p24fps, small complete-file cache before playback, no network dependency during loops, persistent local cache.",
+  "version": "0.13.0",
+  "homepageMode": "High-detail1080p: complete cached short opening first; asynchronously cache the original high-quality1080p full loop and crossfade only after full decode readiness.",
   "sourceResolution": [
     2560,
     1440
@@ -13,7 +13,7 @@
   "provider": "辽宁发布 / 辽宁卫视《黑土地》",
   "publisher": "辽宁省人民政府网站",
   "native4K": false,
-  "enhancement": "当前首页固定1920×1080、24fps、H.264 Main，压缩体积并完整缓存后播放；原色、画幅与台标保留，无生成式修补。",
+  "enhancement": "当前默认高细节1080p、25fps。开场从1440p源片单独以CRF20编码，完整主循环使用原高质量1080p版本；保留原色、画幅、来源角标，不使用低码率1MB版本。",
   "loopDuration": 19.5,
   "loopSegments": [
     {
@@ -124,9 +124,9 @@
     }
   ],
   "startupBufferSeconds": 0,
-  "defaultQuality": "1080p",
+  "defaultQuality": "1080p-hq",
   "entranceMaxWaitMs": 6000,
-  "startupPolicy": "Cache the compact1080p clip before playback; reuse Blob and persistent CacheStorage; no autoplay of partially buffered MP4.",
+  "startupPolicy": "Fully prepare the short high-quality opening, then keep it playing while caching full high-quality loop. Promote only after full-file validation and decoded moving frame; no partial stream playback.",
   "smooth1080": {
     "file": "agate-loop-smooth-1080.mp4",
     "width": 1920,
@@ -145,5 +145,26 @@
     "duration": 34.6,
     "originalSound": true
   },
-  "legacyEnhancement": "以2560×1440公开原片为源，轻度降噪、Lanczos 1.5倍放大、温和锐化，输出3840×2160；属于4K增强而非原生4K。保留原始画幅、台标与角标，不臆造纹色或工艺细节。"
+  "legacyEnhancement": "以2560×1440公开原片为源，轻度降噪、Lanczos 1.5倍放大、温和锐化，输出3840×2160；属于4K增强而非原生4K。保留原始画幅、台标与角标，不臆造纹色或工艺细节。",
+  "opening1080": {
+    "file": "agate-opening-hq-1080.mp4",
+    "width": 1920,
+    "height": 1080,
+    "fps": 25,
+    "duration": 2.64,
+    "bytes": 1157772,
+    "audio": false,
+    "sourceStart": 219.4,
+    "sourceDuration": 3.2,
+    "mainTime": 14.0
+  },
+  "quality1080": {
+    "file": "agate-loop-clean-hd.mp4",
+    "width": 1920,
+    "height": 1080,
+    "fps": 25,
+    "duration": 19.48,
+    "bytes": 9290694,
+    "audio": false
+  }
 }
