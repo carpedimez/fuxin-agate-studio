@@ -1,6 +1,6 @@
 {
-  "version": "0.10.0",
-  "homepageMode": "continuous real moving footage; complete local Blob prefetch and first-frame confirmation before entrance",
+  "version": "0.11.0",
+  "homepageMode": "Native progressive MP4: lightweight automatic rendition; buffer opening seconds and confirm first decoded playing frame, without waiting for complete download. Bounded entrance fallback preserves access on slow networks.",
   "sourceResolution": [
     2560,
     1440
@@ -104,5 +104,26 @@
       "start": 217,
       "duration": 8.2
     }
-  ]
+  ],
+  "fastVariants": [
+    {
+      "file": "agate-loop-fast-1080.mp4",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 3742755,
+      "duration": 19.48,
+      "audio": false
+    },
+    {
+      "file": "agate-loop-fast-720.mp4",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1897901,
+      "duration": 19.48,
+      "audio": false
+    }
+  ],
+  "startupBufferSeconds": 1.25,
+  "defaultQuality": "auto",
+  "entranceMaxWaitMs": 6000
 }

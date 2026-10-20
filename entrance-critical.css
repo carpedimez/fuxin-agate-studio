@@ -1,5 +1,5 @@
 html.film-entering{overflow:hidden!important;overscroll-behavior:none}
-.entry-gate{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;background:#160f0c;color:#eddbbd;isolation:isolate;overflow:hidden;transition:opacity .55s ease}
+.entry-gate{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;background:#160f0c;color:#eddbbd;isolation:isolate;overflow:hidden;transition:opacity .25s ease}
 .film-entering .entry-gate{display:flex}.entry-gate.leaving{display:flex;opacity:0;pointer-events:none}
 .entry-gate:before{content:'';position:absolute;inset:-35%;z-index:-1;background:repeating-radial-gradient(ellipse at 60% 40%,transparent 0 46px,#a5734030 47px 49px,transparent 50px 68px),radial-gradient(ellipse at 60% 35%,#79533138,transparent 50%);transform:rotate(-16deg);mask-image:radial-gradient(ellipse,#000,transparent 70%)}
 .entry-gate-inner{width:min(420px,80vw);text-align:center;position:relative}.entry-stone{display:flex;align-items:center;justify-content:center;width:108px;height:108px;margin:0 auto 31px;position:relative;font:48px/1 'SimSun',serif;color:#f0cf98}

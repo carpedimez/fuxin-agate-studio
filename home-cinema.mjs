@@ -10,19 +10,27 @@ document.body.append(dialog);
 const film=dialog.querySelector('video'),filmStatus=dialog.querySelector('#home-full-film-status');
 let releaseMusic=null,filmEpoch=0;
 const gate=document.querySelector('#entry-gate'),gateStatus=document.querySelector('#entry-status'),gateBar=document.querySelector('#entry-progress'),gateFill=document.querySelector('#entry-progress-fill'),gatePercent=document.querySelector('#entry-percent'),gateQuality=document.querySelector('#entry-quality'),gateHelp=document.querySelector('#entry-help'),gateActions=document.querySelector('#entry-actions'),retry=document.querySelector('#entry-retry'),skip=document.querySelector('#entry-skip');
-const root=document.documentElement,cache=new Map(),inertBefore=new Map();
-let selectedQuality='4k',loadEpoch=0,playEpoch=0,controller=null,preparing=false,hasData=false,ready=false,inView=true,userPaused=false,awaitingTap=false,gateEpoch=0,helpTimer,pendingSeek=media.initialTime||0;
+const root=document.documentElement,inertBefore=new Map();
+const variants=Object.fromEntries(media.variants.map(v=>[v.width===3840?'4k':'hd',v]));
+const fast=Object.fromEntries(media.fastVariants.map(v=>[v.height,v]));
 const onHome=()=>!location.hash||location.hash==='#home';
 const canRun=()=>onHome()&&inView&&!document.hidden&&!dialog.open&&!userPaused;
-const variants=Object.fromEntries(media.variants.map(v=>[v.width===3840?'4k':'hd',v]));
-const qualityLabel=key=>key==='4k'?'4K 增强影像':'流畅高清影像';
+let selectedQuality='auto',rendition=null,loadEpoch=0,playEpoch=0,controller=null,preparing=false,hasData=false,ready=false,inView=true,userPaused=false,awaitingTap=false,gateEpoch=0,helpTimer,entryTimer,stallTimer;
+let entryRevealed=!root.classList.contains('film-entering'),revealing=false,pendingSeek=media.initialTime||0,lowerAuto=false;
+const qualityLabel=()=>selectedQuality==='auto'?`智能流畅 · ${rendition?.height||1080}P`:selectedQuality==='4k'?'4K 增强影像':'高清影像';
+const choose=key=>key==='auto'?fast[lowerAuto||innerWidth<1000||navigator.connection?.saveData?720:1080]:variants[key];
 let cursor=-.5;
 const chapters=media.loopSegments.map(segment=>{const time=Math.max(0,cursor);cursor+=segment.duration-media.crossfadeSeconds;return {time,chapter:segment.chapter};});
+function bufferedAhead(){
+ const t=background.currentTime;
+ for(let i=0;i<background.buffered.length;i++)if(t>=background.buffered.start(i)-.05&&t<=background.buffered.end(i)+.05)return Math.max(0,background.buffered.end(i)-t);
+ return 0;
+}
 function updateUI(){
  const playing=ready&&!background.paused;
- toggle.setAttribute('aria-pressed',String(playing));toggle.textContent=playing?'Ⅱ 暂停影像':'▷ 播放影像';
+ toggle.setAttribute('aria-pressed',String(playing));toggle.textContent=playing?'Ⅱ 暂停影像':awaitingTap?'▷ 点击播放':'▷ 播放影像';
  hero.dataset.filmState=preparing?'preparing':playing?'playing':ready?'paused':'poster';
- status.textContent=ready?`${qualityLabel(selectedQuality)} · ${playing?'连续实景':'影像已暂停'}`:'实景封面 · 点击播放连续影像';
+ status.textContent=preparing?'正在准备开场画面…':ready?`${qualityLabel()} · ${playing?'连续实景':'影像已暂停'}`:'实景封面 · 点击播放连续影像';
 }
 function gateProgress(percent,message){
  const value=Math.max(0,Math.min(100,Math.round(percent)));
@@ -30,98 +38,100 @@ function gateProgress(percent,message){
  if(message)gateStatus.textContent=message;
 }
 function showGate(){
+ if(entryRevealed||revealing)return;
  gateEpoch++;gate.classList.remove('leaving');gate.hidden=false;root.classList.add('film-entering');gate.dataset.state='preparing';
  gateHelp.hidden=true;gateActions.hidden=true;retry.textContent='重新准备';skip.disabled=false;
- gateQuality.textContent=qualityLabel(selectedQuality);gateProgress(0,'正在准备实景影像');
+ gateQuality.textContent='只准备开场画面，无需等待整段下载';gateProgress(0,'正在点亮第一帧');
  document.querySelectorAll('body>.header,body>main,body>footer,.home-screen-nav').forEach(el=>{if(!inertBefore.has(el))inertBefore.set(el,el.inert);el.inert=true;});
  gate.setAttribute('tabindex','-1');gate.focus({preventScroll:true});
- clearTimeout(helpTimer);helpTimer=setTimeout(()=>{gateHelp.hidden=false;gateHelp.textContent='这次准备稍久，可以继续等待，也可以先进入。';gateActions.hidden=false;},15000);
+ if(!entryTimer)entryTimer=setTimeout(()=>{entryTimer=0;reveal('slow-network');},media.entranceMaxWaitMs);
+ clearTimeout(helpTimer);helpTimer=setTimeout(()=>{if(entryRevealed)return;gateHelp.hidden=false;gateHelp.textContent='开场仍在准备，也可以直接进入浏览。';gateActions.hidden=false;},2500);
 }
 function reveal(reason){
- clearTimeout(helpTimer);const token=++gateEpoch;
- gate.dataset.state=reason;gateProgress(100,reason==='playing'?'画面就绪，正在入境':'准备就绪，正在入境');gate.classList.add('leaving');
+ if(entryRevealed||revealing)return;
+ clearTimeout(helpTimer);clearTimeout(entryTimer);entryTimer=0;revealing=true;const token=++gateEpoch;
+ gate.dataset.state=reason;gateProgress(100,reason==='playing'?'画面就绪，正在入境':'正在入境');gate.classList.add('leaving');
  setTimeout(()=>{
   if(token!==gateEpoch)return;
-  root.classList.remove('film-entering');gate.classList.remove('leaving');gate.hidden=true;
+  entryRevealed=true;revealing=false;root.classList.remove('film-entering');gate.classList.remove('leaving');gate.hidden=true;
   inertBefore.forEach((wasInert,el)=>{el.inert=wasInert;});inertBefore.clear();
   window.dispatchEvent(new CustomEvent('agate:entry-ready',{detail:{reason,quality:selectedQuality}}));
   if(onHome()){const title=document.querySelector('#home-film-title');title.setAttribute('tabindex','-1');title.focus({preventScroll:true});}
- },motion.matches?0:550);
+ },motion.matches?0:250);
 }
 function gateFailure(message,tap=false){
- clearTimeout(helpTimer);awaitingTap=tap;gate.dataset.state=tap?'awaiting-play':'error';gateStatus.textContent=message;gateHelp.textContent=tap?'影像已经准备好，点击即可入境。':'可以重新准备，也可以先进入，稍后再播放。';gateHelp.hidden=false;gateActions.hidden=false;retry.textContent=tap?'进入并播放':'重新准备';skip.disabled=false;
+ awaitingTap=tap;updateUI();status.textContent=tap?'轻点播放，开启实景影像':'实景封面 · 轻点播放可重试';
+ if(entryRevealed||revealing)return;
+ gate.dataset.state=tap?'awaiting-play':'error';gateStatus.textContent=message;gateHelp.textContent=tap?'影像已准备好，点击播放或直接进入。':'可以重新准备，也可以直接进入浏览。';gateHelp.hidden=false;gateActions.hidden=false;retry.textContent=tap?'进入并播放':'重新准备';skip.disabled=false;
 }
-async function fetchComplete(key,signal,token){
- if(cache.has(key)){const complete=cache.get(key);hero.dataset.downloadBytes=String(complete.bytes);hero.dataset.downloadComplete='true';gateProgress(94,'影像已备妥，正在准备画面');return complete;}
- const item=variants[key];
- const response=await fetch(new URL(`./assets/home-film/${item.file}`,document.baseURI),{signal});
- if(!response.ok)throw new Error('Video response unavailable');
- const expected=Number(response.headers.get('Content-Length'))||item.bytes;
- const reader=response.body?.getReader();let received=0,chunks=[],stall;
- const resetStall=()=>{clearTimeout(stall);stall=setTimeout(()=>controller?.abort('stalled'),25000);};
- try{
-  resetStall();
-  if(reader){
-   while(true){const {done,value}=await reader.read();if(done)break;if(token!==loadEpoch)throw new DOMException('Cancelled','AbortError');chunks.push(value);received+=value.byteLength;resetStall();hero.dataset.downloadBytes=String(received);gateProgress(expected?received/expected*94:0,'正在准备实景影像');}
-  }else{const data=await response.arrayBuffer();chunks=[data];received=data.byteLength;}
- }finally{clearTimeout(stall);}
- if(received!==item.bytes)throw new Error('Incomplete video transfer');
- const blob=new Blob(chunks,{type:'video/mp4'}),url=URL.createObjectURL(blob),result={url,bytes:received};cache.set(key,result);hero.dataset.downloadComplete='true';gateProgress(94,'影像已备妥，正在准备画面');return result;
+// The browser fetches MP4 ranges and starts from the fast-start index. Do not
+// fetch the entire file or construct a Blob before allowing playback.
+function waitForPlayable(signal,token){
+ return new Promise((resolve,reject)=>{
+  const events=['loadedmetadata','loadeddata','canplay','progress','seeked','timeupdate'];let sought=false;
+  const cleanup=()=>{clearTimeout(timeout);events.forEach(n=>background.removeEventListener(n,check));background.removeEventListener('error',failed);signal.removeEventListener('abort',aborted);};
+  const aborted=()=>{cleanup();reject(new DOMException('Cancelled','AbortError'));};
+  const failed=()=>{cleanup();reject(new DOMException('Video unavailable','NotSupportedError'));};
+  const check=()=>{
+   if(token!==loadEpoch){aborted();return;}
+   if(background.readyState>=1&&!sought){sought=true;const target=Math.min(pendingSeek,Math.max(0,background.duration-.1));pendingSeek=0;if(target>0&&Math.abs(background.currentTime-target)>.1)background.currentTime=target;}
+   const ahead=bufferedAhead(),target=Math.min(media.startupBufferSeconds,Math.max(.05,background.duration-background.currentTime));
+   hero.dataset.bufferedAhead=ahead.toFixed(2);
+   if(!entryRevealed&&!revealing)gateProgress(Number.isFinite(target)?Math.min(94,ahead/target*94):0,'正在准备开场画面');
+   if(sought&&!background.seeking&&background.readyState>=2&&ahead>=target-.04){cleanup();resolve();}
+  };
+  const timeout=setTimeout(()=>{cleanup();reject(new Error('Opening buffer timed out'));},45000);
+  events.forEach(n=>background.addEventListener(n,check));background.addEventListener('error',failed);signal.addEventListener('abort',aborted,{once:true});check();
+ });
 }
-function decodedFrame(){
+function decodedFrame(signal){
  return new Promise((resolve,reject)=>{
   let callback;const start=background.currentTime;
-  const timer=setTimeout(()=>{
-   if(callback!==undefined)background.cancelVideoFrameCallback?.(callback);
-   if(background.videoWidth>0&&background.readyState>=2&&!background.paused&&background.currentTime>start)resolve();else reject(new Error('First video frame not ready'));
-  },2500);
-  if(background.requestVideoFrameCallback)callback=background.requestVideoFrameCallback(()=>{clearTimeout(timer);resolve();});
+  const cleanup=()=>{clearTimeout(timer);if(callback!==undefined)background.cancelVideoFrameCallback?.(callback);signal.removeEventListener('abort',aborted);};
+  const aborted=()=>{cleanup();reject(new DOMException('Cancelled','AbortError'));};
+  const timer=setTimeout(()=>{cleanup();if(background.videoWidth>0&&background.readyState>=2&&!background.paused&&background.currentTime>start)resolve();else reject(new Error('First video frame not ready'));},3000);
+  signal.addEventListener('abort',aborted,{once:true});
+  if(background.requestVideoFrameCallback)callback=background.requestVideoFrameCallback(()=>{cleanup();resolve();});
  });
 }
 async function startAndReveal(token){
  background.muted=true;background.defaultMuted=true;
- await background.play();await decodedFrame();
+ await background.play();await decodedFrame(controller.signal);
  if(token!==loadEpoch)return;
- ready=true;preparing=false;awaitingTap=false;hero.dataset.firstFrame='true';hero.dataset.videoQuality=selectedQuality;hero.classList.add('video-ready');gateProgress(100,'画面就绪，正在入境');updateUI();reveal('playing');
+ ready=true;preparing=false;awaitingTap=false;hero.dataset.firstFrame='true';hero.dataset.videoQuality=selectedQuality;hero.dataset.rendition=String(rendition.height);hero.dataset.entryBufferedSeconds=bufferedAhead().toFixed(2);hero.dataset.entryVideoSeconds=String(background.currentTime);hero.classList.add('video-ready');updateUI();reveal('playing');
+ if(!canRun())pauseBackground();
 }
-async function prepare(key=selectedQuality){
- const token=++loadEpoch;playEpoch++;controller?.abort('superseded');controller=new AbortController();selectedQuality=key;qualitySelect.value=key;ready=false;hasData=false;preparing=true;awaitingTap=false;userPaused=false;background.pause();hero.dataset.downloadComplete='false';hero.dataset.firstFrame='false';showGate();updateUI();
+async function prepare(key=selectedQuality,force=false){
+ const token=++loadEpoch;playEpoch++;controller?.abort();controller=new AbortController();clearTimeout(stallTimer);selectedQuality=key;qualitySelect.value=key;rendition=choose(key);ready=false;hasData=false;preparing=true;awaitingTap=false;userPaused=false;
+ hero.dataset.firstFrame='false';hero.dataset.playbackMode='progressive';showGate();updateUI();
+ const path=new URL(`./assets/home-film/${rendition.file}`,document.baseURI).href;
  try{
-  const complete=await fetchComplete(key,controller.signal,token);if(token!==loadEpoch)return;
-  background.src=complete.url;background.preload='auto';background.load();
-  await new Promise((resolve,reject)=>{
-   const cleanup=()=>{clearTimeout(timeout);background.removeEventListener('loadedmetadata',loaded);background.removeEventListener('error',failed);};
-   const loaded=()=>{cleanup();resolve();},failed=()=>{cleanup();reject(new DOMException('Video decoding unavailable','NotSupportedError'));};
-   const timeout=setTimeout(()=>{cleanup();reject(new Error('Video decode timed out'));},15000);
-   if(background.readyState>=1){cleanup();resolve();return;}
-   background.addEventListener('loadedmetadata',loaded,{once:true});background.addEventListener('error',failed,{once:true});
-  });
-  if(token!==loadEpoch)return;
-  hasData=true;background.currentTime=Math.min(pendingSeek,Math.max(0,background.duration-.1));pendingSeek=0;gateProgress(98,'正在唤醒第一帧画面');await startAndReveal(token);
+  background.muted=true;background.defaultMuted=true;background.preload='auto';background.loop=true;
+  if(background.src!==path||force){background.pause();hero.classList.remove('video-ready');background.src=path;background.load();}
+  await waitForPlayable(controller.signal,token);if(token!==loadEpoch)return;
+  hasData=true;await startAndReveal(token);
  }catch(error){
-  if(token!==loadEpoch)return;
+  if(token!==loadEpoch||error.name==='AbortError')return;
   preparing=false;updateUI();
-  if(error.name==='NotAllowedError'){gateFailure('实景影像已准备好',true);return;}
-  if(key==='4k'&&error.name==='NotSupportedError'){pendingSeek=background.currentTime||0;prepare('hd');return;}
+  if(error.name==='NotAllowedError'){gateFailure('开场画面已准备好',true);return;}
+  if(key==='4k'&&error.name==='NotSupportedError'){pendingSeek=background.currentTime||0;prepare('auto');return;}
   gateFailure('实景影像暂未准备完成');
  }
 }
-function pauseBackground(){playEpoch++;background.pause();updateUI();}
+function pauseBackground(){playEpoch++;background.pause();clearTimeout(stallTimer);updateUI();}
 async function resumeBackground(){
  if(!ready||!canRun())return;
  const token=++playEpoch;
  try{await background.play();if(token!==playEpoch)return;if(!canRun()){background.pause();return;}updateUI();}catch{updateUI();status.textContent='点击播放影像，继续观看';}
 }
-function sync(){
- if(preparing)return;
- if(ready&&canRun())resumeBackground();else pauseBackground();
-}
+function sync(){if(preparing)return;if(ready&&canRun())resumeBackground();else pauseBackground();}
 window.agateEntrance={
- retry(){if(awaitingTap&&hasData){preparing=true;gateActions.hidden=true;startAndReveal(loadEpoch).catch(()=>{preparing=false;gateFailure('点击入境，开始播放实景',true);});}else prepare(selectedQuality);},
- skip(){loadEpoch++;playEpoch++;controller?.abort('skipped');preparing=false;ready=false;awaitingTap=false;userPaused=true;background.pause();updateUI();reveal('skipped');}
+ retry(){if(awaitingTap&&hasData){preparing=true;gateActions.hidden=true;startAndReveal(loadEpoch).catch(()=>{preparing=false;gateFailure('轻点播放，开启实景影像',true);});}else prepare(selectedQuality,true);},
+ // Entering early never aborts the stream: the real video appears when ready.
+ skip(){reveal('skipped');}
 };
-toggle.onclick=()=>{if(!ready){prepare(selectedQuality);return;}if(!background.paused){userPaused=true;pauseBackground();}else{userPaused=false;resumeBackground();}};
-qualitySelect.onchange=()=>{pendingSeek=background.currentTime||0;try{localStorage.setItem('agate-film-quality-v1',qualitySelect.value);}catch{}prepare(qualitySelect.value);};
+toggle.onclick=()=>{if(awaitingTap&&hasData){window.agateEntrance.retry();return;}if(!ready){prepare(selectedQuality,true);return;}if(!background.paused){userPaused=true;pauseBackground();}else{userPaused=false;resumeBackground();}};
+qualitySelect.onchange=()=>{pendingSeek=background.currentTime||0;try{localStorage.setItem('agate-film-quality-v2',qualitySelect.value);}catch{}prepare(qualitySelect.value);};
 hero.querySelectorAll('[data-film-chapter]').forEach(button=>button.onclick=()=>{
  const first=chapters.find(c=>c.chapter===Number(button.dataset.filmChapter));if(!first)return;
  if(!ready){pendingSeek=first.time;prepare(selectedQuality);return;}background.currentTime=first.time;
@@ -131,16 +141,23 @@ background.addEventListener('timeupdate',()=>{
  hero.querySelectorAll('[data-film-chapter]').forEach(button=>button.classList.toggle('active',Number(button.dataset.filmChapter)===chapter));
  progress.style.width=Number.isFinite(background.duration)?`${t/background.duration*100}%`:'0%';
 });
-background.addEventListener('playing',updateUI);background.addEventListener('pause',updateUI);
+background.addEventListener('playing',()=>{clearTimeout(stallTimer);updateUI();});background.addEventListener('pause',updateUI);
+background.addEventListener('waiting',()=>{
+ if(!ready||!canRun())return;
+ status.textContent='正在缓冲，画面就绪后继续';clearTimeout(stallTimer);
+ if(selectedQuality==='auto'&&rendition.height>720)stallTimer=setTimeout(()=>{if(canRun()&&bufferedAhead()<.25){lowerAuto=true;pendingSeek=background.currentTime;prepare('auto');}},3500);
+});
 new IntersectionObserver(entries=>{inView=entries[0].isIntersecting;sync();},{threshold:.12}).observe(hero);
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&dialog.open)film.pause();sync();});
 window.addEventListener('hashchange',()=>{
  if(dialog.open)dialog.close();
  if(!onHome()){
-  if(preparing||root.classList.contains('film-entering')){loadEpoch++;controller?.abort('route');preparing=false;reveal('route');}pauseBackground();
+  if(preparing){loadEpoch++;controller?.abort();preparing=false;}reveal('route');pauseBackground();
  }else if(!ready&&!motion.matches)prepare(selectedQuality);else sync();
 });
-motion.addEventListener('change',()=>{if(motion.matches){userPaused=true;pauseBackground();}else sync();});
+motion.addEventListener('change',()=>{
+ if(motion.matches){userPaused=true;if(preparing){loadEpoch++;controller?.abort();preparing=false;}pauseBackground();reveal('reduced-motion');}else if(!ready&&onHome())prepare(selectedQuality);else sync();
+});
 gate.addEventListener('keydown',event=>{
  if(event.key!=='Tab')return;
  const buttons=[...gate.querySelectorAll('button:not(:disabled)')].filter(b=>!b.closest('[hidden]'));if(!buttons.length){event.preventDefault();return;}
@@ -163,8 +180,8 @@ dialog.addEventListener('click',event=>{if(event.target===dialog){const r=dialog
 film.addEventListener('playing',()=>{if(!dialog.open)film.pause();else filmStatus.textContent='';});
 film.addEventListener('error',()=>{filmStatus.textContent='主题片暂未载入，可通过下方来源观看原片。';});
 film.addEventListener('ended',()=>{filmStatus.textContent='主题片已结束，可重播或关闭继续创作。';});
-try{const saved=localStorage.getItem('agate-film-quality-v1');selectedQuality=saved in variants?saved:innerWidth<1000||navigator.connection?.saveData?'hd':'4k';}catch{selectedQuality=innerWidth<1000?'hd':'4k';}
-qualitySelect.value=selectedQuality;updateUI();
+try{const saved=localStorage.getItem('agate-film-quality-v2');selectedQuality=['auto','hd','4k'].includes(saved)?saved:'auto';}catch{}
+qualitySelect.value=selectedQuality;rendition=choose(selectedQuality);updateUI();
 if(onHome()){
  if(motion.matches){userPaused=true;showGate();hero.querySelector('.home-film-poster').decode().catch(()=>{}).finally(()=>{status.textContent='减少动态效果已启用 · 可手动播放';reveal('reduced-motion');});}
  else prepare(selectedQuality);

@@ -89,6 +89,6 @@
   ],
   "currentPlaybackManifest": "playback.json",
   "legacySourceNotice": "以下旧片源、循环与截图字段为历史版本归档；当前片源、画质及镜头以playback.json为准。",
-  "currentPlaybackVersion": "0.10.0",
-  "currentMode": "QR-free real moving footage; real photographic section backdrops; complete local Blob prefetch before entrance"
+  "currentPlaybackVersion": "0.11.0",
+  "currentMode": "Progressive fast-start video, adaptive lightweight default, 4K manual option; no whole-file entrance wait"
 }
