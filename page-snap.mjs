@@ -124,7 +124,7 @@ window.addEventListener('resize',()=>{measure();updateActive();});
 function refresh(){
  cancelSpring();drag=null;wheelTotal=0;wheelTime=0;gestureBusy=false;entryAnimation?.cancel();root.classList.remove('snap-dragging');const group=activeGroup();panels=group?.panels||[];titles=group?.titles||[];root.classList.toggle('snap-home',!!group);nav.hidden=!group;lastActive=-1;
  if(group){nav.setAttribute('aria-label',group.label);nav.innerHTML=titles.map((title,i)=>`<button data-screen="${i}" aria-label="第${i+1}屏：${title}"><i aria-hidden="true"></i><span>${String(i+1).padStart(2,'0')} / ${title}</span></button>`).join('')+'<small aria-hidden="true">SCROLL / DRAG</small>';}else nav.replaceChildren();
- if(isPaged())requestAnimationFrame(()=>{window.scrollTo({top:0,behavior:'instant'});updateActive();});
+ requestAnimationFrame(()=>{window.scrollTo({top:0,behavior:'instant'});updateActive();});
 }
 window.addEventListener('hashchange',refresh);refresh();
 

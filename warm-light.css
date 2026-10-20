@@ -1,0 +1,102 @@
+/* Warm daylight: ivory chalcedony, agate red and sandstone rather than black. */
+:root{color-scheme:light;--bg:#f6f0e5;--panel:#fffaf1;--panel2:#efe4d2;--line:#9c714c30;--text:#4b3529;--muted:#7d6957;--copper:#ad6045;--gold:#8d6036;--green:#70816a}
+body{background:#f6f0e5;color:var(--text)}
+body:before{content:'';position:fixed;inset:0;z-index:-1;background:radial-gradient(ellipse at 80% 5%,#fff8dfb3,transparent 60%);pointer-events:none}
+.agate-background{background:#f4edde}.agate-bandfield{opacity:.23!important;filter:saturate(.8)}
+.agate-veiling{background:linear-gradient(90deg,#f8f2e8fa,#f6efdfeb 48%,#f5ecd4a6),linear-gradient(0deg,#f8f2e8f0,transparent 75%)}
+.header{background:#fbf7efeF;border-color:#a4744530;backdrop-filter:blur(18px)}
+.brand{color:#5d3b28}.brand-mark{color:#985b34;background:#d1ad6b12;border-color:#b5824f}.brand small{color:#917455}
+.header nav a{color:#8c7660}.header nav a.active{color:#955037}.header nav a.active:after{background:#b47548}
+.header>.source-open{color:#8b7256}.ambient-player{background:#fffaf23d;border-color:#af815d46}.music-toggle,.music-settings{color:#8f6240;background:transparent}
+.music-panel{background:#fffaf2fa;border-color:#b8865d5c;box-shadow:0 18px 50px #6c472426;color:#4b3529}.music-panel #music-status,.music-panel #music-artist{color:#806b55}
+footer{background:#f1e7d7;border-color:#a1744630;color:#8b6a48}
+.primary{background:#b56b4c;border-color:#b97854;color:#fff8eb!important;box-shadow:0 5px 18px #92513212}.primary:hover{background:#a75c40;color:#fffaf0!important}
+.text-button,.quiet{color:#866747}.eyebrow{color:#9b754c}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline-color:#a36039}
+.panel,.collection-card{background:linear-gradient(135deg,#fffdf7f5,#f8efdfef);border-color:#b78e622f;box-shadow:0 12px 35px #8c602710}
+.empty-state{background:#fffaf1c9!important;border-color:#b58b6355;color:#77604a}
+.page-heading h1,.hero-copy h1,.hero-copy h2{color:#61402c;text-shadow:none}
+.hero-description{color:#806850}.hero-copy>.eyebrow{color:#98754f}
+.home-stone-study .hero-copy h1{color:#65432e}.home-stone-study:before{background-image:linear-gradient(90deg,#f7f0e6f7,#f7efdfde 40%,#f7e7c88c 80%),url('./assets/photos/agate-bands.webp');background-position:center,72% 50%}
+.home-stone-study .hero-description{color:#7d654e}.hero-meta strong{color:#865a3c}.hero-meta small{color:#937c61}.hero-meta>div{border-color:#ad855438}
+.hero-scene{background:radial-gradient(ellipse at center,#fff8da60,transparent 68%)}.orbit{border-color:#a778412e}.orbit-two{border-color:#c3966524}
+.scene-coordinate,.specimen-label small{color:#8c7358}.specimen-label>span{color:#71492f}.scene-rotate{background:#fff7e9cf;color:#875e3d;border-color:#b0814f50}
+.learn-section-links button{color:#94613d;border-color:#b98a5b55}.learn-section-links button:hover{color:#a95837;border-color:#a95837}
+.agate-gallery:before{background-image:linear-gradient(90deg,#f8f2e8f2,#f5ecdbde),url('./assets/photos/agate-libation-cup.webp')}
+.photo-card{background:#fffaf0da;border-color:#c8a67c42;box-shadow:0 7px 25px #a16d3610}.photo-caption strong{color:#725035}.photo-caption small{color:#927a60}.photo-index{color:#aa8256}
+.photo-filters button{color:#896b50;border-color:#b48d6044}.photo-filters button[aria-pressed=true]{color:#8c4c32;background:#c3884f17;border-color:#ae75485e}
+.photo-category,.photo-open-hint{color:#fff0d5}.photo-section-heading>p,.photo-section-footer p{color:#866e56}
+.formation-teaser{background:#fcf6eb;border-color:#c0926138}.formation-mini:after{background:linear-gradient(90deg,transparent 70%,#fcf6eb),linear-gradient(0deg,#4e30102b,transparent 30%)}
+.formation-teaser-copy h2{color:#65442c}.formation-teaser-copy>p:not(.eyebrow){color:#80684e}.formation-teaser-copy>small{color:#9b8060}.formation-teaser-trail{background:#f1e5d1;color:#87613f;border-color:#b88f5f35}
+#home-story:before{background-image:linear-gradient(90deg,#f8f1e5fa,#f8efdfef 30%,#f4e2c99c 55%,#ead3b522 85%),url('./assets/backgrounds/craft.webp');background-position:center,70% 50%}
+#home-story h2{color:#68432c;text-shadow:none}#home-story>p{color:#7e654e;text-shadow:none}#home-story .eyebrow{color:#aa7c4a}.real-backdrop-caption,.real-backdrop-caption a{color:#865c39;text-shadow:0 1px 5px #fff8e7}
+.panel .subtle,.panel .hint,.craft-stepper small,.studio-note{color:#8d755f}.craft-stepper{background:#fff8edba;border-color:#b88e5c33}.craft-stepper span{color:#866342}.craft-stepper .active{background:#bf875017}
+.canvas-panel{border-color:#ba906041;box-shadow:0 15px 40px #9d70351a}.canvas-toolbar,.canvas-caption{background:#f4e9d8;color:#795b3c}.canvas-toolbar .segmented{background:#e9dcc6}.segmented button.selected{background:#fff9ed;color:#89552f}
+.canvas-stage{--text:#f2e4cd;--muted:#c2af91;--gold:#e2bc85}.canvas-stage :is(.canvas-top-label,.canvas-bottom-label,.work-stage-badge){color:#ecd9b9}
+.comparison-control,.craft-navigation{background:#f8efdf;border-color:#bb95683b}.craft-navigation :is(p,small){color:#8a6c4c}
+.step-intro p,.step-intro li,.explanation,.craft-context p{color:#8a6b50}.metrics span{color:#957655}.metrics strong{color:#975c3c}
+.playground,.journey-grid,.knowledge-block{background:#fff8edcc;border-color:#b68c6038}.playground-grid button{background:#d2b58412;border-color:#b68b5d33;color:#896342}.playground-grid button:hover{background:#e5c99930}
+.candidate,.sample,.swatch{color:#78563c}.candidate.selected,.sample.selected{background:#c68c4a15;border-color:#bb8a55}
+.page :is(select,textarea,input:not([type=range]):not([type=checkbox]):not([type=file])){background:#fff9ef;color:#664a32;border-color:#b18b5f66}
+.knowledge-search input,.knowledge-answer{background:#fff8ec;color:#765539;border-color:#be976843}
+dialog:not(.formation-dialog):not(.home-film-dialog):not(.photo-dialog){background:#fff8ed;color:#5d422c;border-color:#b98b5c66;box-shadow:0 25px 90px #5d361d44}
+.source-record p,.validation-p,.play-dialog-intro{color:#8a7054}.source-record a{color:#995b34}
+/* Photography and the microscopic cinema retain a dark viewing surround. */
+.formation-dialog,.home-film-dialog,.photo-dialog{--text:#f2e6d3;--muted:#bda88c;--gold:#dfbd8b;--line:#dcb78530;color:#f2e6d3}
+.home-film{color:#fff5de;background:#5b4533}.home-film-shade{background:linear-gradient(90deg,#2c211ba8,#38291b7d 32%,#392a1d20 70%,#f1d4a709),linear-gradient(0deg,#2b2118d9,transparent 50%,#382b1e22)}
+#home-film h1{color:#fff7e5;text-shadow:0 3px 28px #3e2b2055}.home-film-subtitle{color:#fff1d6;text-shadow:0 2px 18px #2a201544}.home-film .eyebrow{color:#fbe1b3}.home-film-location{color:#f9e9ce}
+.explore-launch{background:linear-gradient(110deg,#fff0cdeb,#f2d8afe0);border-color:#fce4b3dd;color:#764a2c;box-shadow:0 10px 40px #49311f20,inset 0 1px 0 #fffcf0}
+.explore-label small{color:#aa7a4c}.explore-arrow{color:#915c35;border-color:#b583515c}.explore-launch:before{background:radial-gradient(ellipse at var(--light-x) var(--light-y),#fffbe0a6,transparent 70%)}
+.explore-launch:hover,.explore-launch:focus-visible{border-color:#fff5d5;box-shadow:0 12px 45px #e9bd6c48}.explore-launch:hover .explore-arrow,.explore-launch:focus-visible .explore-arrow{background:#ae7343;color:#fff8e7}
+.explore-caption{display:flex;gap:18px;align-items:center;flex-wrap:wrap;color:#f2dfbd}.explore-caption>span{text-shadow:0 1px 6px #3b2918}.explore-caption [data-explore-sound]{font-size:9px;color:#f4e5c9;border-left:1px solid #ffe5b94d;padding:0 0 0 17px;letter-spacing:1px}
+.home-film-controls{opacity:.9}.home-film-control,.home-film-credit,.home-scroll-hint{color:#f2dfba}.home-film-bottom{border-color:#ffe7c140}
+/* The threshold opens into a sunlit, translucent slice of agate. */
+.explore-portal{background:#ecdbc0}.portal-grain{background:linear-gradient(110deg,#fbf5e9f2,#f6dfbbba 55%,#f2d5ade8),url('./assets/photos/agate-bands.webp') center/cover;filter:saturate(.8)}
+.portal-contours i{border-color:#b1804c55}.portal-contours i:nth-child(2){border-color:#b8824210}.portal-contours i:nth-child(3){border-color:#ad683c66}.portal-contours i:nth-child(4){border-color:#bd8b5366}
+.portal-words{color:#7d4e2e}.portal-words>small{color:#ac7a47}.portal-words>span>span{color:#a26e42}.portal-words>i{background:#ac7a4780}
+.home-overview:before{background:radial-gradient(ellipse at 85% 10%,#ffe4ab75,transparent 53%),radial-gradient(ellipse at 10% 95%,#dcc19c36,transparent 45%),linear-gradient(140deg,#faf6ee,#f3e8d4)}
+.overview-heading h2{color:#6b452d}.overview-heading .eyebrow{color:#ab7b49}.overview-intro p{color:#7d6044;line-height:2.2}
+.home-entry-card{background:#fffcf4cc;border-color:#bd95653f;box-shadow:0 12px 30px #8f602914;transition:transform .45s,box-shadow .45s,border-color .45s,background .45s}
+.home-entry-card:hover{transform:translateY(-8px);background:#fffaf0;border-color:#b27c4b88;box-shadow:0 20px 38px #9d6c3626}
+.entry-card-copy h3{color:#744a2f}.entry-card-kicker{color:#b0804e}.entry-card-copy p{color:#7d6046}.entry-card-result{color:#876748;border-color:#bb915940}.entry-card-link{color:#9f603a;border-color:#c69b653e}
+.entry-card-number,.entry-card-tag{color:#fff3d9}.entry-card-photo:after{background:linear-gradient(180deg,#3b241e38,transparent 48%,#49311b63)}.entry-card-photo img{filter:saturate(.96)}
+.works-demo{background:radial-gradient(ellipse at 55% 40%,#d6ad6d50,transparent 65%),#eee0c7}.works-demo .entry-card-number,.works-demo .entry-card-tag{color:#9f7545;text-shadow:none}
+.entry-card-photo:has(.entry-preview-placeholder){background:radial-gradient(ellipse at 50% 42%,#fff9e5d9,transparent 70%),#ead8bc}.entry-preview-placeholder{color:#b18652}
+.home-entry-grid:before{background:linear-gradient(90deg,transparent,#bc8d5c80 12%,#bc8d5c80 88%,transparent);transition-duration:2.1s}
+.overview-footer p,.overview-footer .source-open{color:#876748}.overview-footer p a,.guide-watch{color:#96613c}.overview-footer-actions{gap:18px}.guide-watch .home-film-play-icon{border-color:#b78a535c}
+[data-explore-sound]{font-size:10px;color:#967247;white-space:nowrap;letter-spacing:.5px;padding:4px 0}
+[data-explore-sound]>span{font-size:14px;margin-right:2px}
+[data-explore-sound][aria-pressed=false]{opacity:.65}
+.guide-replay-row{display:flex;align-items:center;justify-content:space-between;gap:15px;margin:-7px 0 26px;color:#a3845d;font-size:9px;letter-spacing:1.5px}
+.guide-replay-row button{font-size:10px;color:#a06f43;border-bottom:1px solid #b58b5b50;padding:4px 0;letter-spacing:.5px}
+.guide-preparing :is(.overview-heading,.guide-replay-row,.overview-footer){opacity:0}
+.guide-card-pending{opacity:0;pointer-events:none}.guide-card-entering{pointer-events:none}
+.guide-preparing .home-entry-grid:before{transform:scaleX(0)}
+.home-entry-card:focus-visible{outline:2px solid #a96b3d;outline-offset:5px}
+.home-screen-nav button i{background:#9f74434f}.home-screen-nav button[aria-current=step] i{background:#ab6b3e;box-shadow:0 0 12px #c1925433}.home-screen-nav>small{color:#aa895f}
+body:has(#home-film:is(:hover)) .home-screen-nav>small{color:#a58354}
+/* Rural exploration becomes a daylight field notebook around its real imagery. */
+#journey{--j-line:#a47a4933;--j-paper:#67472c;--j-muted:#8d7354;--j-green:#738562}
+#journey :is(h2,h3,strong){color:#6d492e}
+#journey :is(p,small,li,label){color:#7c6043}
+#journey :is(.journey-subnav,.journey-map-wrap,.journey-place-detail,.journey-craft-layout,.journey-plan-editor,.journey-learning,.journey-rural-detail,.journey-knowledge,.journey-before-you-go){background:#fff9efeb;border-color:#b38a5938}
+#journey .journey-subnav>.journey-shell>span{color:#7d5132}#journey .journey-subnav button{color:#9b7a55}#journey .journey-subnav button.active{color:#a55935}
+#journey :is(.journey-outline-button,.journey-presets>button,.journey-quiz-answers button,.journey-connections button,.journey-role-panel button){color:#8c5d37;background:#f2e6d23b;border-color:#bd96634d}
+#journey :is(.journey-presets>button[aria-pressed=true],.journey-connections button[aria-pressed=true],.journey-role-panel button[aria-pressed=true]){background:#c19a6023;color:#92502f;border-color:#b3834b80}
+#journey .journey-map-node{background:#fff5dfeb;color:#795633;border-color:#a57b4e85;box-shadow:0 8px 20px #4c53251c}#journey .journey-map-node svg{color:#77885e}
+#journey .journey-map-node[aria-pressed=true]{background:#b77d45;color:#fff4d6;border-color:#f8dfb1}#journey .journey-map-node[aria-pressed=true] svg{color:#fff3d2}
+#journey .journey-map-top>span{color:#8a6640}#journey .journey-detail-copy .journey-place-prepare{color:#9a7c59!important}
+#journey .journey-detail-observe{background:#d3b77b19;border-color:#bc945b}#journey .journey-detail-observe>span{color:#a27845}
+#journey .journey-craft-copy .craft-tabs button{color:#aa8962;border-color:#c5a5754f}#journey .journey-craft-copy .craft-tabs button[aria-pressed=true]{color:#9e5935;border-color:#b27343}
+#journey :is(.journey-intro-line strong,.journey-intro-line>p,.journey-map-legend,.journey-place-source,.journey-small-note,.journey-observation>span,.journey-rural-detail>span){color:#927048}
+#journey .journey-knowledge :is(input,.knowledge-answer),#journey textarea{background:#fff9ec;color:#755338;border-color:#ba8e5f55}
+#journey .journey-hero-shade{background:linear-gradient(90deg,#33271bba,#4c382777 45%,#c89a5412 90%),linear-gradient(0deg,#443020bd,transparent 50%)}
+#journey :is(.journey-hero,.journey-craft-image,.journey-rural-banner) :is(h1,h2,h3,strong,p,small,span){color:#f7e8ca}
+#journey .journey-hero-copy .eyebrow{color:#e4c38f}
+#journey .journey-craft-image .journey-image-label{color:#efd4a8}
+@media(max-width:850px){.agate-veiling{background:linear-gradient(90deg,#f8f2e8f5,#f6eddfd6 60%,#f4e3c49c)}.overview-footer-actions{gap:15px}.guide-replay-row{letter-spacing:.5px}}
+@media(max-width:560px){.home-film-shade{background:linear-gradient(90deg,#30251cb8,#38291b75 65%,#634a2f33),linear-gradient(0deg,#2b2218d9,transparent 58%)}.explore-caption{gap:12px}.explore-caption [data-explore-sound]{font-size:8px;padding-left:12px}.home-overview{padding-top:33px}.guide-replay-row{margin:0 0 27px;font-size:8px;gap:8px}.guide-replay-row button{font-size:9px}.home-entry-card:hover{transform:none}#home-story:before{background-image:linear-gradient(180deg,#f9f2e6f7,#f8ecd9e8 25%,#f5e2c7a6 70%,#f5e8d5e8),url('./assets/backgrounds/craft.webp');background-position:center,68% 50%}.real-backdrop-caption{font-size:8px}}
+@media(prefers-reduced-motion:reduce){.guide-card-pending{opacity:1;pointer-events:auto}.guide-card-entering{pointer-events:auto}.guide-preparing :is(.overview-heading,.guide-replay-row,.overview-footer){opacity:1}.home-entry-card{transition:none}.home-entry-grid:before{transition:none}}
+
+/* Readable small labels on the lighter paper; disabled controls keep their state. */
+.header nav a{color:#7d6651}.header>.source-open{color:#7f6449}.entry-card-kicker{color:#91663d}.overview-heading .eyebrow{color:#94673b}.guide-replay-row{color:#846246}.guide-replay-row button{color:#8e5b34}.overview-footer-actions [data-explore-sound]{color:#855d37}.craft-stepper .active b{color:#fff3d9}.specimen-label{padding:9px 13px;background:#fff6e5d6;border:1px solid #c49c6a30;border-radius:3px;box-shadow:0 7px 18px #6e452812}.specimen-label small{color:#846447}.overview-footer .source-open{color:#846246}
