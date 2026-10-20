@@ -5,7 +5,7 @@ const motion=matchMedia('(prefers-reduced-motion: reduce)'),header=document.quer
 new ResizeObserver(()=>hero.style.setProperty('--film-header-height',`${header.getBoundingClientRect().height}px`)).observe(header);
 const sourceUrl=media.sourceUrl;
 const dialog=document.createElement('dialog');dialog.className='home-film-dialog';dialog.id='home-film-dialog';dialog.setAttribute('aria-labelledby','home-full-film-title');
-dialog.innerHTML=`<div class="home-film-dialog-top"><div><p>FUXIN · AGATE CULTURE & CRAFT</p><h2 id="home-full-film-title">阜新玛瑙 · 从纹色到手艺</h2></div><button id="home-film-close" class="home-film-close" aria-label="关闭玛瑙主题片">×</button></div><video id="home-full-film" class="home-full-film" controls playsinline preload="none" poster="./assets/home-film/poster-4k.webp" aria-label="阜新玛瑙文化与手艺主题选段，保留原声"></video><p id="home-full-film-status" class="home-full-film-status" role="status"></p><div class="home-film-dialog-footer"><p>玛瑙主题选段 · 约 36 秒 · 保留原声<br>原片《阜新玛瑙——刀刃上的大地瑰宝》<br>辽宁发布 / 辽宁卫视《黑土地》 · 省政府网站发布</p><a href="${sourceUrl}" target="_blank" rel="noopener">查看完整原片与出处 ↗</a><span class="film-key-hint">ESC / CLOSE</span></div>`;
+dialog.innerHTML=`<div class="home-film-dialog-top"><div><p>FUXIN · AGATE CULTURE & CRAFT</p><h2 id="home-full-film-title">阜新玛瑙 · 从纹色到手艺</h2></div><button id="home-film-close" class="home-film-close" aria-label="关闭玛瑙主题片">×</button></div><video id="home-full-film" class="home-full-film" controls playsinline preload="none" poster="./assets/home-film/poster-clean-4k.webp" aria-label="阜新玛瑙文化与手艺主题选段，保留原声"></video><p id="home-full-film-status" class="home-full-film-status" role="status"></p><div class="home-film-dialog-footer"><p>玛瑙主题选段 · 约 ${Math.round(media.story4k.duration)} 秒 · 保留原声<br>原片《阜新玛瑙——刀刃上的大地瑰宝》<br>辽宁发布 / 辽宁卫视《黑土地》 · 省政府网站发布</p><a href="${sourceUrl}" target="_blank" rel="noopener">查看完整原片与出处 ↗</a><span class="film-key-hint">ESC / CLOSE</span></div>`;
 document.body.append(dialog);
 const film=dialog.querySelector('video'),filmStatus=dialog.querySelector('#home-full-film-status');
 let releaseMusic=null,filmEpoch=0;
@@ -150,7 +150,7 @@ function showFilm(){
  if(dialog.open)return;
  filmEpoch++;pauseBackground();releaseMusic=window.agateMusic?.suspendForFilm?.()||null;
  filmStatus.textContent='正在准备玛瑙主题片…';dialog.showModal();
- const path=selectedQuality==='4k'?`./assets/home-film/${media.story4k.file}`:'./assets/home-film/agate-story-hd.mp4';
+ const path=selectedQuality==='4k'?`./assets/home-film/${media.story4k.file}`:`./assets/home-film/${media.storyHd.file}`;
  if(film.getAttribute('src')!==path){film.src=path;film.load();}
  film.currentTime=0;film.muted=false;film.volume=1;
  const token=filmEpoch;

@@ -28,3 +28,5 @@
 }
 @media(max-width:370px){.journey-hero-copy h1{font-size:41px}.journey-intro-line{gap:19px}.journey-intro-line>div{padding-right:12px}.journey-intro-line>div>span{max-width:140px}.journey-section-heading h2{font-size:25px}.journey-map-node{min-width:58px;padding:7px 5px}.journey-map-node>span{font-size:7px}.journey-presets strong{font-size:16px}.journey-presets small{font-size:6px}.journey-route-item h4{font-size:18px}.journey-connections strong{font-size:16px}.journey-connections button{gap:8px;padding:18px 11px}}
 @media(prefers-reduced-motion:reduce){#journey *,#journey *:before,#journey *:after{animation:none!important;transition:none!important}.journey-anim-ready [data-journey-reveal]{opacity:1!important;transform:none!important}.journey-hero-image{transform:none!important}}
+
+.journey-hero-image{animation:none;object-position:65% 48%}.journey-hero-shade{background:linear-gradient(90deg,#100d0af7 0%,#100d0ad9 32%,#100d0a70 62%,#100d0a45),linear-gradient(0deg,#1b120ff5,transparent 45%)}

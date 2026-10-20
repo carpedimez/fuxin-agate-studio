@@ -1,0 +1,88 @@
+[
+  {
+    "file": "photos/agate-bands.webp",
+    "use": "全站底图与观纹屏",
+    "source": "https://commons.wikimedia.org/wiki/File:Agate1_hg.jpg",
+    "author": "Hannes Grobe",
+    "license": "CC BY-SA 2.5",
+    "scope": "真实玛瑙切片样本，未确认产地，不作为阜新原料证明"
+  },
+  {
+    "file": "photos/agate-libation-cup.webp",
+    "use": "图鉴与我的作品",
+    "source": "https://www.clevelandart.org/art/1920.425",
+    "author": "Cleveland Museum of Art / Gary Kirchenbauer",
+    "license": "CC0 1.0",
+    "scope": "清代馆藏玛瑙杯，非阜新本地作品证明"
+  },
+  {
+    "file": "backgrounds/craft.webp",
+    "use": "首页非遗手艺屏、纹色创作",
+    "source": "https://www.ln.gov.cn/web/sqgk/whly/sjft/q/2026020611181587017/index.shtml",
+    "author": "辽宁发布 / 辽宁卫视《黑土地》",
+    "sourceTime": 118.3,
+    "sourceResolution": [
+      2560,
+      1440
+    ],
+    "changes": "源视频实景截帧，保持原画幅、原色与台标；页面通过CSS cover与暗色渐变适配文字。未使用生成式修补。",
+    "scope": "阜新玛瑙专题实景，并不表示本站与镜头内工坊或市场建立合作。",
+    "license": "第三方宣传专题，保留辽宁发布、辽宁卫视与省政府发布出处；未查到开放许可，不声明为本站原创拍摄。使用范围仍待权利方确认。"
+  },
+  {
+    "file": "backgrounds/carving.webp",
+    "use": "阜新透雕实景备选",
+    "source": "https://www.ln.gov.cn/web/sqgk/whly/sjft/q/2026020611181587017/index.shtml",
+    "author": "辽宁发布 / 辽宁卫视《黑土地》",
+    "sourceTime": 177.4,
+    "sourceResolution": [
+      2560,
+      1440
+    ],
+    "changes": "源视频实景截帧，保持原画幅、原色与台标；页面通过CSS cover与暗色渐变适配文字。未使用生成式修补。",
+    "scope": "阜新玛瑙专题实景，并不表示本站与镜头内工坊或市场建立合作。",
+    "license": "第三方宣传专题，保留辽宁发布、辽宁卫视与省政府发布出处；未查到开放许可，不声明为本站原创拍摄。使用范围仍待权利方确认。"
+  },
+  {
+    "file": "backgrounds/vessels.webp",
+    "use": "阜新巧色雕件实景备选",
+    "source": "https://www.ln.gov.cn/web/sqgk/whly/sjft/q/2026020611181587017/index.shtml",
+    "author": "辽宁发布 / 辽宁卫视《黑土地》",
+    "sourceTime": 183.3,
+    "sourceResolution": [
+      2560,
+      1440
+    ],
+    "changes": "源视频实景截帧，保持原画幅、原色与台标；页面通过CSS cover与暗色渐变适配文字。未使用生成式修补。",
+    "scope": "阜新玛瑙专题实景，并不表示本站与镜头内工坊或市场建立合作。",
+    "license": "第三方宣传专题，保留辽宁发布、辽宁卫视与省政府发布出处；未查到开放许可，不声明为本站原创拍摄。使用范围仍待权利方确认。"
+  },
+  {
+    "file": "backgrounds/market.webp",
+    "use": "循艺入乡首屏",
+    "source": "https://www.ln.gov.cn/web/sqgk/whly/sjft/q/2026020611181587017/index.shtml",
+    "author": "辽宁发布 / 辽宁卫视《黑土地》",
+    "sourceTime": 228.1,
+    "sourceResolution": [
+      2560,
+      1440
+    ],
+    "changes": "源视频实景截帧，保持原画幅、原色与台标；页面通过CSS cover与暗色渐变适配文字。未使用生成式修补。",
+    "scope": "阜新玛瑙专题实景，并不表示本站与镜头内工坊或市场建立合作。",
+    "license": "第三方宣传专题，保留辽宁发布、辽宁卫视与省政府发布出处；未查到开放许可，不声明为本站原创拍摄。使用范围仍待权利方确认。"
+  },
+  {
+    "file": "backgrounds/raw.webp",
+    "use": "循艺入乡页面底图",
+    "source": "https://www.ln.gov.cn/web/sqgk/whly/sjft/q/2026020611181587017/index.shtml",
+    "author": "辽宁发布 / 辽宁卫视《黑土地》",
+    "sourceTime": 229.9,
+    "sourceResolution": [
+      2560,
+      1440
+    ],
+    "changes": "源视频实景截帧，保持原画幅、原色与台标；页面通过CSS cover与暗色渐变适配文字。未使用生成式修补。",
+    "scope": "阜新玛瑙专题实景，并不表示本站与镜头内工坊或市场建立合作。",
+    "license": "第三方宣传专题，保留辽宁发布、辽宁卫视与省政府发布出处；未查到开放许可，不声明为本站原创拍摄。使用范围仍待权利方确认。"
+  }
+]
