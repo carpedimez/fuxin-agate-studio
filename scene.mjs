@@ -24,7 +24,7 @@ function bindStoneInput(container,canvas,camera,stone,controls){
   // Keep existing single/two-finger touch controls in the 3D viewport.
   const over=event.pointerType!=='mouse'||pointers.size>0||hitTest(event.clientX,event.clientY);
   event.agateStoneHit=over;controls.enabled=over;
-  if(over){pointers.add(event.pointerId);canvas.style.cursor='grabbing';}
+  if(over){controls.enableZoom=true;pointers.add(event.pointerId);canvas.style.cursor='grabbing';}
  }
  function move(event){
   if(event.pointerType!=='mouse'||pointers.size)return;
