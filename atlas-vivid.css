@@ -1,0 +1,177 @@
+/* High-contrast thematic routes. Stroke widths stay readable while zooming. */
+.atlas-art .atlas-route-casing,.atlas-art .atlas-line,.atlas-art .atlas-route-arrow{fill:none;vector-effect:non-scaling-stroke;stroke-linecap:round;stroke-linejoin:round;filter:none}
+.atlas-art .atlas-route-casing{stroke:#fffdf2;stroke-width:10;opacity:.97}
+.atlas-art .atlas-guide-line{stroke:#df680c;stroke-width:4.5;stroke-dasharray:12 8;animation:atlas-route-flow 3s linear infinite}
+.atlas-art .atlas-explored-line{stroke:#066552;stroke-width:4;stroke-dasharray:2 10}
+.atlas-art .atlas-progress-casing{stroke-width:8}
+.atlas-art .atlas-plan-casing{stroke-width:11}
+.atlas-art .atlas-planned-line{stroke:#185be0;stroke-width:5;stroke-dasharray:13 7 2 7}
+.atlas-art .atlas-route-arrow{stroke:#8c3705;stroke-width:3;paint-order:stroke;filter:drop-shadow(0 0 2px #fff) drop-shadow(0 0 1px #fff)}
+.atlas-map-help{display:grid;grid-template-columns:minmax(0,1fr) auto;row-gap:7px;padding-block:8px}
+.atlas-route-key{grid-column:1/-1;display:flex;align-items:center;gap:16px;font-size:10px;color:#5f5848;min-width:0}
+.atlas-route-key>span{display:flex;align-items:center;gap:6px;white-space:nowrap}
+.atlas-route-key i{display:inline-block;width:25px;height:0;border-top:3px dashed #df680c}
+.atlas-route-key .route-key-read{border-color:#066552;border-top-style:dotted}
+.atlas-route-key .route-key-plan{border-color:#185be0;border-top-style:solid}
+.atlas-route-key small{margin-left:auto;font-size:9px;color:#7d725f}
+@keyframes atlas-route-flow{to{stroke-dashoffset:-40}}
+
+/* Seven identities, one predictable set of reading and saving controls. */
+.atlas-story{--story-wash:#fff4e7;--story-highlight:#ffb15a;--story-ink:#402d30;--story-muted:#62515a;background:var(--story-wash);--j-paper:var(--story-ink);--j-muted:var(--story-muted)}
+.atlas-story[data-clue=stone]{--story-wash:#fff3e7;--story-highlight:#ffb568;--story-ink:#4e3029;--story-muted:#715548}
+.atlas-story[data-clue=color]{--story-wash:#fbf0fd;--story-highlight:#ed79a8;--story-ink:#42264e;--story-muted:#6a5072}
+.atlas-story[data-clue=welcome]{--story-wash:#edf9f1;--story-highlight:#b9e167;--story-ink:#17443d;--story-muted:#4c7064}
+.atlas-story[data-clue=studio]{--story-wash:#fff2e8;--story-highlight:#efb66f;--story-ink:#4b3026;--story-muted:#74584b}
+.atlas-story[data-clue=market]{--story-wash:#fff2eb;--story-highlight:#ffc74c;--story-ink:#512b37;--story-muted:#80545b}
+.atlas-story[data-clue=water]{--story-wash:#eefaFC;--story-highlight:#41d6ce;--story-ink:#163e54;--story-muted:#4c6e7c}
+.atlas-story[data-clue=pagoda]{--story-wash:#f3f1fc;--story-highlight:#e8c267;--story-ink:#39325c;--story-muted:#68607f}
+.atlas-story .story-topbar{background:color-mix(in srgb,var(--story-wash) 94%,transparent);border-color:color-mix(in srgb,var(--story-color) 20%,transparent)}
+.atlas-story .story-topbar>span{color:var(--story-muted)}
+.atlas-story .story-topbar .story-back{border-color:color-mix(in srgb,var(--story-color) 32%,transparent);background:#fff9;border-radius:30px}
+.atlas-story .story-read-track{height:3px;background:#ffffff70}.atlas-story .story-read-track>i{background:linear-gradient(90deg,var(--story-color),var(--story-highlight))}
+.atlas-story .story-hero{max-width:none;min-height:610px;padding:64px max(5%,calc((100vw - 1560px)/2)) 90px;gap:5%;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);background:var(--story-wash)}
+.story-scene-art{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;color:var(--story-color);opacity:.2}
+.story-scene-art svg{width:100%;height:100%;stroke:currentColor;stroke-width:1.2;overflow:visible}
+.story-theme-sign{position:absolute;left:5%;bottom:26px;z-index:2;display:flex;align-items:center;gap:18px;color:var(--story-color)}
+.story-theme-sign span{font:9px/1.8 monospace;letter-spacing:1.6px;max-width:185px}.story-theme-sign strong{font-size:14px;letter-spacing:3px;border-left:1px solid currentColor;padding-left:18px}
+.atlas-story .story-hero-copy{padding:10px 0;animation:vivid-arrive .75s both}
+.atlas-story .story-hero h1{font-size:clamp(35px,4.1vw,74px);line-height:1.2;letter-spacing:-2px}
+.atlas-story .story-hero h1:focus{outline:none}
+.atlas-story .story-hero-copy>p{color:var(--story-muted);font-size:17px;line-height:1.9;max-width:450px}
+.atlas-story .story-kicker{font-size:10px;letter-spacing:2px;display:flex;align-items:center;gap:10px}
+.atlas-story .story-kicker:before{content:'';width:23px;height:3px;background:currentColor;flex-shrink:0}
+.atlas-story .story-hero-copy>a{border:1px solid color-mix(in srgb,var(--story-color) 35%,transparent);padding:12px 18px;border-radius:30px;background:#fffa;gap:25px;font-weight:600}
+.atlas-story .story-hero>figure{height:430px;box-shadow:0 22px 65px color-mix(in srgb,var(--story-color) 17%,transparent);animation:vivid-arrive .95s .12s both;border:1px solid #fff8}
+.atlas-story .story-hero-word{left:auto;right:2%;bottom:-20px;opacity:.07;z-index:0}
+.atlas-story .story-content{padding-top:24px;max-width:1500px}
+.atlas-story .story-chapter-index{background:#ffffffb5;border:1px solid color-mix(in srgb,var(--story-color) 19%,transparent);padding:12px 20px;border-radius:16px;box-shadow:0 10px 28px #29304a06;margin-bottom:65px}
+.atlas-story .story-chapter-index button{color:var(--story-ink);border-color:color-mix(in srgb,var(--story-color) 18%,transparent);font-weight:600}
+.atlas-story .story-chapter-index b{background:var(--story-color);color:#fff;display:grid;place-items:center;min-width:30px;height:30px;border-radius:50%;font-size:11px}
+.atlas-story .story-chapter-index i{color:var(--story-color)}
+.atlas-story .story-section-head>span{font-size:11px}.atlas-story .story-section-head h2{color:var(--story-ink);font-size:clamp(29px,3vw,46px)}
+.atlas-story .story-section-head>p{color:var(--story-muted);font-size:16px}
+.atlas-story .story-lens{background:#ffffffcf;border:1px solid color-mix(in srgb,var(--story-color) 20%,transparent);border-radius:22px;box-shadow:0 16px 40px #44305a09;padding:32px}
+.atlas-story .story-lens-tabs{gap:9px}.atlas-story .story-lens-tabs>button{background:var(--story-wash);color:var(--story-muted);border-radius:12px;border-color:color-mix(in srgb,var(--story-color) 14%,transparent);min-width:0;padding:17px 12px}
+.atlas-story .story-lens-tabs>button[aria-pressed=true]{background:var(--story-color);color:white;border-color:var(--story-color);box-shadow:0 7px 20px color-mix(in srgb,var(--story-color) 24%,transparent)}
+.atlas-story .story-lens-answer{border-color:color-mix(in srgb,var(--story-color) 20%,transparent)}
+.atlas-story .story-lens-answer p,.atlas-story .story-instruction{color:var(--story-muted)}
+.atlas-story .story-button{border-radius:30px;min-height:49px;padding-inline:24px}
+.atlas-story .story-photo>img{border-radius:18px}.atlas-story .story-photo>figcaption{color:var(--story-muted);font-size:11px}
+.atlas-story .story-note-editor textarea{background:#fffc;color:var(--story-ink);border-color:color-mix(in srgb,var(--story-color) 30%,transparent);border-radius:16px}
+.atlas-story .story-note-editor textarea::placeholder{color:var(--story-muted);opacity:.8}
+.atlas-story #story-save-status{color:var(--story-muted)}
+.atlas-story .story-observation{padding:36px;border:1px solid color-mix(in srgb,var(--story-color) 20%,transparent);border-radius:24px;background:linear-gradient(125deg,#ffffffc9,transparent),var(--story-wash);gap:6%}
+.atlas-story .story-provenance{background:#ffffff8f;border-color:color-mix(in srgb,var(--story-color) 18%,transparent);border-radius:15px}
+.atlas-story .story-provenance :is(strong,small){color:var(--story-muted)}
+.atlas-story .story-end{border-color:color-mix(in srgb,var(--story-color) 20%,transparent)}
+.atlas-story .story-end a+a{border-radius:17px;box-shadow:0 12px 30px color-mix(in srgb,var(--story-color) 17%,transparent)}
+
+/* 01 / a crystalline geological stage, warm light against mineral blue. */
+.atlas-story[data-clue=stone] .story-hero{background:radial-gradient(ellipse at 70% 50%,#713a45aa,transparent 62%),linear-gradient(125deg,#182a44,#22304d 55%,#58364b)}
+.atlas-story[data-clue=stone] .story-hero h1{color:#ffce93}.atlas-story[data-clue=stone] .story-hero-copy>p{color:#d6deec}
+.atlas-story[data-clue=stone] :is(.story-kicker,.story-theme-sign){color:#f8c58d}
+.atlas-story[data-clue=stone] .story-hero-copy>a{background:#ffcd9214;color:#ffe2ba;border-color:#ffcd9266}
+.atlas-story[data-clue=stone] .story-scene-art{color:#ffc486;opacity:.26;animation:crystal-light 8s ease-in-out infinite}
+.atlas-story[data-clue=stone] .story-hero>figure{border-radius:12px 130px 12px 90px;transform:rotate(-3deg);border:7px solid #ffdaa32e;box-shadow:20px 20px 0 #f0a05715}
+.atlas-story[data-clue=stone] .story-formation-grid{gap:16px;align-items:start}
+.atlas-story[data-clue=stone] .story-formation-grid article{background:#fff9f1;border-radius:15px;border-color:#dba27355;box-shadow:0 14px 28px #a3581710}
+.atlas-story[data-clue=stone] .story-formation-grid article:nth-child(even){margin-top:35px}
+.atlas-story[data-clue=stone] .story-formation-grid article>div{border-top:4px solid #e68f49}.atlas-story[data-clue=stone] .story-formation-grid p{color:var(--story-muted)}
+.atlas-story[data-clue=stone] .story-stone-mount{padding:10px;border-radius:105px 20px 105px 20px;background:linear-gradient(125deg,#ffce91,#fff8ee 45%,#be7255)}
+
+/* 02 / a chromatic gallery, circular artwork and spectrum edges. */
+.atlas-story[data-clue=color] .story-hero{background:radial-gradient(at 25% 15%,#ffc6b8aa,transparent 47%),radial-gradient(at 88% 65%,#c6b2f8,transparent 55%),#fff1fa;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.atlas-story[data-clue=color] .story-hero h1{color:#753694}.atlas-story[data-clue=color] .story-hero>figure{border-radius:50%;height:440px;width:min(100%,440px);justify-self:center;border:12px solid #ffffffc9;box-shadow:20px 12px 0 #ec97bb70,-18px -15px 0 #a9b3f34d}
+.atlas-story[data-clue=color] .story-hero-copy{grid-column:2;grid-row:1}.atlas-story[data-clue=color] .story-hero>figure{grid-column:1;grid-row:1}
+.atlas-story[data-clue=color] .story-scene-art{color:#a854ba;opacity:.3}.atlas-story[data-clue=color] .story-scene-art svg{stroke-dasharray:4 10;animation:spectrum-drift 18s linear infinite}
+.atlas-story[data-clue=color] .story-hero figcaption{left:18%;right:18%;bottom:35px;text-align:center}.atlas-story[data-clue=color] .story-hero-word{color:#bd5eaa;left:45%;right:auto;bottom:0}
+.atlas-story[data-clue=color] .story-chapter-index{border-top:4px solid #d982bf}.atlas-story[data-clue=color] .story-gallery-section{background:#fff9fd;padding:35px;border:1px solid #ddbbe5;border-radius:30px}
+.atlas-story[data-clue=color] .photo-card{border-radius:15px;overflow:hidden}.atlas-story[data-clue=color] .photo-filters button.active{color:#8037a5;background:#f1e1fa;border-color:#b889c8}
+.atlas-story[data-clue=color] .story-split{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}
+
+/* 03 / a bright countryside postcard, arch and postage frame. */
+.atlas-story[data-clue=welcome] .story-hero{background:radial-gradient(ellipse at 20% 0,#dbf5ad,transparent 55%),linear-gradient(130deg,#f2fcdf,#d3f0e8);grid-template-columns:minmax(0,1.05fr) minmax(0,1fr)}
+.atlas-story[data-clue=welcome] .story-hero>figure{border-radius:180px 180px 18px 18px;border:10px solid #fffce7;box-shadow:16px 16px 0 #3c8e7922;height:450px}
+.atlas-story[data-clue=welcome] .story-scene-art{color:#14775b;opacity:.17}.atlas-story[data-clue=welcome] .story-theme-sign strong{background:#fffbe5;border:1px dashed #17806d;padding:8px 15px;transform:rotate(-4deg)}
+.atlas-story[data-clue=welcome] .story-chapter-index{border-radius:3px;border-style:dashed;background:#fdfef2}
+.atlas-story[data-clue=welcome] .story-local-section>.story-section-head{border-left:6px solid #a8d45d;padding-left:24px}
+.atlas-story[data-clue=welcome] :is(.journey-rural-detail,.journey-knowledge){border:1px solid #afd6bb;background:#fbfff8;border-radius:20px;padding:30px}
+.atlas-story[data-clue=welcome] .journey-rural-banner{border-radius:24px;overflow:hidden}.atlas-story[data-clue=welcome] .journey-connections button{border-radius:12px}
+.atlas-story[data-clue=welcome] .journey-role-panel button[aria-pressed=true]{background:#0b7773}.atlas-story[data-clue=welcome] .journey-knowledge .knowledge-answer{background:#eaf7eb;color:#3c6652;border-radius:12px}
+
+/* 04 / copper and cinema, framing the real gestures of the maker. */
+.atlas-story[data-clue=studio] .story-hero{background:linear-gradient(105deg,#fff0dc 48%,#e2b18d 48%,#c87756);grid-template-columns:minmax(0,.9fr) minmax(0,1.25fr)}
+.atlas-story[data-clue=studio] .story-hero>figure{border-radius:7px;height:385px;border:14px solid #332e2c;box-shadow:15px 18px 0 #a6553533}
+.atlas-story[data-clue=studio] .story-hero>figure:before{content:'';position:absolute;inset:0;pointer-events:none;z-index:2;border:1px solid #f0c99e77}
+.atlas-story[data-clue=studio] .story-theme-sign{color:#8e3e23}.atlas-story[data-clue=studio] .story-scene-art{opacity:.22;color:#934121}
+.atlas-story[data-clue=studio] .story-hero-word{font-size:330px;bottom:-30px;right:0;color:#ffe5ba;opacity:.14}
+.atlas-story[data-clue=studio] .story-film-button{background:linear-gradient(115deg,#fff2d9,#f8d6b8);border-color:#c1774980;border-radius:14px;box-shadow:0 8px 0 #a6592910}
+.atlas-story[data-clue=studio] .story-film-button>span{box-shadow:0 0 0 8px #a34a2320}.atlas-story[data-clue=studio] .story-film-button small{color:#865738}
+.atlas-story[data-clue=studio] .journey-craft-layout{border:7px solid #e8bf97;border-radius:15px;overflow:hidden;background:#fffbf2}
+.atlas-story[data-clue=studio] .journey-craft-copy .craft-tabs button[aria-pressed=true]{color:#ab421f;border-color:#ab421f}
+.atlas-story[data-clue=studio] .story-craft-section>.story-section-head{padding-left:24px;border-left:6px solid #cf7d46}
+
+/* 05 / an energetic coral-and-sunflower editorial collage. */
+.atlas-story[data-clue=market] .story-hero{background:radial-gradient(at 5% 100%,#ffc45f,transparent 55%),linear-gradient(135deg,#fff1ce,#ffd9d8);grid-template-columns:minmax(0,1fr) minmax(0,1.15fr)}
+.atlas-story[data-clue=market] .story-hero>figure{height:390px;border:12px solid #fff9ec;border-bottom-width:40px;border-radius:6px;transform:rotate(3deg);box-shadow:-16px 20px 0 #ce587b33}
+.atlas-story[data-clue=market] .story-hero figcaption{bottom:14px}.atlas-story[data-clue=market] .story-theme-sign strong{background:#b43e58;color:#fff6da;padding:9px 17px;border:0;transform:rotate(-3deg)}
+.atlas-story[data-clue=market] .story-scene-art{color:#cb5165;opacity:.28}.atlas-story[data-clue=market] .story-hero-word{color:#df644b;opacity:.12}
+.atlas-story[data-clue=market] .story-chapter-index{border-radius:0;box-shadow:7px 7px 0 #de899f2e;border-color:#d76a8580}
+.atlas-story[data-clue=market] .story-market-triptych{gap:28px;padding:12px 0 30px;align-items:start}
+.atlas-story[data-clue=market] .story-market-triptych article{background:#fffcf2;border:1px solid #e8a078;border-radius:5px;box-shadow:7px 9px 0 #d9708c1f;transform:rotate(-2deg)}
+.atlas-story[data-clue=market] .story-market-triptych article:nth-child(2){transform:rotate(2deg);margin-top:30px;background:#fff0e6}.atlas-story[data-clue=market] .story-market-triptych article:nth-child(3){transform:rotate(-1deg);background:#fff6d9}
+.atlas-story[data-clue=market] .story-market-triptych article>span{background:#b43e58;color:white;font-weight:700}.atlas-story[data-clue=market] .story-market-triptych h3{color:#a83652}.atlas-story[data-clue=market] .story-market-triptych article>p{color:#7e4f55}
+
+/* 06 / luminous water, elliptical reflections and glassy color samples. */
+.atlas-story[data-clue=water] .story-hero{background:radial-gradient(ellipse at 75% 30%,#8be3e0,transparent 60%),linear-gradient(130deg,#e8fafd,#d6e9fc);grid-template-columns:minmax(0,.9fr) minmax(0,1.2fr)}
+.atlas-story[data-clue=water] .story-hero{display:flex;flex-direction:column;gap:26px;padding-top:44px;padding-bottom:80px;min-height:0}
+.atlas-story[data-clue=water] .story-hero-copy{text-align:center;padding:0;width:100%}.atlas-story[data-clue=water] .story-kicker{justify-content:center;margin-bottom:18px}.atlas-story[data-clue=water] .story-hero h1{margin-bottom:18px}.atlas-story[data-clue=water] .story-hero-copy>p{margin:0 auto 20px;max-width:650px}
+.atlas-story[data-clue=water] .story-hero>figure{border-radius:50% 50% 35% 35% / 45% 45% 55% 55%;height:410px;border:8px solid #ffffffa6;box-shadow:0 18px 0 #2babb425,0 35px 70px #14637c20}
+.atlas-story[data-clue=water] .story-hero>figure{width:min(100%,1000px);height:300px;align-self:center}
+.atlas-story[data-clue=water] .story-scene-art{color:#147d9f;opacity:.2;animation:ripple-breathe 10s ease-in-out infinite}
+.atlas-story[data-clue=water] .story-hero figcaption{left:18%;right:18%;bottom:30px;text-align:center}.atlas-story[data-clue=water] .story-hero-word{color:#268eae;opacity:.09}
+.atlas-story[data-clue=water] .story-water-thought{background:linear-gradient(140deg,#c4f0e8,#e0f4fc 65%,#d7e4fb);border-color:#80bfcc;border-radius:60% 40% 45% 30% / 20% 30% 30% 30%;padding:55px}
+.atlas-story[data-clue=water] .story-water-thought blockquote{color:#0d7390}.atlas-story[data-clue=water] .story-water-thought :is(p,span){color:#376a7c}
+.atlas-story[data-clue=water] .story-palette{gap:18px}.atlas-story[data-clue=water] .story-palette button{border-color:#94cdd5;background:#ffffffbd;border-radius:80px 80px 20px 20px;box-shadow:0 12px 25px #176a8b0c;color:#2e6175}
+.atlas-story[data-clue=water] .story-palette button>span{border-radius:70px 70px 16px 16px;box-shadow:inset 0 0 30px #ffffff3b}.atlas-story[data-clue=water] .story-palette button[aria-pressed=true]{box-shadow:0 0 0 3px #096e91,0 16px 30px #096e9120;transform:translateY(-6px)}
+.atlas-story[data-clue=water] .story-water-result{background:#d4f0f3;border:1px solid #a1ccd7;border-radius:18px}.atlas-story[data-clue=water] .story-water-result p{color:#286174}
+
+/* 07 / an indigo-and-gold archive, a different rhythm from the water page. */
+.atlas-story[data-clue=pagoda] .story-hero{background:radial-gradient(ellipse at 80% 50%,#5c568c,transparent 65%),linear-gradient(125deg,#25284a,#37335f);grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr)}
+.atlas-story[data-clue=pagoda] .story-hero-copy{grid-column:2;grid-row:1}.atlas-story[data-clue=pagoda] .story-hero>figure{grid-column:1;grid-row:1}
+.atlas-story[data-clue=pagoda] .story-hero h1{color:#f4dca2}.atlas-story[data-clue=pagoda] .story-hero-copy>p{color:#e0daef}.atlas-story[data-clue=pagoda] :is(.story-kicker,.story-theme-sign){color:#eed3a0}
+.atlas-story[data-clue=pagoda] .story-hero-copy>a{color:#f8e5bc;background:#e2c58114;border-color:#e2c58170}
+.atlas-story[data-clue=pagoda] .story-hero>figure{height:450px;border-radius:180px 180px 0 0;border:8px solid #e4cc922e;box-shadow:12px 12px 0 #e4cc9214;max-width:410px;justify-self:center;width:100%}
+.atlas-story[data-clue=pagoda] .story-hero>figure img{object-position:38% 75%}.atlas-story[data-clue=pagoda] .story-hero figcaption{left:20px;bottom:16px}
+.atlas-story[data-clue=pagoda] .story-scene-art{color:#edcb85;opacity:.3;right:0;left:25%}.atlas-story[data-clue=pagoda] .story-hero-word{color:#e6c787;opacity:.06;right:30%;font-size:400px}
+.atlas-story[data-clue=pagoda] .story-chapter-index{border-radius:3px;border-block:2px solid #b6a4d6;background:#fdfaff}
+.atlas-story[data-clue=pagoda] .story-lens{border-radius:3px;border-left:5px solid #9a83c6}.atlas-story[data-clue=pagoda] .story-sketch-paper{background:linear-gradient(#b6a9d033 1px,transparent 1px),linear-gradient(90deg,#b6a9d02b 1px,transparent 1px),#fcfaff;background-size:32px 32px;border:1px solid #ab98ca;border-radius:3px;box-shadow:8px 8px 0 #c3b6e233}
+.atlas-story[data-clue=pagoda] .story-sketch-paper>span{color:#756496}.atlas-story[data-clue=pagoda] .story-sketch-tools button{background:#e5ddf3;color:#544284;border-color:#b6a3d0}
+.atlas-story[data-clue=pagoda] .story-sketch-tools output{color:#736486}
+
+@keyframes vivid-arrive{from{opacity:0;translate:0 20px}to{opacity:1;translate:0 0}}
+@keyframes crystal-light{50%{opacity:.4}}
+@keyframes spectrum-drift{to{stroke-dashoffset:-84}}
+@keyframes ripple-breathe{50%{transform:scale(1.05);opacity:.32}}
+@media(max-width:1050px){.atlas-story .story-hero{min-height:540px;gap:4%;padding-inline:5%}.atlas-story .story-hero h1{font-size:clamp(35px,4.6vw,52px)}.atlas-story .story-hero>figure{height:370px}.atlas-story[data-clue=color] .story-hero>figure{height:350px;width:350px;max-width:100%}.atlas-story[data-clue=studio] .story-hero>figure{height:320px}.atlas-story[data-clue=pagoda] .story-hero>figure{height:390px}.atlas-story .story-lens{padding:24px}.atlas-story .story-observation{padding:26px}.atlas-story .story-gallery-section{padding:25px}}
+@media(max-width:750px){
+ .atlas-route-key{gap:12px;font-size:9px;flex-wrap:wrap}.atlas-route-key i{width:17px}.atlas-route-key small{margin-left:0;font-size:8px}.atlas-map-help{row-gap:8px}
+ .atlas-story .story-hero{min-height:0;display:flex;flex-direction:column;padding:34px 5% 85px;gap:25px;align-items:stretch}
+ .atlas-story .story-hero-copy{padding:0}.atlas-story .story-hero h1{font-size:clamp(33px,8.4vw,49px);letter-spacing:-1px;margin-bottom:20px}
+ .atlas-story .story-kicker{font-size:9px;margin-bottom:20px}.atlas-story .story-hero-copy>p{font-size:15px;max-width:none;margin-bottom:18px}
+ .atlas-story .story-hero-copy>a{font-size:12px;margin:0;padding:10px 16px}
+ .atlas-story .story-hero>figure{width:100%;height:285px;flex:none;max-width:none;margin:0;align-self:center}
+ .story-theme-sign{bottom:22px;left:5%;gap:12px;right:5%}.story-theme-sign span{font-size:8px;letter-spacing:.7px;max-width:145px}.story-theme-sign strong{font-size:12px;letter-spacing:1px;padding-left:12px}
+ .atlas-story .story-content{padding-top:18px}.atlas-story .story-chapter-index{border-radius:10px;padding:10px;margin-bottom:45px;gap:0}
+ .atlas-story .story-chapter-index button{gap:6px;padding:6px 9px;font-size:11px;flex-wrap:wrap}.atlas-story .story-chapter-index button:first-child{padding-left:0}.atlas-story .story-chapter-index b{height:23px;min-width:23px;font-size:9px}
+ .atlas-story .story-section-head h2{font-size:29px}.atlas-story .story-section-head>p{font-size:15px}.atlas-story .story-lens{padding:22px;border-radius:16px}.atlas-story .story-lens-tabs>button{padding:14px 9px}
+ .atlas-story .story-observation{padding:24px 19px;border-radius:17px}.atlas-story .story-note-editor textarea{font-size:15px}.atlas-story .story-photo>figcaption{font-size:10px}
+ .atlas-story[data-clue=stone] .story-hero>figure{border-radius:12px 80px 12px 60px;transform:rotate(-2deg);width:94%;height:290px}.atlas-story[data-clue=stone] .story-formation-grid article:nth-child(even){margin-top:22px}
+ .atlas-story[data-clue=color] .story-hero>figure{border-radius:50%;width:290px;max-width:93%;height:290px;border-width:8px;box-shadow:10px 8px 0 #ec97bb70,-9px -8px 0 #a9b3f34d}.atlas-story[data-clue=color] .story-gallery-section{padding:23px 15px;border-radius:20px}.atlas-story[data-clue=color] .story-hero figcaption{font-size:9px;bottom:23px;left:13%;right:13%}
+ .atlas-story[data-clue=welcome] .story-hero>figure{border-radius:150px 150px 12px 12px;width:92%;height:320px;border-width:7px;box-shadow:9px 9px 0 #3c8e7922}.atlas-story[data-clue=welcome] :is(.journey-rural-detail,.journey-knowledge){padding:23px}.atlas-story[data-clue=welcome] .story-theme-sign strong{padding:6px 9px}
+ .atlas-story[data-clue=studio] .story-hero{background:linear-gradient(155deg,#fff0dc 55%,#e2b18d 55%,#c87756)}.atlas-story[data-clue=studio] .story-hero>figure{height:235px;border-width:8px;box-shadow:8px 10px 0 #a6553533}.atlas-story[data-clue=studio] .story-hero figcaption{font-size:9px;left:14px;right:14px;bottom:12px}.atlas-story[data-clue=studio] .journey-craft-layout{border-width:4px}
+ .atlas-story[data-clue=market] .story-hero>figure{width:93%;height:260px;border-width:8px;border-bottom-width:24px;box-shadow:-8px 11px 0 #ce587b33}.atlas-story[data-clue=market] .story-market-triptych{padding-inline:10px;gap:25px}.atlas-story[data-clue=market] .story-market-triptych article:nth-child(2){margin-top:0}.atlas-story[data-clue=market] .story-theme-sign strong{padding:7px 9px}
+ .atlas-story[data-clue=water] .story-hero>figure{height:285px;border-width:6px}.atlas-story[data-clue=water] .story-water-thought{padding:35px}.atlas-story[data-clue=water] .story-palette{gap:13px}.atlas-story[data-clue=water] .story-hero figcaption{font-size:9px;bottom:24px}
+ .atlas-story[data-clue=pagoda] .story-hero>figure{height:330px;width:85%;max-width:320px;border-width:6px}.atlas-story[data-clue=pagoda] .story-scene-art{left:0}.atlas-story[data-clue=pagoda] .story-hero-word{right:0;font-size:270px}.atlas-story[data-clue=pagoda] .story-chapter-index{border-radius:3px}
+}
+@media(prefers-reduced-motion:reduce){.atlas-art .atlas-guide-line,.atlas-story .story-hero-copy,.atlas-story .story-hero>figure,.atlas-story .story-scene-art,.atlas-story .story-scene-art svg{animation:none!important}.atlas-story .story-palette button{transition:none}}
