@@ -5,10 +5,15 @@ export function createDisplay(scene,stone){
  const clear=group=>{for(const child of [...group.children]){child.geometry?.dispose();child.material?.dispose();group.remove(child);}};
  function update(options={}){const p={...displayDefaults,...options};scene.background=p.backdrop==='paper'?new THREE.Color(0xded7c8):p.backdrop==='night'?new THREE.Color(0x0d1b2a):null;const key=JSON.stringify(p)+stone.geometry.uuid;if(key===previous)return;previous=key;clear(accessory);clear(stand);stone.geometry.computeBoundingBox();const b=stone.geometry.boundingBox,top=b.max.y,bottom=b.min.y;
   if(p.style==='pendant'){
-   const metal=new THREE.MeshStandardMaterial({color:0xc6a45e,metalness:.8,roughness:.26}),ring=new THREE.Mesh(new THREE.TorusGeometry(.13,.035,12,48),metal);ring.position.set(0,top+.045,.02);accessory.add(ring);
+   // Use an actual highest contour vertex: x=0 can be a notch in mountains/hearts.
+   const positions=stone.geometry.attributes.position;let anchorX=Infinity;
+   for(let i=0;i<positions.count;i++)if(Math.abs(positions.getY(i)-top)<.0001&&Math.abs(positions.getX(i))<Math.abs(anchorX))anchorX=positions.getX(i);
+   if(!Number.isFinite(anchorX))anchorX=0;
+   const anchorZ=(b.min.z+b.max.z)/2,ringY=top+.07;
+   const metal=new THREE.MeshStandardMaterial({color:0xc6a45e,metalness:.8,roughness:.26}),ring=new THREE.Mesh(new THREE.TorusGeometry(.13,.035,12,48),metal);ring.name='pendant-ring';ring.position.set(anchorX,ringY,anchorZ);accessory.add(ring);
    const cordColor={cinnabar:0x8c281d,ink:0x202822,jade:0x527566}[p.cord]||0x8c281d;
-   const path=new THREE.CatmullRomCurve3([new THREE.Vector3(-.03,top+.15,0),new THREE.Vector3(-.48,top+.55,-.02),new THREE.Vector3(-.48,top+.83,-.05),new THREE.Vector3(0,top+.93,-.06),new THREE.Vector3(.48,top+.83,-.05),new THREE.Vector3(.48,top+.55,-.02),new THREE.Vector3(.03,top+.15,0)]);
-   const cord=new THREE.Mesh(new THREE.TubeGeometry(path,80,.022,8,false),new THREE.MeshStandardMaterial({color:cordColor,roughness:.9}));accessory.add(cord);
+   const path=new THREE.CatmullRomCurve3([[-.03,.18,0],[-.48,.55,-.02],[-.48,.83,-.05],[0,.93,-.06],[.48,.83,-.05],[.48,.55,-.02],[.03,.18,0]].map(([x,y,z])=>new THREE.Vector3(anchorX+x,top+y,anchorZ+z)));
+   const cord=new THREE.Mesh(new THREE.TubeGeometry(path,80,.022,8,false),new THREE.MeshStandardMaterial({color:cordColor,roughness:.9}));cord.name='pendant-cord';accessory.add(cord);
   }else if(p.style==='stand'){
    const base=new THREE.Mesh(new THREE.CylinderGeometry(1.35,1.48,.22,80),new THREE.MeshStandardMaterial({color:0x37261c,roughness:.45}));base.position.set(0,bottom-.25,0);stand.add(base);
    const lip=new THREE.Mesh(new THREE.CylinderGeometry(1.36,1.36,.025,80),new THREE.MeshStandardMaterial({color:0xa88a51,metalness:.65,roughness:.3}));lip.position.set(0,bottom-.125,0);stand.add(lip);

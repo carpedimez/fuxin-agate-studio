@@ -81,6 +81,7 @@ body .play-dialog select option{background:#fffaf0;color:#493728}
 .workbench .palette .swatch.selected::after{content:'✓';position:absolute;right:4px;top:4px;font:700 13px/1.2 sans-serif;color:#fff;background:#386358;border-radius:50%;padding:1px 3px}
 .workbench #optimize{font-size:14px;min-height:45px;padding:10px}
 .workbench #work-demo-caption{font-size:14px}
+.workbench :is(#preset-lines,#stamp-flower)[aria-pressed=true]{background:var(--work-tint);color:var(--work-ink);border:2px solid var(--work-ink);box-shadow:inset 3px 0 var(--work-ink)}
 .gallery-controls :is(button,select){font-size:13px;padding:8px}.gallery-controls label,.gallery-controls span,.gallery-controls small{font-size:12px}
 .gallery-exports>button{font-size:15px}.gallery-exports>button small,.gallery-exports>p:not(.eyebrow),.gallery-exports #gallery-status{font-size:12px}
 .gallery-paper-exports button,.work-outline,.gallery-tabs button{font-size:13px}.gallery-credit{font-size:11px}#gallery-stage-label{font-size:12px}

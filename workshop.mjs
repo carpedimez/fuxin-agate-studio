@@ -69,7 +69,7 @@ export function createWorkshop(api){
  <div id="gallery-replay-tools" class="gallery-controls" hidden><button id="gallery-replay-toggle" aria-pressed="false">▷ 播放回看</button><input id="gallery-replay-position" type="range" min="0" max="0" value="0" aria-label="实际创作快照进度"><span id="gallery-replay-label"></span></div>
  <p id="gallery-credit" class="gallery-credit"></p></section>
  <aside class="gallery-exports"><p class="eyebrow">TAKE IT WITH YOU</p><h3>让作品，<br><span>继续被看见。</span></h3><p>保存可继续编辑的方案，或带走能转动、能回看的作品页。</p>
- <button id="gallery-save">＋ 收藏到我的作品<small>保存在当前浏览器，随时继续编辑</small></button><button id="gallery-project">↗ 完整创作方案<small>JSON · 原料、轮廓、刻线与实际快照</small></button><button id="gallery-offline">↗ 可交互作品页<small>独立 HTML · 离线转动、对照与回看</small></button><button id="gallery-video">▷ 录制旋转短片<small>约 6 秒 · 1280×720 · 保留素材署名</small></button><button id="gallery-screenshot">↗ 保存当前 3D 视角<small>PNG · 包含当前搭配与来源</small></button><div class="gallery-paper-exports"><button id="gallery-card">方案卡 PNG</button></div><p id="gallery-status" role="status" aria-live="polite">先转动欣赏，也可以回到创作继续修改。</p></aside></div>`;
+ <button id="gallery-save">✓ 更新我的作品<small>入展自动保存 · 修改后可更新同一记录</small></button><button id="gallery-project">↗ 完整创作方案<small>JSON · 原料、轮廓、刻线与实际快照</small></button><button id="gallery-offline">↗ 可交互作品页<small>独立 HTML · 离线转动、对照与回看</small></button><button id="gallery-video">▷ 录制旋转短片<small>约 6 秒 · 1280×720 · 保留素材署名</small></button><button id="gallery-screenshot">↗ 保存当前 3D 视角<small>PNG · 包含当前搭配与来源</small></button><div class="gallery-paper-exports"><button id="gallery-card">方案卡 PNG</button></div><p id="gallery-status" role="status" aria-live="polite">先转动欣赏，也可以回到创作继续修改。</p></aside></div>`;
  document.body.append(gallery);$('.gallery-paper-exports').append(posterEntry);
  $('#open-poster').innerHTML='纪念海报 PNG';
  const previewHome=document.createComment('studio 3D preview');$('#preview-scene').before(previewHome);
@@ -133,8 +133,8 @@ export function createWorkshop(api){
  }
  async function openGallery(){
   if(!state.image||!state.analysis){toast('请先选一块原料。');return;}
-  stopTutorial();capture('完成作品');$('#gallery-title').textContent=state.workTitle||'石里有境 · 我的玛瑙作品';$('#gallery-credit').textContent=creditFor(state.sample)+' · 数字工艺外观示意';$('#gallery-background').value=state.presentation.backdrop;$('#gallery-light').value=state.light;
-  gallery.showModal();$('#gallery-three').append($('#preview-scene'));$('#gallery-replay-position').max=Math.max(0,timeline.length-1);$('#gallery-replay-position').value='0';await setGalleryMode('three');
+  stopTutorial();capture('完成作品');const saved=api.saveDesign({automatic:true});$('#gallery-title').textContent=state.workTitle||'石里有境 · 我的玛瑙作品';$('#gallery-credit').textContent=creditFor(state.sample)+' · 数字工艺外观示意';$('#gallery-background').value=state.presentation.backdrop;$('#gallery-light').value=state.light;
+  gallery.showModal();$('#gallery-three').append($('#preview-scene'));$('#gallery-replay-position').max=Math.max(0,timeline.length-1);$('#gallery-replay-position').value='0';await setGalleryMode('three');status(saved?'已自动保存到“我的作品”；再次入展会更新这件作品。':'未能保存到浏览器，请先下载完整方案保留作品。');
  }
  async function setGalleryMode(mode){
   if(recording)return;stopReplay();galleryMode=mode;
