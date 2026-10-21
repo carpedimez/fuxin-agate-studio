@@ -1,9 +1,10 @@
 import {createCraftTexture,createGrooveNormal,drawFinished,traceShape} from './craft.mjs';
 import {motifOutline} from './core.mjs';
+import {materialPreview} from './material-preview.mjs';
 
 const steps=[
  {word:'先观\n纹色',title:'选一块喜欢的石',action:'点击左侧原料，观察它的天然条带。',tips:['可以换一块原料，或导入自己的照片。','选好后，点击下方“开始构形”。'],tools:['inspiration']},
- {word:'借色\n成形',title:'让颜色落在合适的位置',action:'在画布上拖动轮廓，让想保留的纹色进入外形。',tips:['左侧切换外形；滚轮调整大小，Shift＋滚轮旋转。','右下角实时显示取形效果，满意后去刻线。'],tools:['comparison']},
+ {word:'选色\n构形',title:'把喜欢的纹色放进外形里',action:'拖动轮廓挑选纹理；也可在左侧选颜色，再点“自动寻找所选颜色”。',tips:['左侧选择外形；滚轮调整大小，Shift＋滚轮旋转。','系统只调整取形位置，保留原石本来的颜色。'],tools:['comparison']},
  {word:'落笔\n成艺',title:'在作品上留下一笔',action:'直接在作品上按住并拖动，刻出自己的线条。',tips:['先用“添一组筋线”试试，也可添加纹样、落款。','画布上方可切换擦线；支持撤销与重做。'],tools:['patterns','lettering']},
  {word:'予石\n以光',title:'给它一点光，准备入展',action:'拖动作品查看侧面，调整光泽、厚度与搭配。',tips:['在左侧为作品起名，尝试挂件或展台。','完成后进入作品展厅，赏玩、回看并带走成果。'],tools:['styling']}
 ];
@@ -21,16 +22,34 @@ export function createWorkshop(api){
  const material=$('#studio .material-panel'),design=$('#studio .design-panel');
  const shape=$('.shape-controls'),engrave=$('.engrave-controls'),finish=$('.finish-controls');
  material.append(shape,engrave,finish);
- const advanced=document.createElement('details');advanced.className='work-advanced';advanced.innerHTML='<summary>进阶：选取与修正色区</summary>';
- $('.color-picker').before(advanced);advanced.append($('.color-picker'));shape.append(advanced);
+ const advanced=document.createElement('details');advanced.className='work-advanced';advanced.innerHTML='<summary>精细调整选色范围</summary>';
+ const color=$('.color-picker');
+ for(const node of [color.querySelector('.check'),$('#reanalyze'),$('.brush-tools'),$('#reset-mask'),$('#analysis-status'),$('#pick-color')])advanced.append(node);
+ color.querySelectorAll(':scope>.hint').forEach(node=>node.remove());
+ color.querySelector('.panel-heading h2').textContent='选择想保留的颜色';
+ color.querySelector('.panel-heading').after(Object.assign(document.createElement('p'),{className:'work-color-help',textContent:'选一个色块，自动寻找取形位置。只移动轮廓，保留原石本色。'}));
+ color.append(Object.assign(document.createElement('p'),{id:'work-color-state',className:'work-color-state'}),$('#optimize'));
+ $('#motif').after(color);shape.append(advanced);
+ $('#optimize').innerHTML='自动寻找所选颜色 <span>↗</span>';$('#optimize').title='自动调整轮廓位置，尽量保留所选颜色，不改变原料本色';
+ const lock=$('#lock-scale').closest('label');advanced.prepend(lock);
+ for(const option of $('#motif').options)option.textContent=({fruit:'果实形',leaf:'叶片形',mountain:'山峰形',drop:'水滴形',round:'圆牌形',heart:'心形',custom:'我的手绘轮廓'})[option.value]||option.textContent;
+ const stepLabel=$('.craft-stepper button[data-craft-step="1"] span');stepLabel.firstChild.textContent='选色构形';
+ $('.shape-controls .panel-heading h2').textContent='选择外形与取色位置';
+ $('.shape-controls>.hint').textContent='拖动轮廓挑选纹理，右下角会实时显示取形效果。';
+ const penSettings=document.createElement('details');penSettings.className='work-advanced';penSettings.innerHTML='<summary>更多笔触：直线、镜像与深浅</summary>';
+ const penGroup=$('.engrave-controls .feature-group');penGroup.before($('#preset-lines'),penSettings);penSettings.append(penGroup);
+ $('.engrave-controls .step-description').textContent='在作品上按住拖动即可刻线。也可先添筋线，或用上方工具添加纹样与文字。';
  const metrics=document.createElement('details');metrics.className='work-advanced';metrics.innerHTML='<summary>查看构图指标与依据</summary>';
  for(const el of [$('.metrics'),$('#layout-explanation'),$('.method-details')])metrics.append(el);shape.append(metrics);
  finish.prepend($('.work-title'));
  design.classList.add('work-guide');
  design.insertAdjacentHTML('afterbegin','<div class="work-guide-content"><p class="eyebrow" id="work-guide-index"></p><h2 id="work-guide-word"></h2><strong id="work-guide-title"></strong><p id="work-guide-action"></p><ol id="work-guide-tips"></ol><button id="work-demo-button" class="work-demo-button">▷ 看这个动作</button><div id="work-context-tools"></div><p id="work-feedback" role="status" aria-live="polite">选好原料，就可以开始了。</p></div>');
  const slots=$('#work-context-tools');
+ const toolRack=document.createElement('section');toolRack.id='work-tool-rack';toolRack.setAttribute('aria-labelledby','work-tools-title');toolRack.innerHTML='<h2 id="work-tools-title">本步工具</h2>';
+ toolRack.append(slots);material.prepend(toolRack);
  const posterEntry=$('#open-poster');posterEntry.remove();
  for(const key of ['inspiration','comparison','patterns','lettering','styling'])slots.append($('#open-'+key));
+ for(const [key,title,description] of [['inspiration','套用灵感参考','选一种构思，再自行修改'],['comparison','比较创作方案','暂存不同构图，放在一起看'],['patterns','添加纹样','选图案，拖动摆放后刻入'],['lettering','刻字落款','输入文字，拖动确定位置'],['styling','文创搭配','切换挂绳、展台与背景']]){const button=$('#open-'+key),span=button.querySelector('span');span.firstChild.textContent=title;span.querySelector('small').textContent=description;}
  $('.playground').remove();
  $('#canvas-stage').insertAdjacentHTML('beforeend','<div id="work-demo" hidden><canvas id="work-demo-canvas" width="840" height="600"></canvas><span id="work-demo-caption"></span><button type="button" id="work-demo-close" aria-label="关闭操作示范">×</button></div>');
  $('#work-demo-close').onclick=stopTutorial;
@@ -45,8 +64,8 @@ export function createWorkshop(api){
  gallery.innerHTML=`<header class="gallery-heading"><div><small>YOUR WORK · YOUR STORY / 作品展厅</small><h2 id="gallery-title">我的玛瑙作品</h2></div><button id="gallery-close" class="work-outline">← 继续创作</button></header>
  <div class="gallery-layout"><section class="gallery-main"><div class="gallery-tabs" role="tablist" aria-label="作品欣赏方式"><button data-gallery-mode="three" role="tab">立体赏玩</button><button data-gallery-mode="compare" role="tab">原石对照</button><button data-gallery-mode="replay" role="tab">创作回看</button></div>
  <div class="gallery-stage"><div id="gallery-three"></div><canvas id="gallery-flat" width="1000" height="760" hidden aria-label="原石对照与实际创作快照"></canvas><span id="gallery-stage-label">拖动旋转 · 滚轮缩放</span></div>
- <div id="gallery-three-tools" class="gallery-controls"><button data-gallery-view="front">正面</button><button data-gallery-view="side">侧面</button><button data-gallery-view="back">背面</button><button id="gallery-spin" aria-pressed="false">▷ 自动旋转</button><label>背景 <select id="gallery-background"><option value="paper">暖纸展厅</option><option value="ink">墨色工坊</option><option value="night">夜色藏蓝</option></select></label><label>光照 <select id="gallery-light"><option value="left">左侧柔光</option><option value="right">右侧柔光</option></select></label></div>
- <div id="gallery-compare-tools" class="gallery-controls" hidden><span>原料</span><input id="gallery-compare" type="range" min="0" max="100" value="50" aria-label="原石与成器对照分界"><span>成器</span><small>拖动滑杆查看原料与取形后的作品</small></div>
+ <div id="gallery-three-tools" class="gallery-controls"><button data-gallery-view="front">正面</button><button data-gallery-view="side">侧面</button><button data-gallery-view="back">背面</button><button id="gallery-spin" aria-pressed="false">▷ 自动旋转</button><label>背景 <select id="gallery-background"><option value="paper">暖纸展厅</option><option value="ink">墨色工坊</option><option value="night">夜色藏蓝</option></select></label><label>光照 <select id="gallery-light"><option value="left">光从左侧照来</option><option value="right">光从右侧照来</option></select></label></div>
+ <div id="gallery-compare-tools" class="gallery-controls" hidden><span>只看成器</span><input id="gallery-compare" type="range" min="0" max="100" value="50" aria-label="原石与成器对照分界"><span>只看原料</span><small>移动分界线：画面左边看原料，右边看成器</small></div>
  <div id="gallery-replay-tools" class="gallery-controls" hidden><button id="gallery-replay-toggle" aria-pressed="false">▷ 播放回看</button><input id="gallery-replay-position" type="range" min="0" max="0" value="0" aria-label="实际创作快照进度"><span id="gallery-replay-label"></span></div>
  <p id="gallery-credit" class="gallery-credit"></p></section>
  <aside class="gallery-exports"><p class="eyebrow">TAKE IT WITH YOU</p><h3>让作品，<br><span>继续被看见。</span></h3><p>保存可继续编辑的方案，或带走能转动、能回看的作品页。</p>
@@ -80,9 +99,11 @@ export function createWorkshop(api){
   $('#work-guide-word').replaceChildren(...s.word.split('\n').map(word=>Object.assign(document.createElement('span'),{textContent:word})));
   $('#work-guide-title').textContent=s.title;$('#work-guide-action').textContent=s.action;$('#work-guide-tips').replaceChildren(...s.tips.map(text=>Object.assign(document.createElement('li'),{textContent:text})));
   for(const key of ['inspiration','comparison','patterns','lettering','styling'])$('#open-'+key).hidden=!s.tools.includes(key);
+  slots.classList.toggle('two-tools',s.tools.length===2);$('#work-tools-title').textContent=['灵感参考','构图辅助工具','刻线辅助工具','作品搭配工具'][n];
   $('#step-goal').textContent=s.title;$('#step-tip').textContent=s.action;
   $('#caption-text').textContent=['先观察纹色，选好后开始构形。','轮廓和取形预览会随操作实时更新。','刻线与落款会同步保留在三维作品中。','作品已进入三维预览，完成后可进入展厅。'][n];
   if(n===3)$('#next-step').innerHTML='进入作品展厅 <span>↗</span>';
+  if(n===1)$('#next-step').innerHTML='确认取色位置，去刻线 <span>→</span>';
   $('#work-feedback').textContent=['当前原料：'+$('#canvas-sample-name').textContent,'拖动轮廓，右下角查看实时取形。',state.strokes.length?`已留下 ${state.strokes.length} 道刻线，可继续添加或撤销。`:'试着在作品上拖动，或先添一组筋线。','完成后进入展厅，有 6 种成果保存方式。'][n];
   // Restrict preview modes to the current task, while preserving their handlers.
   $('#view-color').hidden=n>=2;$('#view-carved').hidden=n===0||n===3;$('#view-preview').hidden=n!==3;
@@ -106,7 +127,7 @@ export function createWorkshop(api){
   const hash=JSON.stringify([state.sample,state.kind,state.pose,state.selectedColor,state.strokes,state.inscription,state.polish,state.thickness,state.presentation,state.workTitle,state.light]);
   if(hash===lastHash)return;lastHash=hash;
   const c=makeCanvas(480,360),ctx=c.getContext('2d');ctx.fillStyle='#eee2cd';ctx.fillRect(0,0,480,360);
-  if(state.step===0){const k=Math.min(430/state.image.width,310/state.image.height);ctx.drawImage(state.image,(480-state.image.width*k)/2,(360-state.image.height*k)/2,state.image.width*k,state.image.height*k);}else drawFinished(ctx,480,360,state,{background:false,padding:.12});
+  if(state.step===0){const image=materialPreview(state),k=Math.min(430/image.width,310/image.height);ctx.drawImage(image,(480-image.width*k)/2,(360-image.height*k)/2,image.width*k,image.height*k);}else drawFinished(ctx,480,360,state,{background:false,padding:.12});
   timeline.push({label:reason,step:state.step,time:new Date().toISOString(),image:c.toDataURL('image/jpeg',.72),hash});
   if(timeline.length>24)timeline.splice(1,1);
  }
@@ -128,7 +149,7 @@ export function createWorkshop(api){
  // Tabs support both pointer input and the standard keyboard arrow pattern.
  $('.gallery-tabs').addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const ids=['three','compare','replay'],i=ids.indexOf(galleryMode),next=e.key==='Home'?0:e.key==='End'?2:(i+(e.key==='ArrowRight'?1:2))%3;setGalleryMode(ids[next]);$(`[data-gallery-mode="${ids[next]}"]`).focus();});
  function fitImage(ctx,img,w,h){const k=Math.min((w-100)/img.width,(h-100)/img.height);ctx.drawImage(img,(w-img.width*k)/2,(h-img.height*k)/2,img.width*k,img.height*k);}
- function paintComparison(){const c=$('#gallery-flat'),ctx=c.getContext('2d'),w=c.width,h=c.height,x=w*Number($('#gallery-compare').value)/100;ctx.fillStyle='#eee2cd';ctx.fillRect(0,0,w,h);drawFinished(ctx,w,h,state,{background:false,padding:.13});ctx.save();ctx.beginPath();ctx.rect(0,0,x,h);ctx.clip();ctx.fillStyle='#e4d4b9';ctx.fillRect(0,0,w,h);fitImage(ctx,state.image,w,h);ctx.restore();ctx.strokeStyle='#a2573c';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();$('#gallery-stage-label').textContent='左：整块原料 / 右：本次取形与刻线 · 非同位置透视对齐';}
+ function paintComparison(){const c=$('#gallery-flat'),ctx=c.getContext('2d'),w=c.width,h=c.height,x=w*Number($('#gallery-compare').value)/100;ctx.fillStyle='#eee2cd';ctx.fillRect(0,0,w,h);drawFinished(ctx,w,h,state,{background:false,padding:.13});ctx.save();ctx.beginPath();ctx.rect(0,0,x,h);ctx.clip();ctx.fillStyle='#e4d4b9';ctx.fillRect(0,0,w,h);fitImage(ctx,materialPreview(state),w,h);ctx.restore();ctx.strokeStyle='#a2573c';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();$('#gallery-stage-label').textContent='左：整块原料 / 右：本次取形与刻线 · 非同位置透视对齐';}
  let replayPaint=0;
  async function paintReplay(){const token=++replayPaint,index=Number($('#gallery-replay-position').value),item=timeline[index];if(!item)return;let image;try{image=await imageFrom(item.image);}catch{if(token===replayPaint)status('这张快照未能读取，可以选择其他快照，或继续欣赏作品。');return;}if(token!==replayPaint)return;const c=$('#gallery-flat'),ctx=c.getContext('2d');ctx.fillStyle='#eee2cd';ctx.fillRect(0,0,c.width,c.height);fitImage(ctx,image,c.width,c.height);$('#gallery-replay-label').textContent=`${index+1} / ${timeline.length}`;$('#gallery-stage-label').textContent=item.label+' · '+new Date(item.time).toLocaleTimeString('zh-CN');}
  function stopReplay(){clearInterval(replayTimer);replayTimer=0;$('#gallery-replay-toggle').textContent='▷ 播放回看';$('#gallery-replay-toggle').setAttribute('aria-pressed','false');}
@@ -138,7 +159,7 @@ export function createWorkshop(api){
   if(!state.image)return;stopTutorial();const token=demoEpoch,n=state.step,layer=$('#work-demo'),c=$('#work-demo-canvas'),ctx=c.getContext('2d'),start=performance.now();layer.hidden=false;$('#work-demo-caption').textContent=['操作示范：左侧选择原料，观察天然纹色','操作示范：拖动轮廓，挑选想保留的颜色','操作示范：按住拖动，在作品上留下一笔','操作示范：调整光泽，再拖动作品查看厚度'][n];
   const draft={...state,pose:{...state.pose},strokes:structuredClone(state.strokes)},reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;
   const frame=now=>{if(token!==demoEpoch)return;const t=Math.min(1,(now-start)/4000),a=reduced?.6:(Math.sin(t*Math.PI*2)*.5+.5);ctx.fillStyle='#eee2cd';ctx.fillRect(0,0,840,600);
-   if(n<=1){fitImage(ctx,state.image,840,600);if(n===1){ctx.save();ctx.translate(330+a*160,300);ctx.scale(140,140);traceShape(ctx,state.kind);ctx.fillStyle='#fff4cf2a';ctx.fill();ctx.strokeStyle='#9e4936';ctx.lineWidth=.03;ctx.stroke();ctx.restore();}ctx.fillStyle='#fff7e8';ctx.beginPath();ctx.arc(330+a*160,n===0?210+a*70:300,12,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#9e4936';ctx.lineWidth=3;ctx.stroke();}
+   if(n<=1){fitImage(ctx,materialPreview(state),840,600);if(n===1){ctx.save();ctx.translate(330+a*160,300);ctx.scale(140,140);traceShape(ctx,state.kind);ctx.fillStyle='#fff4cf2a';ctx.fill();ctx.strokeStyle='#9e4936';ctx.lineWidth=.03;ctx.stroke();ctx.restore();}ctx.fillStyle='#fff7e8';ctx.beginPath();ctx.arc(330+a*160,n===0?210+a*70:300,12,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#9e4936';ctx.lineWidth=3;ctx.stroke();}
    else{if(n===2)draft.strokes=[...state.strokes,{width:.023,depth:.6,points:Array.from({length:Math.max(2,Math.round(t*40))},(_,i)=>[-.5+i*.025,Math.sin(i*.08)*.15])}];else draft.polish=.2+a*.7;drawFinished(ctx,840,600,draft,{background:false,padding:.14});}
    if(!reduced&&t<1)demoFrame=requestAnimationFrame(frame);else if(!reduced)setTimeout(()=>{if(token===demoEpoch)stopTutorial();},800);
   };frame(start);
@@ -146,7 +167,7 @@ export function createWorkshop(api){
  async function exportOffline(){
   const button=$('#gallery-offline');button.disabled=true;status('正在封装当前作品与离线欣赏程序…');
   try{capture('保存作品页');const viewerUrl=new URL('./viewer.bundle.js',import.meta.url);viewerUrl.search=new URL(import.meta.url).search;const response=await fetch(viewerUrl);if(!response.ok)throw Error('离线欣赏程序暂时未能读取，请稍后重试。');const script=await response.text();
-   const source=makeCanvas(720,540),ctx=source.getContext('2d');ctx.fillStyle='#eee2cd';ctx.fillRect(0,0,720,540);fitImage(ctx,state.image,720,540);
+   const source=makeCanvas(720,540),ctx=source.getContext('2d');ctx.fillStyle='#eee2cd';ctx.fillRect(0,0,720,540);fitImage(ctx,materialPreview(state),720,540);
    const finished=makeCanvas(900,700);finished.getContext('2d').fillStyle='#eee2cd';finished.getContext('2d').fillRect(0,0,900,700);drawFinished(finished.getContext('2d'),900,700,state,{background:false});
    const data={title:state.workTitle||'石里有境 · 我的作品',credit:creditFor(state.sample),references:referencesFor(state.sample),kind:state.kind,outline:motifOutline(state.kind),texture:createCraftTexture(state,{size:768}).toDataURL(),normal:createGrooveNormal(state.strokes,384,state.inscription).toDataURL(),polish:state.polish,light:state.light,thickness:state.thickness,presentation:{...state.presentation},source:source.toDataURL('image/jpeg',.82),finished:finished.toDataURL(),timeline:timeline.map(({hash,...row})=>row),project:api.projectData()};
    const json=JSON.stringify(data).replace(/</g,'\\u003c'),code=script.replace(/<\/script/gi,'<\\/script');

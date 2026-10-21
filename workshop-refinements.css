@@ -1,0 +1,92 @@
+/* Light native form controls, including options in dialogs outside .page. */
+body select,body select option,body select optgroup{color-scheme:light;background-color:#fffaf0;color:#493728}
+body select{border:1px solid #ad8b655e;border-radius:5px}
+body select:focus-visible{outline:2px solid #386358;outline-offset:3px}
+body select option:checked{background-color:#e8eee4;color:#284d40}
+body select:disabled{background-color:#eee8db;color:#7d6c59}
+body .play-dialog :is(select,input[type=text],textarea){font-size:15px;background:#fffaf0;color:#493728;border:1px solid #ad8b655e;padding:10px;border-radius:5px}
+body .play-dialog select option{background:#fffaf0;color:#493728}
+.play-dialog .field-label,.play-dialog .check,.play-dialog .play-position label{font-size:14px;color:#644b37;line-height:1.7}
+.play-dialog .play-dialog-intro{font-size:14px;color:#70563e}.play-dialog .hint{font-size:12px;line-height:1.85;color:#80664c}
+.play-dialog .primary,.play-dialog .text-button{font-size:14px}.play-dialog .pattern-library span{font-size:12px}
+.play-dialog .play-position{gap:16px}.play-dialog .play-position>label{min-width:0;flex:1}
+.axis-captions{display:flex;justify-content:space-between;gap:10px;font-size:12px;line-height:1.6;color:#8c7052}
+.play-editor canvas#pattern-preview,.play-editor canvas#lettering-preview{background:#eee2cd;border:1px solid #c3a47a33;border-radius:8px}
+
+/* Real control names are .sample; keep the visual hierarchy readable at 100% zoom. */
+.workbench .studio-layout{grid-template-columns:300px minmax(0,1fr) 240px;gap:14px}
+.workbench .panel{padding:17px}
+.workbench .material-panel .panel-heading h2{font-size:18px;line-height:1.45}
+.workbench .panel-heading>span{font-size:12px}
+.workbench .material-panel .field-label,.workbench .sliders label,.workbench .work-title label{font-size:14px;line-height:1.6}
+.workbench .hint,.workbench .subtle,.workbench .step-description{font-size:13px;line-height:1.85}
+.workbench .material-panel :is(select,input[type=text]){font-size:14px;min-height:40px}
+.workbench .material-panel :is(.feature-button,.primary,.text-button){font-size:14px;line-height:1.5}
+.workbench .material-panel .check{font-size:13px;line-height:1.8}
+.workbench .work-advanced>summary{font-size:13px;line-height:1.7;padding-bottom:4px;min-height:31px}
+.workbench .work-advanced .feature-group{margin-top:9px;padding-top:0;border-top:0}
+.workbench .sample-list{gap:10px}.workbench .sample{padding:10px;gap:11px;border-radius:5px}
+.workbench .sample img{width:46px;height:46px;background:#eee2cd;border-radius:4px;object-fit:contain}
+.workbench .sample strong{font-size:15px;line-height:1.6}.workbench .sample small{font-size:12px;line-height:1.6}
+.workbench .upload{padding:16px 8px}.workbench .upload>span{font-size:14px}.workbench .upload small{font-size:12px}
+.workbench .brush-tools button{font-size:12px;padding:8px 5px}.workbench .candidate-list button{font-size:13px;padding:8px}
+.workbench .light-presets button,.workbench .view-actions button{font-size:13px;padding:8px 5px}
+.workbench .polish-labels{font-size:12px}.workbench .styling-panel summary{font-size:14px;line-height:1.7}
+.workbench .stroke-count span{font-size:12px}.workbench .stroke-count strong{font-size:28px}
+.workbench .craft-stepper span{font-size:15px}.workbench .craft-stepper b{font-size:12px}
+.workbench .craft-navigation strong{font-size:15px}.workbench .craft-navigation span:not(.primary span){font-size:12px}
+.workbench .craft-navigation .primary{font-size:14px;padding:11px 18px;min-width:190px}
+.workbench .craft-navigation>.text-button{font-size:13px}
+.workbench .page-heading>.module-guide-back,.workbench .project-import{font-size:12px}
+.workbench .heading-actions .primary{font-size:13px}.workbench .page-heading .eyebrow{font-size:10px}
+.workbench .canvas-toolbar{min-height:43px}.workbench .canvas-toolbar .segmented button{font-size:13px;padding:6px 10px}
+.workbench .canvas-toolbar .quiet{font-size:12px}.workbench .canvas-top-label>span{font-size:15px}.workbench .canvas-top-label small{font-size:9px}
+.workbench .canvas-bottom-label>span{font-size:13px;line-height:1.8}.workbench .canvas-bottom-label small{font-size:10px}
+.workbench .work-stage-badge{font-size:11px}.workbench .canvas-caption{font-size:12px;line-height:1.7;min-height:33px}
+.workbench .comparison-control{font-size:12px;padding:7px 12px;min-height:35px;white-space:nowrap}
+.workbench .engrave-toolbar button{font-size:13px;padding:6px 10px}.workbench .engrave-toolbar{top:50px}
+.workbench .result-peek{background:#eee2cdeF}.workbench .result-peek>span{font-size:11px;line-height:1.6}
+#studio.workbench[data-backdrop="paper"][data-view="preview"] .canvas-top-label,#studio.workbench[data-backdrop="paper"][data-view="preview"] .canvas-bottom-label{background:#fff8e5dd;border-color:#b4936330;color:#6b4b33;border-radius:5px}
+#studio.workbench[data-backdrop="paper"][data-view="preview"] .canvas-bottom-label small{color:#886b4b}
+
+#work-tool-rack{border:1px solid color-mix(in srgb,var(--work-ink) 30%,transparent);border-top:3px solid var(--work-ink);background:var(--work-tint);border-radius:7px;padding:12px;margin:0 0 19px}
+#work-tools-title{font:700 15px/1.5 'Microsoft YaHei','PingFang SC',sans-serif;letter-spacing:0;color:var(--work-ink);margin:0 0 10px}
+#work-tool-rack #work-context-tools{display:grid;grid-template-columns:minmax(0,1fr);gap:8px;margin:0;min-width:0}
+#work-tool-rack #work-context-tools.two-tools{grid-template-columns:repeat(2,minmax(0,1fr))}
+#work-tool-rack #work-context-tools button{display:grid;grid-template-columns:22px minmax(0,1fr);gap:7px;align-items:center;padding:11px 8px;background:#fffdf5;border:1px solid color-mix(in srgb,var(--work-ink) 40%,transparent);min-height:66px;min-width:0;box-shadow:0 3px 8px #87603909}
+#work-tool-rack #work-context-tools button:hover{background:#fff7df;border-color:var(--work-ink)}
+#work-tool-rack #work-context-tools i{font-size:21px}#work-tool-rack #work-context-tools span{font-size:14px;font-weight:600;line-height:1.6;min-width:0}
+#work-tool-rack #work-context-tools small{display:block;font-size:12px;font-weight:400;line-height:1.6;margin-top:3px;color:#876a4a}
+#work-tool-rack #work-context-tools b{display:none}
+#work-tool-rack #work-context-tools.two-tools button{display:block;position:relative;min-height:92px}
+#work-tool-rack #work-context-tools.two-tools i{position:absolute;right:8px;top:12px;font-size:18px}
+#work-tool-rack #work-context-tools.two-tools span{display:block}
+#work-tool-rack #work-context-tools.two-tools small{padding-top:5px}
+.play-dialog h2{font-family:'Microsoft YaHei','PingFang SC',sans-serif;font-weight:700;font-size:27px}
+.workbench .work-guide{overflow-x:hidden;overflow-y:auto}
+.workbench .work-guide::after{right:0}
+.work-guide-content{min-width:0;overflow-wrap:anywhere}
+.work-guide-content>.eyebrow{font-size:10px;letter-spacing:.5px}
+#work-guide-title{font-size:16px;line-height:1.7}#work-guide-action{font-size:14px;line-height:1.8}
+#work-guide-tips{font-size:13px;line-height:1.85}#work-feedback{font-size:13px;line-height:1.8}
+.work-demo-button{font-size:14px;padding:10px;line-height:1.6}
+.work-color-help{font-size:13px;line-height:1.85;color:#795d43;margin:8px 0 11px}
+.work-color-state{font-size:12px;line-height:1.7;color:#8b6038;margin:9px 0}
+.workbench .color-picker .divider{display:none}.workbench .color-picker{margin:17px 0 15px;padding-top:14px;border-top:1px solid #b8976930}
+.workbench .color-picker .palette{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;margin:9px 0}
+.workbench .palette .swatch{position:relative;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;gap:4px;padding:5px 3px;min-width:0;border:1px solid #b08f6145;border-radius:5px;background:#fffaf0}
+.workbench .palette .swatch i{width:100%;height:26px;min-width:0;flex:none;border-radius:3px}
+.workbench .palette .swatch span{font-size:12px;line-height:1.4}.workbench .palette .swatch small{font-size:11px;line-height:1.4;position:static}
+.workbench .palette .swatch.selected{border:2px solid var(--work-ink);padding:4px 2px;background:var(--work-tint)}
+.workbench .palette .swatch.selected::after{content:'✓';position:absolute;right:4px;top:4px;font:700 13px/1.2 sans-serif;color:#fff;background:#386358;border-radius:50%;padding:1px 3px}
+.workbench #optimize{font-size:14px;min-height:45px;padding:10px}
+.workbench #work-demo-caption{font-size:14px}
+.gallery-controls :is(button,select){font-size:13px;padding:8px}.gallery-controls label,.gallery-controls span,.gallery-controls small{font-size:12px}
+.gallery-exports>button{font-size:15px}.gallery-exports>button small,.gallery-exports>p:not(.eyebrow),.gallery-exports #gallery-status{font-size:12px}
+.gallery-paper-exports button,.work-outline,.gallery-tabs button{font-size:13px}.gallery-credit{font-size:11px}#gallery-stage-label{font-size:12px}
+@media(min-width:851px){#studio.workbench:not([hidden]){grid-template-rows:56px 50px minmax(0,1fr) 62px;gap:8px}}
+@media(min-width:1800px){.workbench .studio-layout{grid-template-columns:340px minmax(0,1fr) 270px;gap:18px}.workbench .material-panel .panel-heading h2{font-size:20px}.workbench .sample strong{font-size:16px}.workbench .hint,.workbench .step-description{font-size:14px}.workbench .material-panel .field-label{font-size:15px}}
+@media(min-width:851px) and (max-width:1100px){.workbench .studio-layout{grid-template-columns:265px minmax(0,1fr) 195px;gap:10px}.workbench .panel{padding:13px}.workbench .page-heading{gap:12px}.workbench .page-heading h1{font-size:19px}.workbench .hint{font-size:13px}}
+@media(min-width:851px) and (max-height:650px){#studio.workbench:not([hidden]){grid-template-rows:48px 46px minmax(0,1fr) 56px;gap:7px}.workbench .craft-stepper{height:46px}.workbench .craft-navigation{min-height:56px}.workbench .craft-navigation span:not(.primary span){display:none}#work-guide-title{font-size:15px}#work-guide-action,#work-feedback{font-size:13px}.workbench .canvas-bottom-label>span{font-size:12px}.workbench .engrave-toolbar{top:40px}}
+@media(max-width:850px){.workbench .studio-layout{display:flex}.workbench .panel{padding:16px}.workbench .work-guide{overflow:visible}.work-guide-content{display:block}#work-guide-title{font-size:16px}#work-guide-action{font-size:14px}#work-feedback{font-size:13px}.workbench .sample strong{font-size:14px}.workbench .sample small{font-size:11px}.workbench .craft-navigation .primary{font-size:14px}.workbench .canvas-caption{font-size:11px}.gallery-layout{grid-template-columns:minmax(0,1fr) 260px}}
+@media(max-width:560px){.workbench .sample-list{grid-template-columns:1fr}.workbench .sample{flex-direction:row;padding:9px}.workbench .sample img{width:40px;height:40px}.workbench .craft-stepper span{font-size:12px}.workbench .craft-stepper b{font-size:11px}.workbench .work-stage-badge{font-size:10px}.workbench .canvas-bottom-label>span{font-size:12px}.workbench .page-heading>.module-guide-back{font-size:11px}.workbench .canvas-toolbar .segmented button{font-size:12px}.workbench .engrave-toolbar button{font-size:12px}.workbench .work-guide::after{font-size:120px}#work-tool-rack{margin-bottom:17px}.play-dialog .play-position{flex-direction:column;gap:10px}.gallery-layout{display:block}}
