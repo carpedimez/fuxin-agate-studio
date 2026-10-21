@@ -15,5 +15,12 @@
   "placesSource": "https://whly.ln.gov.cn/whly/wlzt/sjly/ajjq/2025112116121250991/index.shtml",
   "craftSource": "https://rsj.fuxin.gov.cn/content/2026/1037027.html",
   "verifiedAt": "2026-10-21",
-  "mapArtwork": "本站原创SVG主题地图；山形、建筑、水面与连线为插画和叙事关系，不表示实际地貌、道路或可通行路线。"
+  "mapArtwork": "用户提供的手绘导览参考图，叠加学习入口与主题连线；学习入口非坐标，连线非道路。",
+  "artwork": {
+    "file": "fuxin-reference-map.png",
+    "source": "用户于本会话提供的《阜新市玛瑙导引图》参考图片",
+    "changes": "原图原样归档，网页叠加可点击学习线索、缩放和平移；学习标记不表示坐标、距离或道路。",
+    "rights": "图片未附绘者与原始许可，待核实；不宣称为本站原创或官方测绘。",
+    "imageGeneration": "本次内置 image_gen 多次网络连接失败，未采用任何新生成图片。"
+  }
 }
