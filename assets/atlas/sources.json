@@ -1,0 +1,19 @@
+{
+  "outline": {
+    "url": "https://geo.datav.aliyun.com/areas_v3/bound/210900_full.json",
+    "provider": "阿里云 DataV.GeoAtlas 公开区县轮廓",
+    "use": "简化市域方位概览，非测绘底图或道路导航"
+  },
+  "townReference": {
+    "url": "https://www.amap.com/place/B01A20R3QM",
+    "coordinate": [
+      122.221321,
+      42.09239
+    ],
+    "use": "十家子区域方位参考，镇内图标为主题排布，非精确坐标"
+  },
+  "placesSource": "https://whly.ln.gov.cn/whly/wlzt/sjly/ajjq/2025112116121250991/index.shtml",
+  "craftSource": "https://rsj.fuxin.gov.cn/content/2026/1037027.html",
+  "verifiedAt": "2026-10-21",
+  "mapArtwork": "本站原创SVG主题地图；山形、建筑、水面与连线为插画和叙事关系，不表示实际地貌、道路或可通行路线。"
+}

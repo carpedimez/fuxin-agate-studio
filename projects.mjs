@@ -13,5 +13,6 @@ export function validateProject(input){
  if(p.inscription!=null){const t=p.inscription;if(typeof t.text!=='string'||Array.from(t.text).length>8||/[\u0000-\u001f]/.test(t.text)||!['serif','sans'].includes(t.font)||typeof t.vertical!=='boolean')bad();for(const [key,min,max]of [['x',-.85,.85],['y',-.85,.85],['size',.08,.35],['angle',-180,180]])if(!Number.isFinite(t[key])||t[key]<min||t[key]>max)bad();}else p.inscription=null;
  if(p.presentation!=null){if(!['stone','pendant','stand'].includes(p.presentation.style)||!['ink','paper','night'].includes(p.presentation.backdrop)||!['cinnabar','ink','jade'].includes(p.presentation.cord))bad();}else p.presentation={style:'stone',backdrop:'ink',cord:'cinnabar'};
  if(p.workTitle!=null&&(typeof p.workTitle!=='string'||Array.from(p.workTitle).length>24||/[\u0000-\u001f]/.test(p.workTitle)))bad();p.workTitle=p.workTitle||'';
+ if(p.inspiration!=null&&(typeof p.inspiration.id!=='string'||p.inspiration.id.length>40||typeof p.inspiration.title!=='string'||p.inspiration.title.length>80))bad();
  return p;
 }

@@ -11,7 +11,7 @@ const sourceFor=id=>sources.find(s=>s.id===id);
 const bounded=(v,min,max,fallback)=>Number.isFinite(Number(v))?Math.round(Math.min(max,Math.max(min,Number(v)))):fallback;
 
 export function initJourney({toast,download}){
- const root=document.querySelector('#journey'),$=s=>root.querySelector(s),$$=s=>[...root.querySelectorAll(s)];
+ const root=document.querySelector('#journey'),$=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
  const draftKey='agate-journey-draft-v1',learningKey='agate-journey-learning-v1';
  const raw=read(draftKey,{}),storedDraft=raw&&typeof raw==='object'?raw:{};
  const known=new Set();
@@ -106,7 +106,7 @@ export function initJourney({toast,download}){
   $$('[data-connection]').forEach(b=>b.onclick=()=>{selectedConnection=Number(b.dataset.connection);renderConnections();});const c=connections[selectedConnection];$('#journey-connection-label').textContent=c.label;$('#journey-connection-title').textContent=c.title;$('#journey-connection-copy').textContent=c.text;$('#journey-role-copy').textContent=c[role];
  }
  $$('[data-journey-role]').forEach(b=>b.onclick=()=>{role=b.dataset.journeyRole;$$('[data-journey-role]').forEach(v=>v.setAttribute('aria-pressed',String(v===b)));$('#journey-role-copy').textContent=connections[selectedConnection][role];});
- function scrollTo(id){document.getElementById(id)?.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'instant':'smooth',block:'start'});}
+ function scrollTo(id){if(window.agateAtlas){window.agateAtlas.openSection(id);return;}document.getElementById(id)?.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'instant':'smooth',block:'start'});}
  $$('[data-journey-scroll]').forEach(b=>b.onclick=()=>scrollTo(b.dataset.journeyScroll));
  if('IntersectionObserver'in window){const activeObserver=new IntersectionObserver(entries=>{for(const entry of entries)if(entry.isIntersecting){$$('.journey-subnav [data-journey-scroll]').forEach(b=>b.classList.toggle('active',b.dataset.journeyScroll===entry.target.id));}},{rootMargin:'-70px 0px -55% 0px',threshold:0});$$('.journey-chapter').forEach(section=>activeObserver.observe(section));
   if(!matchMedia('(prefers-reduced-motion: reduce)').matches){root.classList.add('journey-anim-ready');const reveal=new IntersectionObserver(entries=>{for(const entry of entries)if(entry.isIntersecting){entry.target.classList.add('revealed');reveal.unobserve(entry.target);}},{threshold:.06});$$('[data-journey-reveal]').forEach(el=>reveal.observe(el));}}

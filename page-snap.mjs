@@ -1,9 +1,8 @@
 // Native snapping remains the fallback. The spring only enhances explicit
 // wheel, keyboard and mouse-drag navigation outside the interactive tools.
 const root=document.documentElement,header=document.querySelector('.header');
-const groups={
- learn:{label:'观石识艺章节导航',panels:['.home-stone-study','.formation-teaser','#agate-gallery','#home-story'],titles:['读懂纹色','石的来历','实物图鉴','非遗手艺']}
-};
+// Learning now opens inside the unified atlas reader; no full-page chapter snapping.
+const groups={};
 const reduce=matchMedia('(prefers-reduced-motion: reduce)');
 Object.values(groups).forEach(group=>{group.panels=group.panels.map(selector=>document.querySelector(selector));group.panels.forEach((panel,i)=>{panel.classList.add('home-snap-panel');panel.dataset.snapPanel=String(i);});});
 let panels=[],titles=[];
