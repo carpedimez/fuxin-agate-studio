@@ -1,0 +1,86 @@
+/* Four editorial posters: existing copy and destinations, distinct mineral palettes. */
+.guide-page .home-entry-card{--poster-ink:#823e30;--poster-base:#702b25;--poster-accent:#f6cf94;--poster-paper:#fff8ed;position:relative;border:1px solid #b5895d45;border-radius:10px;background:var(--poster-paper);box-shadow:0 8px 22px #78553113;isolation:isolate}
+.guide-page .home-entry-card:nth-child(2){--poster-ink:#8c5527;--poster-base:#64432c;--poster-accent:#ffe0a4;--poster-paper:#fff8e9}
+.guide-page .home-entry-card:nth-child(3){--poster-ink:#36655c;--poster-base:#284c46;--poster-accent:#c8e1ba;--poster-paper:#f4f8ef}
+.guide-page .home-entry-card:nth-child(4){--poster-ink:#4c6178;--poster-base:#334b60;--poster-accent:#f0d8ac;--poster-paper:#f4f6f6}
+.guide-page .entry-card-photo{height:clamp(148px,21svh,250px);min-height:0;background:var(--poster-base);overflow:hidden;isolation:isolate}
+.guide-page .entry-card-photo:has(.entry-preview-placeholder){background:var(--poster-base)}
+.guide-page .entry-card-photo>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:70% 50%;filter:saturate(.95);transition:opacity .45s,transform .7s cubic-bezier(.2,.6,.3,1)}
+.guide-page .home-entry-card:first-child .entry-card-photo>img{object-position:65% 48%}
+.guide-page .home-entry-card:nth-child(3) .entry-card-photo>img{object-position:72% 50%}
+.guide-page .entry-card-photo::after{z-index:1;background:linear-gradient(90deg,var(--poster-base) 1%,color-mix(in srgb,var(--poster-base) 88%,transparent) 21%,color-mix(in srgb,var(--poster-base) 37%,transparent) 51%,transparent 82%),linear-gradient(0deg,#16171333,transparent 40%);pointer-events:none}
+.guide-page .entry-card-photo::before{content:attr(data-poster-glyph);position:absolute;z-index:2;right:-.09em;bottom:-.16em;color:transparent;-webkit-text-stroke:1px #ffefd63d;font:900 clamp(150px,14vw,240px)/1 sans-serif;letter-spacing:-.09em;pointer-events:none}
+.guide-page .entry-card-photo .entry-card-number{z-index:3;top:15px;left:19px;font:9px/1.2 monospace;letter-spacing:1px;color:#fff5e3df;text-shadow:0 1px 5px #0004}
+.guide-page .entry-card-photo .entry-card-tag{z-index:3;top:13px;right:14px;bottom:auto;left:auto;border:1px solid #fff5dc65;border-radius:3px;padding:4px 6px;background:#1d241b5c;color:#fff9e8;font-size:8px;line-height:1.2;letter-spacing:1px;backdrop-filter:blur(6px)}
+.guide-page .entry-card-photo .entry-poster-title{position:absolute;z-index:3;left:17px;bottom:18px;margin:0;min-height:0;color:#fff9ed;font:800 clamp(38px,3.3vw,64px)/.99 'Microsoft YaHei','PingFang SC',sans-serif;letter-spacing:-1.5px;text-shadow:0 2px 20px #251d1926}
+.guide-page .entry-poster-title>span{display:block}
+.guide-page .entry-poster-title>span+span{margin-top:4px;margin-left:12px;color:var(--poster-accent);transition:transform .45s cubic-bezier(.2,.7,.25,1)}
+.guide-page .entry-card-copy{padding:17px 19px 15px;background:var(--poster-paper);position:relative;gap:0}
+.guide-page .entry-card-copy::before{content:'';position:absolute;left:19px;top:0;width:32px;height:3px;background:var(--poster-ink)}
+.guide-page .entry-card-copy .entry-card-kicker{display:none}
+.guide-page .entry-card-copy p{font-size:11px;line-height:1.85;margin:0 0 9px;min-height:0;color:#614f3d}
+.guide-page .entry-card-copy .entry-card-result{display:block;margin:0 0 11px;padding:0;border:0;color:#79654e;font-size:9px;line-height:1.8;letter-spacing:0}
+.guide-page .entry-card-copy .entry-card-link{color:var(--poster-ink);padding-top:10px;margin-top:auto;min-height:39px;font-size:11px;border-color:color-mix(in srgb,var(--poster-ink) 21%,transparent);letter-spacing:.3px}
+.guide-page .entry-card-link i{display:grid;place-items:center;flex:none;width:29px;height:29px;border-radius:50%;border:1px solid color-mix(in srgb,var(--poster-ink) 40%,transparent);font-size:20px;line-height:1;color:var(--poster-ink);transition:transform .35s,background .35s,color .35s,border-color .35s}
+.guide-page .works-demo>svg{z-index:0;width:84%;height:110%;left:29%;top:0;filter:drop-shadow(0 9px 9px #101b2659);transform:rotate(-8deg);transition:transform .7s cubic-bezier(.2,.6,.3,1)}
+.guide-page .entry-preview-placeholder{color:#fff1d1;opacity:.3}
+.guide-page .home-entry-card:focus-visible{outline:2px solid var(--poster-ink);outline-offset:4px}
+@media(hover:hover) and (pointer:fine){
+ .guide-page .home-entry-card:hover{transform:translateY(-5px);background:var(--poster-paper);border-color:color-mix(in srgb,var(--poster-ink) 55%,transparent);box-shadow:0 15px 30px #79573023}
+ .guide-page .home-entry-card:is(:hover,:focus-visible) .entry-poster-title>span+span{transform:translateX(5px)}
+ .guide-page .home-entry-card:is(:hover,:focus-visible) .entry-card-photo>img{transform:scale(1.055)}
+ .guide-page .home-entry-card:is(:hover,:focus-visible) .works-demo>svg{transform:rotate(-2deg) scale(1.04)}
+}
+.guide-page .home-entry-card:is(:hover,:focus-visible) .entry-card-link i{background:var(--poster-ink);color:#fffaf1;border-color:var(--poster-ink);transform:rotate(0)}
+@media(min-width:851px) and (max-height:800px){
+ .guide-page .entry-card-photo{height:clamp(130px,19svh,156px)}
+ .guide-page .entry-card-photo .entry-poster-title{font-size:clamp(35px,3.2vw,47px);bottom:13px;left:15px}
+ .guide-page .entry-card-photo .entry-card-number{top:12px;left:16px;font-size:8px}
+ .guide-page .entry-card-photo .entry-card-tag{top:10px;right:10px;font-size:7px}
+ .guide-page .entry-card-copy{padding:13px 15px 12px}
+ .guide-page .entry-card-copy::before{left:15px}
+ .guide-page .entry-card-copy p{font-size:11px;line-height:1.75;margin-bottom:7px}
+ .guide-page .entry-card-copy .entry-card-result{font-size:9px;margin-bottom:8px;line-height:1.6}
+ .guide-page .entry-card-copy .entry-card-link{padding-top:7px;min-height:34px}
+ .guide-page .entry-card-link i{width:26px;height:26px;font-size:18px}
+}
+@media(min-width:851px) and (max-height:650px){
+ .guide-page .entry-card-photo{height:115px}
+ .guide-page .entry-card-photo .entry-poster-title{font-size:34px;bottom:10px}
+ .guide-page .entry-card-photo .entry-card-number{top:10px}
+ .guide-page .entry-card-copy{padding-top:11px;padding-bottom:10px}
+}
+@media(min-width:1200px) and (min-height:1000px){
+ .guide-page .entry-card-photo{height:clamp(220px,25svh,320px)}
+ .guide-page .entry-card-photo .entry-poster-title{font-size:clamp(54px,3.7vw,72px);left:24px;bottom:22px}
+ .guide-page .entry-card-photo .entry-card-number{left:24px;top:19px;font-size:10px}
+ .guide-page .entry-card-photo .entry-card-tag{right:19px;top:16px;font-size:9px}
+ .guide-page .entry-card-copy{padding:20px 23px 18px}
+ .guide-page .entry-card-copy::before{left:23px}
+ .guide-page .entry-card-copy p{font-size:12px;line-height:1.9;margin-bottom:11px}
+ .guide-page .entry-card-copy .entry-card-result{font-size:10px;margin-bottom:12px}
+ .guide-page .entry-card-copy .entry-card-link{font-size:12px}
+}
+@media(max-width:850px){
+ .guide-page .home-entry-card{display:flex;flex-direction:column}
+ .guide-page .entry-card-photo{height:190px;min-height:0;flex:none}
+ .guide-page .entry-card-photo .entry-poster-title{font-size:49px;left:19px;bottom:20px}
+ .guide-page .entry-card-photo::before{font-size:190px}
+ .guide-page .entry-card-copy{display:flex;flex:1;flex-direction:column;padding:18px 19px 15px}
+ .guide-page .entry-card-copy p{font-size:12px;line-height:1.9;margin-bottom:10px}
+ .guide-page .entry-card-copy .entry-card-result{font-size:10px;margin-bottom:12px}
+ .guide-page .entry-card-copy .entry-card-link{font-size:12px;padding-top:10px}
+}
+@media(max-width:560px){
+ .guide-page .home-entry-grid{gap:22px}
+ .guide-page .entry-card-photo{height:190px}
+ .guide-page .entry-card-photo .entry-poster-title{font-size:53px}
+ .guide-page .entry-card-photo .entry-card-number{left:20px;font-size:10px}
+ .guide-page .entry-card-photo .entry-card-tag{top:13px;right:14px;font-size:9px}
+ .guide-page .works-demo>svg{width:81%;height:110%;left:29%;top:0}
+}
+@media(prefers-reduced-motion:reduce){
+ .guide-page .home-entry-card,.guide-page .entry-card-photo>img,.guide-page .entry-poster-title>span+span,.guide-page .entry-card-link i,.guide-page .works-demo>svg{transition:none}
+ .guide-page .home-entry-card:hover,.guide-page .home-entry-card:is(:hover,:focus-visible) .entry-poster-title>span+span,.guide-page .home-entry-card:is(:hover,:focus-visible) .entry-card-photo>img{transform:none}
+ .guide-page .home-entry-card:is(:hover,:focus-visible) .works-demo>svg{transform:rotate(-8deg)}
+}
