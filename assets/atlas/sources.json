@@ -15,12 +15,18 @@
   "placesSource": "https://whly.ln.gov.cn/whly/wlzt/sjly/ajjq/2025112116121250991/index.shtml",
   "craftSource": "https://rsj.fuxin.gov.cn/content/2026/1037027.html",
   "verifiedAt": "2026-10-21",
-  "mapArtwork": "用户提供的手绘导览参考图，叠加学习入口与主题连线；学习入口非坐标，连线非道路。",
+  "mapArtwork": "内置 image_gen 生成的无文字 AI 山水主题插画；网页叠加七条学习入口；非地理坐标或道路。",
   "artwork": {
-    "file": "fuxin-reference-map.png",
-    "source": "用户于本会话提供的《阜新市玛瑙导引图》参考图片",
-    "changes": "原图原样归档，网页叠加可点击学习线索、缩放和平移；学习标记不表示坐标、距离或道路。",
-    "rights": "图片未附绘者与原始许可，待核实；不宣称为本站原创或官方测绘。",
-    "imageGeneration": "本次内置 image_gen 多次网络连接失败，未采用任何新生成图片。"
+    "file": "fuxin-landscape-clean.png",
+    "source": "内置 image_gen，参考用户提供的手绘导览画风进行生成编辑",
+    "changes": "删除所有标题、地名、图例、推荐线路说明和底图标签；右栏重绘为连续山水，当前底图只含图像。",
+    "rights": "AI 主题插画，不宣称官方地图、实拍或当地建筑复原；原用户参考图仅归档。",
+    "mode": "built-in image_gen / precise-object-edit",
+    "generatedAt": "2026-10-21",
+    "dimensions": [
+      1536,
+      1024
+    ],
+    "prompt": "Mode: built-in image_gen; precise-object-edit; reference: github-pages/assets/atlas/fuxin-reference-map.png\nOutput: github-pages/assets/atlas/fuxin-landscape-clean.png\nUse case: precise-object-edit. Asset type: text-free painted landscape background for an interactive Fuxin agate cultural map. Input image 1 is the edit target and style reference. Remove EVERY text, Chinese character, letter, number, logo, map pin, label, signage, compass, scale bar, road shield, legend and information panel from this image. Remove the entire right-hand information column and replace it with continuous painted landscape. Also replace large calligraphy areas at upper left and bottom with natural terrain. Reconstruct a cohesive full-bleed horizontal hand-painted tourist landscape illustration, about 3:2 ratio. Preserve the fine watercolor / Chinese landscape painting aesthetic, warm ivory paper, verdant mountains, blue-green rivers, traditional courtyards, stone pagoda, lakes, market-town buildings and naturally banded red agate stones. Rich carefully painted natural detail, inviting daylight, green/gold/ochre palette. Use generous soft terrain spaces around features so seven separate HTML labels can be overlaid later. Composition: agate outcrop around 14% x 51%; banded agate and hills around 33% x 27%; courtyard around 52% x 45%; artisan workshop around 67% x 65%; small market buildings around 82% x 38%; river/lake around 85% x 82%; stone pagoda around 44% x 84%. Buildings are conceptual thematic illustrations, not a claim of exact geography. No embedded user interface or border. Critical: zero typography anywhere, no writing on buildings, no text-like markings, no colored route lines, no infographic panels. Entire final image is landscape artwork only.\n"
   }
 }
