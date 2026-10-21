@@ -14,7 +14,11 @@ await build({
   builder.onResolve({filter:/^three\/addons\/controls\/OrbitControls\.js$/},()=>({path:path.join(root,'vendor/OrbitControls.js')}));
  }}]
 });
-const cssFiles=['styles.css','experience.css','expansion.css','playground.css','music.css','mineral.css','gallery.css','formation.css','journey.css','home-cinema.css','page-snap.css','home-overview.css','explore.css','warm-light.css','guide-posters.css'];
+await build({absWorkingDir:root,entryPoints:['offline-viewer.mjs'],bundle:true,format:'iife',platform:'browser',target:'es2022',minify:true,outfile:path.join(root,'viewer.bundle.js'),legalComments:'eof',charset:'utf8',plugins:[{name:'viewer-three',setup(builder){
+ builder.onResolve({filter:/^three$/},()=>({path:path.join(root,'vendor/three.module.js')}));
+ builder.onResolve({filter:/^three\/addons\/controls\/OrbitControls\.js$/},()=>({path:path.join(root,'vendor/OrbitControls.js')}));
+}}]});
+const cssFiles=['styles.css','experience.css','expansion.css','playground.css','music.css','mineral.css','gallery.css','formation.css','journey.css','home-cinema.css','page-snap.css','home-overview.css','explore.css','warm-light.css','guide-posters.css','workshop.css'];
 const css=(await Promise.all(cssFiles.map(name=>readFile(path.join(root,name),'utf8')))).join('\n');
 const compiled=await transform(css,{loader:'css',minify:true,target:'es2022',legalComments:'eof'});
 await writeFile(path.join(root,'site.bundle.css'),compiled.code);
