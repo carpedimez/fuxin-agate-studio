@@ -1,9 +1,9 @@
 export const journeyPlaces=[
  {id:'welcome',name:'中国玛瑙小镇会客厅',short:'会客厅',type:'文化起点',icon:'hall',x:24,y:47,image:'hero',minutes:30,tag:'认识小镇',fact:'省文旅厅景区介绍列出了中国玛瑙小镇会客厅。',intro:'先建立对小镇的整体认识，再带着问题去看作品与手艺。',observe:'找一件感兴趣的作品，记下它的颜色、造型，以及你想追问的一个问题。',prepare:'到访前核实开放与讲解安排。',source:'town'},
  {id:'studio',name:'工艺观察与交流',short:'手艺现场',type:'工坊场景',icon:'craft',x:45,y:68,image:'craft',minutes:60,tag:'接待需先联系',fact:'市人社局资料提出串联工匠工作室、加工园区与非遗展示馆发展研学体验。',intro:'把屏幕上的纹色构思，变成一次对材料与工艺的真实观察。',observe:'问问工匠：这块材料的哪一抹颜色，最先决定了作品的构思？',prepare:'具体工坊、可参观环节与体验项目需事先联系；本页不指定合作接待方。',source:'rural'},
- {id:'market',name:'玛瑙专业市场',short:'逛逛市集',type:'产业观察',icon:'market',x:49,y:34,image:'hero',minutes:35,tag:'认识原料与文创',fact:'省文旅厅景区介绍提到战国红大市场等专业市场。',intro:'从原料、半成品到文创，观察一块石头如何走进日常生活。',observe:'选择同一种造型，比较不同纹色带来的视觉差异；把喜欢的构思记下来。',prepare:'记录材质与工艺说明，购买与定制由你与经营者自行确认。',source:'town'},
+ {id:'market',name:'玛瑙专业市场',short:'逛逛市集',type:'产业观察',icon:'market',x:49,y:34,image:'market',minutes:35,tag:'认识原料与文创',fact:'省文旅厅景区介绍提到战国红大市场等专业市场。',intro:'从原料、半成品到文创，观察一块石头如何走进日常生活。',observe:'选择同一种造型，比较不同纹色带来的视觉差异；把喜欢的构思记下来。',prepare:'记录材质与工艺说明，购买与定制由你与经营者自行确认。',source:'town'},
  {id:'water',name:'八宝海湿地景观',short:'水岸慢行',type:'自然观察',icon:'water',x:76,y:24,image:'water',minutes:40,tag:'把脚步放慢',fact:'八宝海湿地景观见于省文旅厅的小镇介绍。',intro:'暂时离开精细的石纹，把目光交给水面、岸线与季节的色彩。',observe:'在自然中找到三种颜色，想一想它们能否成为下一件玛瑙作品的配色灵感。',prepare:'核实可进入区域与当天条件；不将湿地游览视为已确认开放的体验项目。',source:'town'},
- {id:'pagoda',name:'辽代闾州塔',short:'寻访古迹',type:'历史线索',icon:'pagoda',x:83,y:67,image:'water',minutes:25,tag:'从石纹走向乡土',fact:'辽代闾州塔列于省文旅厅介绍的小镇历史遗迹中。',intro:'在工艺之外，为这次到访保留一段理解地方历史的时间。',observe:'观察古迹的轮廓与层次；用简单线条记录你对地方建筑的第一印象。',prepare:'出发前核实到达方式、可参观范围及文物保护要求。',source:'town'}
+ {id:'pagoda',name:'辽代闾州塔',short:'寻访古迹',type:'历史线索',icon:'pagoda',x:83,y:67,image:'pagoda',minutes:25,tag:'从石纹走向乡土',fact:'辽代闾州塔列于省文旅厅介绍的小镇历史遗迹中。',intro:'在工艺之外，为这次到访保留一段理解地方历史的时间。',observe:'观察古迹的轮廓与层次；用简单线条记录你对地方建筑的第一印象。',prepare:'出发前核实到达方式、可参观范围及文物保护要求。',source:'town'}
 ];
 export const journeyPresets=[
  {id:'craft',title:'半日识艺',subtitle:'先知艺，再观工',description:'把重点留给文化认知、工艺交流与市场观察。适合第一次接触玛瑙的你。',stops:['welcome','studio','market'],interest:'玛瑙文化与工艺观察'},

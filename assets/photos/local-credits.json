@@ -1,0 +1,74 @@
+{
+  "description": "实拍图片来源。标本照片不标注为阜新出产；馆藏照片不标注为本地作品。地图底图按用户要求保留手绘画风。数字创作、三维交互与用户画稿为功能内容。",
+  "localPhotographs": [
+    {
+      "file": "luzhou-pagoda.webp",
+      "subject": "辽代闾州古塔",
+      "source": "https://www.fmx.gov.cn/content/2026/1100171.html",
+      "original": "https://www.fmx.gov.cn/fmx/upload/2026-08-18/17870391621024028e492a00c6bc594201a013d59ef60f45.png",
+      "credit": "阜新县人民政府办公室，《三州三塔》，2026-08-19",
+      "license": "政府公开文章配图，未声明开放许可；保留原图及来源"
+    },
+    {
+      "file": "shijiazi-town.webp",
+      "subject": "十家子玛瑙特色小镇航拍",
+      "source": "https://www.fmx.gov.cn/content/2026/1100158.html",
+      "original": "https://www.fmx.gov.cn/fmx/upload/2026-08-18/17870375678684028e492a00c6bc572301a013bd4b7c7e8f.jpg",
+      "credit": "阜新县人民政府办公室，2026-08-19",
+      "license": "政府公开文章配图，未声明开放许可；保留原图及来源"
+    },
+    {
+      "file": "babao-reservoir-2.webp",
+      "subject": "冬捕水面",
+      "source": "http://travel.china.com.cn/txt/2018-01/27/content_50323617.htm",
+      "original": "http://images.china.cn/site1000/2018-01/27/f10783ff-6860-428c-9600-2be2091fb525.jpg",
+      "credit": "中国网，《辽宁八宝海水库第二届冬捕节将于28日启幕》，2018-01-27，郭磊",
+      "license": "报道说明部分图片源于网络，未给出本张原摄影署名与开放许可；以报道配图署名，不宣称本站现场拍摄或当前景观"
+    }
+  ],
+  "specimens": [
+    {
+      "file": "agate-bands.webp",
+      "credit": "Hannes Grobe",
+      "license": "CC BY-SA 2.5",
+      "source": "https://commons.wikimedia.org/wiki/File:Agate1_hg.jpg"
+    },
+    {
+      "file": "agate-crystal.webp",
+      "credit": "Hannes Grobe",
+      "license": "CC BY-SA 2.5",
+      "source": "https://commons.wikimedia.org/wiki/File:Agate6_hg.jpg"
+    },
+    {
+      "file": "agate-nodule.webp",
+      "credit": "James St. John",
+      "license": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Agate_2_(31731816833).jpg"
+    },
+    {
+      "file": "agate-moss-pendant.webp",
+      "credit": "Hannes Grobe",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Moosachat_hg.jpg"
+    }
+  ],
+  "moreCredits": [
+    "../backgrounds/credits.json",
+    "../entry-guide/credits.json"
+  ],
+  "routes": {
+    "craft": [
+      "stone",
+      "color",
+      "welcome",
+      "studio"
+    ],
+    "land": [
+      "welcome",
+      "studio",
+      "market",
+      "water",
+      "pagoda"
+    ]
+  }
+}

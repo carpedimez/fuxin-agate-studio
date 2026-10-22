@@ -35,7 +35,7 @@ export function createWorkshop(api){
  for(const option of $('#motif').options)option.textContent=({fruit:'果实形',leaf:'叶片形',mountain:'山峰形',drop:'水滴形',round:'圆牌形',heart:'心形',custom:'我的手绘轮廓'})[option.value]||option.textContent;
  const stepLabel=$('.craft-stepper button[data-craft-step="1"] span');stepLabel.firstChild.textContent='选色构形';
  $('.shape-controls .panel-heading h2').textContent='选择外形与取色位置';
- $('.shape-controls>.hint').textContent='拖动轮廓挑选纹理，右下角会实时显示取形效果。';
+
  const penSettings=document.createElement('details');penSettings.className='work-advanced';penSettings.innerHTML='<summary>更多笔触：直线、镜像与深浅</summary>';
  const penGroup=$('.engrave-controls .feature-group');penGroup.before($('#preset-lines'),penSettings);penSettings.append(penGroup);
  $('.engrave-controls .step-description').textContent='在作品上按住拖动即可刻线。也可先添筋线，或用上方工具添加纹样与文字。';
