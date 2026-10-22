@@ -101,3 +101,18 @@
 .field-learning[data-field-type=crop] .field-photo-action{cursor:default!important}
 
 .field-balance-caption{font-size:13px;line-height:1.8;color:var(--story-muted);margin:-9px 0 20px}.field-color-balance span:empty{display:none}
+
+/* A selection opens a real detail immediately; confirming a point remains a separate action. */
+.field-linked-detail{margin:0 0 16px;border:1px solid color-mix(in srgb,var(--field-accent) 25%,#ece7dd);border-radius:12px;overflow:hidden;background:color-mix(in srgb,var(--field-accent) 4%,#fffdf8)}
+.field-detail-heading{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:12px 15px;border-bottom:1px solid color-mix(in srgb,var(--field-accent) 15%,transparent)}
+.field-detail-heading>span{font-size:13px;line-height:1.6;color:var(--story-muted)}.field-detail-heading>strong{font-size:16px;line-height:1.6;color:var(--field-accent)}
+.field-learning .field-detail-pick{display:block;width:100%;padding:0;border:0;border-radius:0;background:#eeeae2;cursor:crosshair;line-height:0;min-height:120px;overflow:hidden}
+.field-detail-pick canvas{display:block;width:100%;height:auto;aspect-ratio:8/5;border:0;max-width:none}
+.field-detail-pick:disabled{cursor:wait}.field-detail-pick:focus-visible{outline:3px solid var(--field-accent);outline-offset:-4px}
+.field-linked-detail>figcaption{font-size:15px;line-height:1.8;color:var(--story-ink);padding:13px 15px;border-top:1px solid color-mix(in srgb,var(--field-accent) 15%,transparent)}
+.field-photo-surface svg .field-target-area{stroke-width:.8;stroke-dasharray:2 1;fill:#fff4c516}
+.field-scene-detail>img{display:block;width:100%;height:auto;aspect-ratio:8/5;object-fit:contain;background:#e8e7df}
+.field-scene-detail>.field-photo-credit{padding:0 15px 13px;margin:0}
+.field-scene-detail[data-photo-ready=false]>img{visibility:hidden}
+.field-photo-choice[data-suggested=true]{box-shadow:0 0 0 2px var(--field-accent);background:color-mix(in srgb,var(--field-accent) 8%,#fffdf8)}
+@media(max-width:750px){.field-detail-heading{padding:10px 12px;gap:9px}.field-detail-heading>strong{font-size:15px}.field-linked-detail>figcaption{padding:11px 12px;font-size:15px}.field-actions:has(.field-linked-detail){padding:17px 13px}}
