@@ -1,3 +1,4 @@
+import {createLinkedScene,responsiveSceneControls} from './linked-scenes.mjs';
 import {renderThread,renderFieldNotes,renderNotePrompts,renderTakeaway} from './narrative.mjs';
 import {renderAppreciation,bindAppreciation} from './appreciation.mjs';
 import {storyThemes,storyHeroArt} from './story-themes.mjs';
@@ -44,9 +45,9 @@ const stories={
 
 export function createAtlasStories({page,onSelect,onSave,isSaved,onPlan,onSection,onFilm}){
  const article=document.createElement('article');article.className='atlas-story';article.hidden=true;page.append(article);
- let current=null,moved=[],observer=null,progressFrame=0,selectedColors=[],lines=[],drawing=null,appreciation=null;
+ let current=null,moved=[],observer=null,progressFrame=0,selectedColors=[],lines=[],drawing=null,appreciation=null,linkedScenes=[];
  const $=s=>article.querySelector(s);
- function restore(){appreciation?.destroy();appreciation=null;observer?.disconnect();for(const [el,marker]of moved)marker.replaceWith(el);moved=[];article.replaceChildren();current=null;}
+ function restore(){for(const destroy of linkedScenes)destroy();linkedScenes=[];appreciation?.destroy();appreciation=null;observer?.disconnect();for(const [el,marker]of moved)marker.replaceWith(el);moved=[];article.replaceChildren();current=null;}
  function mount(key,slot){const selectors={stone:['.home-stone-study'],photos:['#agate-gallery'],craft:['#journey-craft'],local:['#journey-rural','.journey-knowledge']}[key];for(const sel of selectors||[]){const el=document.querySelector(sel);if(!el)continue;const marker=document.createComment('story content home');el.before(marker);moved.push([el,marker]);slot.append(el);} }
  function open(id){const n=nodes.find(n=>n.id===id);if(!n)return false;if(current===id)return true;restore();current=id;onSelect(id);const s=stories[id],i=nodes.indexOf(n),source=sources.find(r=>r.id===n.source);let saved={};try{saved=JSON.parse(localStorage.getItem('agate-story-observations-v1'))?.[id]||{};}catch{}
  selectedColors=Array.isArray(saved.colors)?saved.colors.filter(v=>/^#[0-9a-f]{6}$/i.test(v)).slice(0,3):[];lines=Array.isArray(saved.lines)?saved.lines.filter(l=>Array.isArray(l)).slice(0,100).map(l=>l.filter(p=>Array.isArray(p)&&p.length===2&&p.every(Number.isFinite)).map(([x,y])=>[Math.max(0,Math.min(1,x)),Math.max(0,Math.min(1,y))]).slice(0,1000)):[];
@@ -57,7 +58,12 @@ export function createAtlasStories({page,onSelect,onSave,isSaved,onPlan,onSectio
  $('[data-story-formation]')?.addEventListener('click',()=>onSection('formation'));$('[data-story-film]')?.addEventListener('click',onFilm);
  $('#story-collect').onclick=()=>{onSave(id);const yes=isSaved(id);$('#story-collect').setAttribute('aria-pressed',String(yes));$('#story-collect').textContent=yes?'✓ 已收集此线索':'＋ 收集此线索';};
  $('#story-add-plan')?.addEventListener('click',e=>{onPlan(n.plan);e.currentTarget.textContent='✓ 已加入我的研学路线';e.currentTarget.disabled=true;});
- for(const box of article.querySelectorAll('.story-lens')){const data=JSON.parse(box.querySelector('.story-lens-data').textContent);for(const b of box.querySelectorAll('[data-story-lens]'))b.onclick=()=>{box.querySelectorAll('[data-story-lens]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));const r=data[Number(b.dataset.storyLens)];box.querySelector('.story-lens-answer').innerHTML=`<strong>${r[1]}</strong><p>${r[2]}</p>`;};}
+ for(const box of article.querySelectorAll('.story-lens')){
+  const data=JSON.parse(box.querySelector('.story-lens-data').textContent),scene=createLinkedScene(id),section=box.closest('.story-split');
+  if(scene&&section){section.classList.add('linked-observation');section.firstElementChild.replaceWith(scene.element);const reset=responsiveSceneControls(section,box.querySelector('.story-lens-tabs'));linkedScenes.push(()=>{reset();scene.destroy();});box.querySelector('.story-instruction').textContent='点击观察卡，画面、标记与解读同步切换。';}
+  for(const b of section.querySelectorAll('[data-story-lens]'))b.onclick=()=>{section.querySelectorAll('[data-story-lens]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));const r=data[Number(b.dataset.storyLens)],answer=box.querySelector('.story-lens-answer');answer.innerHTML=`<strong>${r[1]}</strong><p>${r[2]}</p>`;scene?.select(Number(b.dataset.storyLens));scene?.animateText(answer);};
+ }
+
  const sections=article.querySelectorAll('.story-section');for(const b of article.querySelectorAll('[data-story-jump]'))b.onclick=()=>{const j=Number(b.dataset.storyJump);(j===2?$('.story-observation'):sections[j])?.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});};
  $('[data-story-scroll]').onclick=e=>{e.preventDefault();$('.story-chapter-index').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});};
  function palette(){for(const b of article.querySelectorAll('[data-water-color]')){const active=selectedColors.includes(b.dataset.waterColor);b.setAttribute('aria-pressed',String(active));b.querySelector('i').textContent=active?'✓':'＋';}if($('.story-picked-colors')){$('.story-picked-colors').innerHTML=selectedColors.map(c=>`<span style="background:${c}"></span>`).join('');$('.story-water-result b').textContent=selectedColors.length;}}

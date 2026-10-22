@@ -1,3 +1,4 @@
+import {createLinkedScene,responsiveSceneControls} from './linked-scenes.mjs';
 import {updateRuralContent} from './narrative.mjs';
 import {sources} from './data.mjs';
 import {journeyPlaces as places,journeyPresets as presets,craftObservations,journeyQuiz as questions,journeySeasons as seasons,ruralConnections as connections} from './journey-data.mjs';
@@ -78,8 +79,9 @@ export function initJourney({toast,download}){
   draft.planId=id;learning.routePrepared=true;changed('行程已保存，可在“我的作品”查看。');toast('已保存研学行程，尚未产生预约。');
  };
  $('#journey-copy').onclick=async()=>{const text=tripText();try{await navigator.clipboard.writeText(text);toast('行程文字已复制。');}catch{download(new Blob([text],{type:'text/plain;charset=utf-8'}),'十家子研学行程.txt');toast('已导出行程文字。');}};
+ const craftScene=createLinkedScene('craft'),craftImage=$('.journey-craft-image');craftImage.classList.add('has-linked-scene');craftImage.replaceChildren(craftScene.element);responsiveSceneControls($('.journey-craft-layout'),$('#craft-tabs'));
  function selectCraft(index){
-  selectedCraft=index;const c=craftObservations[index];$('#craft-detail').innerHTML=`<p class="eyebrow">OBSERVATION / 0${index+1}</p><h3>${c.title}</h3><p>${c.text}</p>`;$('#journey-craft-question').textContent=c.question;$$('[data-journey-craft]').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.journeyCraft)===index)));
+  selectedCraft=index;craftScene.select(index);const c=craftObservations[index];$('#craft-detail').innerHTML=`<p class="eyebrow">OBSERVATION / 0${index+1}</p><h3>${c.title}</h3><p>${c.text}</p>`;craftScene.animateText($('#craft-detail'));$('#journey-craft-question').textContent=c.question;$$('[data-journey-craft]').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.journeyCraft)===index)));
  }
  $('#craft-tabs').innerHTML=craftObservations.map((c,i)=>`<button data-journey-craft="${i}" aria-pressed="${i===0}"><b>0${i+1}</b>${c.label}</button>`).join('');$$('[data-journey-craft]').forEach(b=>b.onclick=()=>selectCraft(Number(b.dataset.journeyCraft)));
  $('#journey-record-observation').onclick=()=>{learning.observed=!learning.observed;if(learning.observed&&!learning.question.trim()){$('#journey-question').placeholder=craftObservations[selectedCraft].question;}persist();renderPassport();toast(learning.observed?'已把这条观察收进线上研学准备。':'已取消这项观察记录。');};
