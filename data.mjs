@@ -1,5 +1,5 @@
 export const sources=[
- {id:'real-photos',title:'实拍照片署名与出处',publisher:'实拍图片档案',url:'./assets/photos/local-credits.json',note:'古塔、小镇、冬捕报道配图及公开标本的原始来源与署名。'},
+ {id:'real-photos',title:'实拍照片署名与出处',publisher:'实拍图片档案',url:'./assets/photos/local-credits.json',note:'古塔、小镇、玉龙湖实景及公开标本的原始来源与署名。'},
  {id:'local-pagoda',title:'三州三塔',publisher:'阜新县人民政府办公室',url:'https://www.fmx.gov.cn/content/2026/1100171.html',note:'闾州古塔实景照片与地方历史资料。'},
  {id:'town-practice',title:'十家子返乡创业与玛瑙电商实践',publisher:'国家民委网站 · 中国民族报 · 2026-04-24',url:'https://www.neac.gov.cn/seac/xwzx/202604/1189115.shtml',note:'引用报道中程成学习金镶玛瑙工艺、结合直播经营的经历，用作地方实践案例；不把报道中的经营成果或数字当作本项目效果。'},
  {id:'color-term',title:'玛瑙桃形小水丞 · 俏色与巧作',publisher:'故宫博物院',url:'https://www.dpm.org.cn/collection/jade/230107.html',note:'俏色术语及材料本色与造型相结合的馆藏例子；不将该馆藏归为阜新制作。'},

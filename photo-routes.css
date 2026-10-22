@@ -40,3 +40,55 @@
 @media(max-width:560px){.atlas-map-toolbar>div:first-child{padding:7px 9px}.atlas-map-toolbar strong{font-size:16px;max-width:157px}.atlas-map-kicker{font-size:8px}.atlas-route-selector{padding-top:82px}}
 
 .atlas-route-selector i{display:flex;align-items:center;justify-content:space-between;width:100%;font-size:11px}.atlas-route-selector i span{font-size:16px}.atlas-route-selector>button{min-height:125px}@media(max-width:850px){.atlas-map-toolbar strong br{display:none}.atlas-route-selector i{display:none}.atlas-route-selector>button{min-height:109px}}@media(min-width:851px) and (max-height:800px){.atlas-route-selector i{display:none}.atlas-route-selector>button{min-height:103px}}
+
+/* Fill the map frame itself; route cards float over the painting. */
+@media(min-width:851px){
+ .atlas-map-panel{grid-template-columns:minmax(0,1fr)}
+ .atlas-map-panel .atlas-viewport{grid-column:1/-1;grid-row:1}
+ .atlas-route-selector{position:absolute;left:16px;top:99px;z-index:5;width:205px;padding:0;gap:9px;max-height:calc(100% - 190px);overflow:auto}
+ .atlas-route-selector>button{display:grid;grid-template-columns:36px minmax(0,1fr);gap:3px 5px;min-height:65px;padding:10px 11px;align-content:start;background:#fffaf2eb;backdrop-filter:blur(12px);box-shadow:0 5px 20px #213f4420}
+ .atlas-route-selector small{grid-column:1;grid-row:1;align-self:center;font-size:9px;letter-spacing:0;white-space:nowrap}
+ .atlas-route-selector strong{grid-column:2;grid-row:1;font-size:18px;line-height:1.4}
+ .atlas-route-selector>button>span{grid-column:1/-1;grid-row:2;font-size:12px;line-height:1.5}
+ .atlas-route-selector i{display:none}
+ .atlas-map-toolbar>div:first-child{width:205px;max-width:205px;background:#fffaf0ed}
+ .atlas-map-toolbar strong{font-size:17px}.atlas-map-toolbar strong br{display:none}
+}
+@media(min-width:851px) and (max-height:800px){
+ .atlas-route-selector{top:76px;width:190px;max-height:calc(100% - 152px);gap:7px}
+ .atlas-route-selector>button{padding:7px 10px;min-height:57px;gap:1px 4px}
+ .atlas-route-selector strong{font-size:16px}.atlas-route-selector>button>span{font-size:11px}
+ .atlas-map-toolbar>div:first-child{width:190px;max-width:190px}.atlas-map-toolbar strong{font-size:15px}
+}
+@media(max-width:850px){
+ .atlas-map-panel{height:auto}
+ .atlas-map-panel .atlas-viewport{height:auto;aspect-ratio:1000/650;flex:none;min-height:0}
+ .atlas-route-selector{position:relative;top:auto;left:auto;width:auto}
+}
+
+/* Three different ways of reading one documented photograph. */
+.linked-scene[data-scene-kind=pagoda] .scene-stage{aspect-ratio:1.25;background:#e5e8f0}
+.pagoda-presentation{position:relative;width:100%;height:100%;overflow:hidden;background:#e8ebed}
+.pagoda-photo-reading,.pagoda-detail-reference{position:relative;height:100%;min-width:0;overflow:hidden}
+.pagoda-presentation img{display:block;width:100%;height:100%;object-fit:contain;max-height:none;border-radius:0!important}
+.pagoda-photo-reading>svg,.pagoda-detail-reference>svg,.pagoda-composition-open>div>svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.pagoda-contour{fill:none;stroke:#ffe6a2;stroke-width:4;stroke-linejoin:round;stroke-dasharray:1;animation:pagoda-outline 1.8s ease-out both;filter:drop-shadow(0 1px 3px #211b3a)}
+.pagoda-callouts path{fill:none;stroke:#fce5ad;stroke-width:2;stroke-dasharray:5 6}.pagoda-callouts text{fill:#fff2d0;font:20px 'Microsoft YaHei',sans-serif;paint-order:stroke;stroke:#32254b;stroke-width:3px}
+.pagoda-detail-reading{display:grid;grid-template-columns:30% minmax(0,1fr);gap:14px;padding:20px;background:linear-gradient(130deg,#e6e2f3,#f7f3e9)}
+.pagoda-detail-reference{align-self:center;height:76%;border:1px solid #c4b8d5;border-radius:5px;background:#fff}.pagoda-detail-reference>img{object-fit:contain!important;transform:none!important}
+.pagoda-detail-reference>svg{fill:none;stroke:#a76826;stroke-width:5}.pagoda-detail-box{stroke:#ffc656;stroke-width:8;fill:#ffd96d18}
+.pagoda-enlargement{position:relative;min-width:0;height:100%;border:5px solid #fffdf4;box-shadow:0 8px 25px #40374c24;overflow:hidden;border-radius:9px}
+.pagoda-enlargement>svg{display:block;width:100%;height:100%;background:#deeaee}
+.pagoda-layer-guides path{fill:none;stroke:#ffe8a1;stroke-width:2.3;stroke-dasharray:1;animation:pagoda-outline .6s ease-out both;animation-delay:calc(var(--tier)*.16s);filter:drop-shadow(0 1px 1px #332840)}
+.pagoda-detail-reference>span,.pagoda-enlargement>span{position:absolute;bottom:10px;left:10px;padding:5px 10px;background:#fff9e9ed;border:1px solid #e0d4bc;border-radius:20px;font-size:12px;color:#58462d}
+.pagoda-composition-reading{display:grid;grid-template-columns:.72fr 1fr;gap:18px;padding:24px;background:#e9e4f1;align-items:center}
+.pagoda-composition-reading>figure{display:flex;flex-direction:column;min-width:0;margin:0;height:100%;overflow:hidden;background:#fffdf7;border:5px solid #fffdf7;box-shadow:0 5px 18px #3c2b4c18}
+.pagoda-composition-tight>svg{display:block;width:100%;height:calc(100% - 43px);background:#cfdae2}
+.pagoda-composition-open>div{position:relative;flex:1;min-height:0;background:#e7eef1}.pagoda-composition-open>div img{object-fit:contain;transform:none}
+.pagoda-composition-reading figcaption{flex:none;font:12px/1.6 'Microsoft YaHei',sans-serif;color:#5a4968;text-align:center;min-height:38px;padding:10px 4px 5px}
+.pagoda-third-grid{fill:none;stroke:#fffef0;stroke-width:1.5;stroke-dasharray:7 7;opacity:.65}
+.pagoda-space-bracket{fill:none;stroke:#8d649c;stroke-width:4;stroke-dasharray:1;animation:pagoda-outline 1.2s ease-out both}
+@keyframes pagoda-outline{from{stroke-dashoffset:1;opacity:0}to{stroke-dashoffset:0;opacity:1}}
+@media(max-width:750px){.linked-scene[data-scene-kind=pagoda] .scene-stage{aspect-ratio:1}.pagoda-detail-reading{padding:12px;gap:9px;grid-template-columns:28% minmax(0,1fr)}.pagoda-composition-reading{padding:12px;gap:10px}.pagoda-composition-reading figcaption{font-size:10px;min-height:40px}.pagoda-detail-reference>span,.pagoda-enlargement>span{font-size:10px;left:5px;bottom:6px;padding:4px 6px}.pagoda-callouts text{font-size:23px}}
+@media(prefers-reduced-motion:reduce){.pagoda-contour,.pagoda-layer-guides path,.pagoda-space-bracket{animation:none}}
+.atlas-story[data-clue=water] .story-hero>figure img{object-position:50% 85%}.pagoda-detail-reference{height:auto;aspect-ratio:879/892}.pagoda-composition-open{height:auto!important;align-self:center}.pagoda-composition-open>div{aspect-ratio:879/892;flex:none}
