@@ -1,0 +1,159 @@
+/* Reading sizes are explicit so dense controls can grow without scaling their canvas. */
+body{font-size:16px}
+.header>nav>a{font-size:15px;letter-spacing:1px}
+.header>.source-open{font-size:13px;white-space:nowrap}
+.brand small{font-size:10px;letter-spacing:1.5px}
+.music-toggle{font-size:13px}.music-settings{font-size:15px;min-width:32px}
+.music-panel{width:330px;max-width:calc(100vw - 24px);max-height:calc(100dvh - 140px);overflow:auto}
+.music-panel .eyebrow,.music-panel>p#music-artist,.music-timeline span,.music-footer,#music-status{font-size:13px;line-height:1.7}
+.music-panel label{font-size:14px}.music-volume-row button{width:34px;height:34px}
+.music-footer{flex-wrap:wrap}.music-footer a{white-space:normal}
+.interaction-sound-row{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px 0 2px;border-top:1px solid var(--line);margin-top:16px;font-size:14px}
+.interaction-sound-row button{font-size:14px;padding:7px 12px;min-height:38px;border:1px solid #b5976a66;border-radius:5px;color:var(--copper);background:#faf5e9}
+.interaction-sound-row button[aria-pressed=true]{background:#edf2e6;color:#365e4d;border-color:#8eab8b}
+.module-guide-back,.guide-home-link,.guide-page-location{font-size:14px}
+footer small,footer p,footer .source-open{font-size:13px;letter-spacing:.5px}
+.eyebrow,.subtle,.hint,.small,.field-label,.check{font-size:14px;line-height:1.8}
+.quiet,.text-button,.compact,.full{font-size:15px}
+body :is(select,input[type=text],input[type=date],textarea){font-size:16px;line-height:1.6}
+.collection-card p,.plan-row small,.plan-row button,.atlas-note-grid article>span,.atlas-note-grid button{font-size:14px;line-height:1.8}
+.collection-card .card-actions{flex-wrap:wrap;gap:7px 20px}
+
+/* Opening and exploration guide: retain the poster hierarchy and enlarge the reading. */
+#home-film :is(.home-film-location,.home-opening-note,.home-film-credit,.home-film-control,.explore-caption),#home-film .explore-caption [data-explore-sound]{font-size:13px;line-height:1.7}
+#home-film .eyebrow,#home-film .explore-label small{font-size:12px;letter-spacing:2px}
+.guide-page .overview-heading .eyebrow,.guide-page .guide-film-copy>small{font-size:13px;letter-spacing:1px}
+.guide-page .overview-intro p,.guide-page .guide-film-description{font-size:15px;line-height:1.8}
+.guide-page .guide-film-action{font-size:14px}.guide-page .guide-film-cover-label{font-size:12px}
+.guide-page .entry-card-copy p{font-size:15px;line-height:1.8;margin-bottom:9px}
+.guide-page .entry-card-copy .entry-card-result{font-size:13px;line-height:1.7;margin-bottom:10px}
+.guide-page .entry-card-copy .entry-card-link{font-size:15px;min-height:43px}
+.guide-page .entry-card-photo .entry-card-number,.guide-page .entry-card-photo .entry-card-tag{font-size:12px;letter-spacing:.3px}
+.guide-page .overview-footer p,.guide-page .overview-footer .source-open,.guide-page .guide-replay-row,.guide-page .guide-replay-row button{font-size:13px;line-height:1.7}
+
+/* Map navigation and captions keep their own layout, independent of map zoom. */
+.atlas-heading>.module-guide-back,#atlas-tour{font-size:14px}.atlas-heading .eyebrow{font-size:12px;letter-spacing:1px}
+.atlas-stages button>span{font-size:16px}.atlas-stages b{font-size:13px}.atlas-stages small{font-size:13px}
+.atlas-pin-label strong{font-size:15px;line-height:1.5}.atlas-pin-label small{font-size:12px;line-height:1.5}
+.atlas-route-selector strong{font-size:18px;line-height:1.4}.atlas-route-selector>button>span{font-size:14px;line-height:1.6}
+.atlas-map-kicker,.atlas-map-inset span,.atlas-zoom output{font-size:12px}
+.atlas-node-list{overflow-x:auto;scrollbar-width:thin}.atlas-node-list button{font-size:14px;line-height:1.6;white-space:nowrap}.atlas-node-list button>span{font-size:12px}
+.atlas-detail-phase,.atlas-detail-media>small,.atlas-observe strong,.atlas-source{font-size:13px;line-height:1.7}
+.atlas-card-index{font-size:13px!important}
+.atlas-detail-copy>p{font-size:16px;line-height:1.9}.atlas-detail-actions>button{font-size:15px;line-height:1.6;white-space:normal}
+.atlas-map-help,.atlas-map-help button,.atlas-progress,.atlas-progress small,.atlas-bottom-actions>button{font-size:13px;line-height:1.6}
+.atlas-reader-heading small{font-size:12px;letter-spacing:.5px}.atlas-reader #atlas-reader-close{font-size:14px}
+
+/* Long-form clues keep larger body copy; image credits and task labels now remain legible. */
+.atlas-story :is(.story-kicker,.story-section-head>span,.story-photo>figcaption,.story-formation-grid figcaption,.story-market-triptych figcaption,.story-provenance small,.story-provenance a,.story-instruction,.story-end a small,.story-hero figcaption,.story-theme-sign span){font-size:13px;line-height:1.8;letter-spacing:.5px}
+.atlas-story[data-clue] .story-hero figcaption{font-size:13px;line-height:1.7}
+.atlas-story .story-topbar>span,.atlas-story .story-read-percent{font-size:13px}.atlas-story .story-back,.atlas-story .story-hero-copy>a{font-size:15px}
+.atlas-story .story-chapter-index button{font-size:15px;line-height:1.6}.atlas-story .story-chapter-index b,.atlas-story .story-lens-tabs b{font-size:12px}
+.atlas-story :is(.story-lens>p,.story-lens-answer p,.story-section-head>p,.story-note-editor textarea,.journey-craft-copy .craft-detail p){font-size:16px;line-height:1.95}
+.atlas-story :is(.scene-toolbar>span,.scene-replay,.scene-kicker,.scene-count,.scene-source,.scene-labels>span,.pagoda-composition-reading figcaption,.pagoda-detail-reference>span,.pagoda-enlargement>span){font-size:13px;line-height:1.7}
+.atlas-story :is(.scene-note,.scene-credits>a,.scene-status){font-size:13px;line-height:1.8}
+.atlas-story :is(.story-sketch-tools output,#story-save-status,.journey-small-note,.journey-craft-copy .eyebrow,.journey-connections button small,.journey-rural-banner small,.journey-knowledge a,.photo-caption small,.photo-section-footer,.rural-source-card>span,.rural-source-card a){font-size:13px;line-height:1.8}
+.atlas-story :is(.journey-role-panel button,.journey-knowledge .question-chips button,.photo-filters button,.story-sketch-tools button,.story-note-editor button){font-size:15px}
+.atlas-story .story-chapter-index button{min-width:0;overflow-wrap:anywhere}
+
+/* The desktop workshop retains one full window; its tool columns scroll locally. */
+.workbench .material-panel .panel-heading h2{font-size:20px}.workbench .panel-heading>span{font-size:13px}
+.workbench :is(.hint,.subtle,.step-description,.check,.polish-labels,.stroke-count span,.work-advanced>summary,.work-color-help,.work-color-state){font-size:14px;line-height:1.8}
+.workbench .material-panel :is(.field-label,.sliders label,.work-title label){font-size:15px;line-height:1.7}
+.workbench .material-panel :is(select,input[type=text]){font-size:16px;min-height:42px}
+.workbench .material-panel :is(.feature-button,.primary,.text-button){font-size:15px;line-height:1.6}
+.workbench .sample strong{font-size:16px}.workbench .sample small,.workbench .upload small{font-size:13px;line-height:1.7}
+.workbench .upload>span{font-size:15px}.workbench .brush-tools button,.workbench .candidate-list button,.workbench .light-presets button,.workbench .view-actions button{font-size:14px;white-space:normal}
+.workbench .craft-stepper span{font-size:16px}.workbench .craft-stepper b{font-size:13px}
+.workbench .craft-navigation strong{font-size:16px}.workbench .craft-navigation span:not(.primary span){font-size:13px;line-height:1.6}
+.workbench .craft-navigation .primary{font-size:16px;min-height:44px}.workbench .craft-navigation>.text-button{font-size:14px}
+.workbench .page-heading>.module-guide-back,.workbench .project-import{font-size:14px}.workbench .page-heading .eyebrow{font-size:12px;letter-spacing:1px}
+.workbench .heading-actions .primary{font-size:15px}.workbench .canvas-toolbar .segmented button,.workbench .canvas-toolbar .quiet{font-size:14px}
+.workbench .canvas-top-label small,.workbench .canvas-bottom-label small{font-size:12px;letter-spacing:.5px}
+.workbench .canvas-bottom-label>span{font-size:14px}.workbench .work-stage-badge,.workbench .canvas-caption{font-size:13px}
+.workbench .comparison-control{font-size:13px}.workbench .engrave-toolbar button{font-size:14px}.workbench .result-peek>span{font-size:13px}
+#work-guide-title{font-size:17px}#work-guide-action{font-size:15px;line-height:1.85}#work-guide-tips,#work-feedback{font-size:14px;line-height:1.85}
+.work-guide-content>.eyebrow{font-size:12px}.work-demo-button{font-size:15px}
+#work-tools-title{font-size:16px}#work-tool-rack #work-context-tools span{font-size:15px}#work-tool-rack #work-context-tools small{font-size:13px}
+.workbench .palette .swatch span,.workbench .palette .swatch small{font-size:13px}.workbench #optimize{font-size:15px}
+.gallery-controls :is(button,select),.gallery-tabs button,.gallery-paper-exports button,.work-outline{font-size:14px}
+.gallery-controls :is(label,span,small),.gallery-exports>button small,.gallery-exports>p:not(.eyebrow),.gallery-exports #gallery-status,.gallery-credit,#gallery-stage-label{font-size:13px;line-height:1.7}
+.gallery-exports>button{font-size:16px}.gallery-heading small{font-size:12px;letter-spacing:.5px}
+body .play-dialog :is(.field-label,.check,.play-position label,.play-dialog-intro,.hint,.pattern-library span,.axis-captions){font-size:14px;line-height:1.8}
+body .play-dialog :is(.primary,.text-button,select,input[type=text],textarea){font-size:16px}
+
+/* Secondary readers use the same readable sizes as the main pages. */
+body .source-record h3{font-size:18px}body .source-record p{font-size:15px;line-height:1.9}body .source-record a{font-size:14px;overflow-wrap:anywhere}
+.photo-section-heading>p,.photo-info>p{font-size:16px;line-height:1.9}
+.photo-filters button,.photo-dialog-bar button,.photo-pagination button{font-size:15px}
+.photo-caption small,.photo-info :is(.photo-credit,.photo-derivative),.photo-links,.photo-key-hint,.photo-dialog-bar .eyebrow,#photo-result-count,.photo-section-footer p,.photo-category,.photo-open-hint{font-size:13px;line-height:1.8}
+.formation-dialog :is(.eyebrow,.formation-wordmark small,.formation-caption-box small,.formation-ai-label,.formation-observe>span,.formation-notes,.formation-notes p,.formation-notes a,.formation-watch-note,.formation-scrub label,.formation-scrub output,#formation-chapter-en,.formation-interaction-hint){font-size:13px;line-height:1.8;letter-spacing:.5px}
+.formation-dialog :is(.formation-topbar button:not(#formation-close),.formation-visual-tools button,.formation-steps button>span,.formation-transport>button,.formation-actions .primary,.formation-replay){font-size:14px;line-height:1.6}
+.formation-dialog :is(#formation-copy,.formation-observe>p,#formation-caption){font-size:15px;line-height:1.9}
+.atlas-reader :is(.journey-small-note,.journey-plan-heading p,.journey-plan-heading>span,.journey-plan-fields label small,.journey-route-item-copy>span,.journey-route-item-copy>p,.journey-route-item-copy>label,.journey-presets small,.journey-add-heading small,.journey-summary-meta,.journey-plan-summary>.eyebrow,.journey-passport-cover>span,.journey-passport-cover>p,.journey-passport-tasks small,.journey-question-note small,.journey-before-you-go>small){font-size:13px;line-height:1.8}
+.atlas-reader :is(.journey-plan-fields label,.journey-route-item select,.journey-add-heading,.journey-add-stops button,.journey-summary-buttons>.primary,.journey-passport-tasks strong,.journey-quiz-answers button,.journey-quiz-feedback p,.journey-quiz>p,.journey-quiz-feedback>a,.journey-quiz-feedback>.text-button,.journey-before-you-go label){font-size:15px;line-height:1.8}
+.atlas-reader :is(.journey-plan-fields input,.journey-question-note textarea){font-size:16px}
+.atlas-reader .journey-route-item-copy{min-width:0;overflow-wrap:anywhere}
+
+/* Finite feedback, independent from layout transforms and media interaction. */
+.interface-feedback-layer{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:1500;contain:strict}
+.interface-pulse{position:absolute;width:30px;height:30px;pointer-events:none;border:1px solid color-mix(in srgb,var(--pulse-color) 68%,transparent);border-radius:50%;background:radial-gradient(transparent 30%,color-mix(in srgb,var(--pulse-color) 18%,transparent));contain:layout style}
+@media(prefers-reduced-motion:no-preference){
+ dialog[open]:not(.photo-lightbox){animation:interface-panel-in .2s ease-out both}
+ .music-panel:not([hidden]){animation:interface-panel-in .18s ease-out both}
+ :is(.text-button,.module-guide-back,.scene-replay,.work-outline,.interaction-sound-row button){transition:background-color .18s,color .18s,box-shadow .18s}
+ :is(button,.header nav a):active{filter:brightness(.94)}
+}
+@keyframes interface-panel-in{from{opacity:0;translate:0 5px}to{opacity:1;translate:0 0}}
+@media(min-width:851px) and (max-width:1200px){
+ .header{gap:12px}.header>nav{gap:8px}.header>nav>a{font-size:14px;padding-inline:9px;letter-spacing:.3px}
+ .header>.source-open{font-size:12px;gap:5px}.brand small{font-size:9px;letter-spacing:.6px}
+ .atlas-stages small{display:none}.atlas-route-selector>button>span{font-size:13px}
+}
+@media(min-width:851px) and (max-height:800px){
+ .guide-page .entry-card-photo{height:clamp(88px,15svh,122px)}
+ .guide-page .entry-card-copy{padding:12px 16px 10px}.guide-page .entry-card-copy p{font-size:14px;line-height:1.7}
+ .guide-page .guide-film-description{font-size:14px}.guide-page .entry-card-copy .entry-card-result{margin-bottom:6px}
+ .atlas-route-selector{padding-top:93px}.atlas-route-selector strong{font-size:17px}.atlas-route-selector>button>span{font-size:13px}
+}
+@media(min-width:851px) and (max-height:650px){
+ .guide-page .entry-card-photo{height:104px}
+ .guide-page .entry-card-photo .entry-card-number{top:8px;left:15px;font-size:11px}
+ .guide-page .entry-card-photo .entry-poster-title{font-size:28px;bottom:10px;left:15px}
+}
+@media(max-width:850px){
+ .header>nav{gap:8px}.header>nav>a{font-size:14px;letter-spacing:.4px}
+ .ambient-player{max-width:150px}.music-toggle{font-size:12px;gap:6px}
+ .guide-page .home-entry-grid{align-items:stretch}.guide-page .entry-card-copy p{font-size:15px}
+ .atlas-detail-copy>p{font-size:16px}.atlas-pin-label strong{font-size:14px}.atlas-pin-label small{font-size:12px}
+ .atlas-map-help{flex-wrap:wrap}.atlas-progress small{white-space:normal}
+ .workbench .sample strong{font-size:16px}.workbench .sample small{font-size:13px}
+ .workbench .craft-stepper span{font-size:14px}.workbench .craft-stepper b{font-size:12px}
+ .workbench .canvas-caption{font-size:13px;align-items:flex-start}.workbench .craft-navigation .primary{font-size:15px}
+ .play-dialog .play-editor{min-width:0}.gallery-exports>button{font-size:15px}
+}
+@media(max-width:560px){
+ .header>nav{gap:5px}.header>nav>a{font-size:14px;padding-inline:9px;letter-spacing:0}
+ .brand small{font-size:9px}.music-toggle #music-label{max-width:76px}.music-panel{max-height:calc(100dvh - 100px)}
+ #home-film .home-film-credit{font-size:12px}.home-film-bottom{gap:12px;flex-wrap:wrap}
+ .guide-page .entry-card-photo .entry-card-tag{font-size:11px}.guide-page .overview-footer p{flex-wrap:wrap;row-gap:6px}
+ .atlas-stages button>span{font-size:14px}.atlas-stages b{font-size:12px;padding:5px}.atlas-heading>.module-guide-back,#atlas-tour{font-size:13px}
+ .atlas-stages button{flex-direction:column;align-items:center;gap:5px;padding:7px 4px}.atlas-stages button>span{white-space:nowrap}.atlas-stages b{padding:3px 6px}
+ .atlas-story .story-topbar{gap:12px;flex-wrap:wrap}.atlas-story .story-topbar>span{font-size:12px}.atlas-story .story-back{font-size:14px}
+ .atlas-story .story-chapter-index button{font-size:14px;padding:7px 6px;gap:6px}.atlas-story .story-chapter-index b{font-size:11px}
+ .atlas-story[data-clue] .story-hero figcaption{font-size:12px;line-height:1.6}
+ .atlas-story .story-hero>figure figcaption{max-height:38%;overflow:auto}
+ .workbench .craft-stepper span{font-size:14px;letter-spacing:0}.workbench .craft-stepper button{gap:5px;padding-inline:5px}
+ .workbench .page-heading{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:start}
+ .workbench .page-heading>.module-guide-back{grid-column:1;grid-row:1;justify-self:start}
+ .workbench .page-heading>div:not(.heading-actions){grid-column:1/-1;grid-row:2}
+ .workbench .page-heading>.heading-actions{grid-column:2;grid-row:1;align-self:center}
+ .workbench .work-stage-badge{font-size:12px}.workbench .page-heading>.module-guide-back{font-size:13px}
+ #work-guide-title{font-size:17px}#work-guide-action{font-size:15px}#work-feedback,#work-guide-tips{font-size:14px}
+ .workbench .canvas-toolbar .segmented button{font-size:14px}.workbench .canvas-bottom-label>span{font-size:13px}
+ .workbench .comparison-control{white-space:normal;flex-wrap:wrap;gap:7px}.workbench .comparison-control input{min-width:100px}
+ .workbench .brush-tools{flex-wrap:wrap}.workbench .brush-tools button{min-width:70px}
+ .workbench .craft-navigation .primary{min-width:140px;padding:10px 12px}.gallery-controls{flex-wrap:wrap}
+ .atlas-story .journey-connections button{padding:18px 12px}.atlas-story .journey-role-panel>div[role=group]{flex-wrap:wrap}
+}
+@media(prefers-reduced-motion:reduce){.interface-pulse{display:none}dialog[open],.music-panel{animation:none!important}}
