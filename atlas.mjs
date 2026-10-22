@@ -1,3 +1,4 @@
+import {installDiscoveryNotebooks} from './discovery-notebook.mjs';
 import {atlasNodes as nodes,atlasStages as stages} from './atlas-data.mjs';
 import {createAtlasStories} from './atlas-stories.mjs';
 import {atlasArtwork,atlasIcon,atlasRoutes,routeArtwork} from './atlas-art.mjs';
@@ -9,7 +10,7 @@ const write=(key,value)=>{try{localStorage.setItem(key,JSON.stringify(value));re
 const byId=id=>nodes.find(n=>n.id===id);
 const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
 
-export function createAtlas({state,toast,journey}){
+export function createAtlas({state,toast,journey,onUseDiscovery=()=>{}}){
  const page=document.querySelector('#learn'),$=s=>page.querySelector(s),root=document.documentElement;
  const library=document.createElement('div');library.className='atlas-library';library.hidden=true;
  const learned=[...page.children];page.replaceChildren(library);library.append(...learned);page.classList.add('atlas-page');page.setAttribute('aria-label','识石访艺 · 阜新玛瑙文化探索地图');
@@ -97,6 +98,7 @@ export function createAtlas({state,toast,journey}){
  function openStory(id){if(!byId(id))return;stopTour();location.hash='learn/'+id;}
  function toggleNote(id){const n=byId(id),saved=notes.some(row=>row.id===id),next=saved?notes.filter(row=>row.id!==id):[...notes,{id,title:n.name,clue:n.clue}];if(!write('agate-atlas-notes-v1',next)){toast('浏览器未能保存，请先复制你的观察。');return;}notes=next;renderDetail();renderCollected();toast(saved?'已取消线索收藏。':'已收集，可在“我的作品”找回。');}
  const stories=createAtlasStories({page,onSelect:id=>{initialize();select(id,{focus:false});},onSave:toggleNote,isSaved:id=>notes.some(row=>row.id===id),onPlan:id=>{journey.addStop(id);refreshProgress();},onSection:openSection,onFilm:watchFilm});
+ installDiscoveryNotebooks({onUse:onUseDiscovery,onOpen:id=>{sheet.close();openStory(id);let attempts=0;const reveal=()=>{if(stories.current===id){const target=stories.article.querySelector('#field-learning');target?.scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});const heading=target?.querySelector('h2');heading?.setAttribute('tabindex','-1');heading?.focus({preventScroll:true});}else if(++attempts<30)requestAnimationFrame(reveal);};requestAnimationFrame(reveal);}});
  function renderCollected(){let box=document.querySelector('#atlas-collected');if(!box){box=document.createElement('section');box.id='atlas-collected';box.className='atlas-collected';document.querySelector('#collection').append(box);}box.innerHTML=`<div><p class="eyebrow">MY CULTURAL NOTES / 文化灵感</p><h2>把看见的，留给下一次创作。</h2></div>${notes.length?`<div class="atlas-note-grid">${notes.map(n=>`<article><span>${stages.find(s=>s.id===byId(n.id).stage).label}</span><h3>${n.title}</h3><p>${n.clue}</p><div><button data-note-open="${n.id}">回到这条线索 ↗</button><button data-note-remove="${n.id}" aria-label="移除${n.title}灵感">移除</button></div></article>`).join('')}</div>`:'<p>在“识石访艺”收集感兴趣的线索，让创作有迹可循。</p><a href="#learn">去地图寻找灵感 ↗</a>'}`;for(const b of box.querySelectorAll('[data-note-open]'))b.onclick=()=>openStory(b.dataset.noteOpen);for(const b of box.querySelectorAll('[data-note-remove]'))b.onclick=()=>{const next=notes.filter(n=>n.id!==b.dataset.noteRemove);if(write('agate-atlas-notes-v1',next)){notes=next;renderCollected();if(initialized)renderDetail();}else toast('浏览器未能更新收藏。');};}
  let wasMap=false;
  function routeChanged(){const clue=location.hash.startsWith('#learn/')?location.hash.slice(7):null,validClue=byId(clue),active=onAtlas();root.classList.toggle('atlas-active',active);root.classList.toggle('atlas-story-active',!!validClue);page.classList.toggle('atlas-reading',!!validClue);mapView.hidden=!!validClue;stories.article.hidden=!validClue;
