@@ -1,12 +1,28 @@
-// Non-destructive display cutout. Analysis and texture sampling retain the source image.
+import {traceMaterialOutline} from './material-outline.mjs';
+
+// Selection masks describe color analysis, never uploaded photo opacity.
 const previews=new WeakMap();
 export function materialPreview(state){
- if(!state.image||state.sample==='procedural'||state.displayRemoveBackground===false||!state.analysis?.foreground)return state.image;
- const cached=previews.get(state.analysis);if(cached?.image===state.image)return cached.canvas;
- const image=state.image,k=Math.min(1,1200/Math.max(image.width,image.height)),canvas=document.createElement('canvas');canvas.width=Math.round(image.width*k);canvas.height=Math.round(image.height*k);
+ const image=state.image;
+ if(!image||!['bands','nodule'].includes(state.sample))return image;
+ const cached=previews.get(image);if(cached?.sample===state.sample)return cached.canvas;
+ const k=Math.min(1,1600/Math.max(image.width,image.height)),canvas=document.createElement('canvas');
+ canvas.width=Math.max(1,Math.round(image.width*k));canvas.height=Math.max(1,Math.round(image.height*k));
+ const ctx=canvas.getContext('2d');traceMaterialOutline(ctx,state.sample,canvas.width,canvas.height);
+ ctx.save();ctx.clip();ctx.drawImage(image,0,0,canvas.width,canvas.height);ctx.restore();
+ previews.set(image,{sample:state.sample,canvas});return canvas;
+}
+
+export function projectSourceImage(image){
+ const canvas=document.createElement('canvas'),k=Math.min(1,960/Math.max(image.width,image.height));
+ canvas.width=Math.max(1,Math.round(image.width*k));canvas.height=Math.max(1,Math.round(image.height*k));
  const ctx=canvas.getContext('2d');ctx.drawImage(image,0,0,canvas.width,canvas.height);
- const a=state.analysis,mask=document.createElement('canvas');mask.width=a.width;mask.height=a.height;const mc=mask.getContext('2d'),pixels=mc.createImageData(a.width,a.height);
- for(let i=0;i<a.foreground.length;i++)pixels.data[i*4+3]=a.foreground[i]?255:0;
- mc.putImageData(pixels,0,0);ctx.globalCompositeOperation='destination-in';ctx.imageSmoothingEnabled=true;ctx.drawImage(mask,0,0,canvas.width,canvas.height);ctx.globalCompositeOperation='source-over';
- previews.set(a,{image,canvas});return canvas;
+ const pixels=ctx.getImageData(0,0,canvas.width,canvas.height).data;
+ let alpha=false;for(let i=3;i<pixels.length;i+=4)if(pixels[i]!==255){alpha=true;break;}
+ let data=canvas.toDataURL(alpha?'image/png':'image/jpeg',.88);
+ while(data.length>2500000&&Math.max(canvas.width,canvas.height)>320){
+  canvas.width=Math.max(1,Math.floor(canvas.width*.8));canvas.height=Math.max(1,Math.floor(canvas.height*.8));
+  ctx.drawImage(image,0,0,canvas.width,canvas.height);data=canvas.toDataURL(alpha?'image/png':'image/jpeg',.88);
+ }
+ return data;
 }
