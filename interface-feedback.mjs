@@ -24,7 +24,7 @@ document.addEventListener('click',event=>{
  pulse(button,event);queueMicrotask(()=>playInterfaceSound(kind));
 },{capture:true});
 document.addEventListener('change',event=>{if(event.isTrusted&&event.target instanceof Element&&event.target.matches('select,input[type=range]'))playInterfaceSound('select');},{capture:true});
-document.addEventListener('agate-feedback',event=>{if(event.detail?.kind==='success')playInterfaceSound('success');});
+document.addEventListener('agate-feedback',event=>{if(['success','adjust','correct'].includes(event.detail?.kind))playInterfaceSound(event.detail.kind);});
 const clearPulses=()=>{for(const {element,animation}of rings){animation.cancel();element.remove();}rings.clear();};
 motion.addEventListener('change',event=>{if(event.matches)clearPulses();});
 document.addEventListener('visibilitychange',()=>{if(document.hidden)clearPulses();});

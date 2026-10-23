@@ -1,5 +1,6 @@
 import {createLinkedScene,responsiveSceneControls} from './linked-scenes.mjs';
 import {updateRuralContent} from './narrative.mjs';
+import {ruralThumbnail} from './rural-scenes.mjs';
 import {sources} from './data.mjs';
 import {journeyPlaces as places,journeyPresets as presets,craftObservations,journeyQuiz as questions,journeySeasons as seasons,ruralConnections as connections} from './journey-data.mjs';
 
@@ -105,7 +106,7 @@ export function initJourney({toast,download}){
  $('#journey-question-save').onclick=()=>{if(!learning.question.trim()){toast('先写下一个想了解的问题。');$('#journey-question').focus();return;}learning.questionSaved=true;persist();renderPassport();toast('问题已收进手册，也会随行程导出。');};
  $$('[data-journey-check]').forEach(input=>{input.checked=learning.checks[input.dataset.journeyCheck];input.onchange=()=>{learning.checks[input.dataset.journeyCheck]=input.checked;persist();};});
  function renderConnections(){
-  if(!$('#journey-connections').childElementCount){$('#journey-connections').innerHTML=connections.map((c,i)=>`<button data-connection="${i}" aria-pressed="${i===selectedConnection}">${icon(c.icon)}<span><small>0${i+1} / ${c.label}</small><strong>${c.title}</strong></span><b>→</b></button>`).join('');$$('[data-connection]').forEach(b=>b.onclick=()=>{selectedConnection=Number(b.dataset.connection);renderConnections();});}
+  if(!$('#journey-connections').childElementCount){$('#journey-connections').innerHTML=connections.map((c,i)=>`<button data-connection="${i}" aria-pressed="${i===selectedConnection}"><img class="rural-tab-photo" src="${ruralThumbnail(c.id).src}" alt=""><span><small>0${i+1} / ${c.label}</small><strong>${c.title}</strong></span><b>→</b></button>`).join('');$$('[data-connection]').forEach(b=>b.onclick=()=>{selectedConnection=Number(b.dataset.connection);renderConnections();});}
   $$('[data-connection]').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.connection)===selectedConnection)));
   updateRuralContent(document,connections[selectedConnection],role);
  }

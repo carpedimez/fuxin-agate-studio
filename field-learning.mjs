@@ -1,5 +1,6 @@
 import {fieldActivities,fieldPhotos,fieldFocus,fieldDetailViews} from './field-learning-data.mjs';
 import {escapeDiscovery as esc,getDiscovery,saveDiscovery,describeDiscovery} from './discovery-store.mjs';
+import {assessOrder,renderOrderResult,orderCardState} from './order-feedback.mjs';
 const credit=id=>`<a href="${fieldPhotos[id].url}" target="_blank" rel="noopener">${esc(fieldPhotos[id].name)} · ${esc(fieldPhotos[id].credit)} ↗</a>`;
 const photoButton=id=>`<button type="button" class="field-photo-choice" data-field-photo="${id}" aria-pressed="false"><img src="${fieldPhotos[id].src}" alt="${esc(fieldPhotos[id].name)}" loading="lazy"><span>${esc(fieldPhotos[id].name)}</span></button>`;
 export function renderFieldLearning(clue){
@@ -9,7 +10,7 @@ export function renderFieldLearning(clue){
  </div><div class="field-actions"><span class="field-task-label">${{point:'找一个具体位置',crop:'你想保留什么？',connect:'你想了解哪一个问题？',order:'让每一步都有依据',palette:'三个位置，一组配色'}[a.type]}</span>${a.type==='crop'?'<div class="field-crop-preview"><canvas width="360" height="360" aria-label="当前取形留下的实物纹理"></canvas><div><span>这次留下的纹色</span><p data-field-crop-label>选择一个位置，比较取形。</p></div></div>':''}<div class="field-options" role="group" aria-label="选择观察任务"></div>
  ${a.type==='point'?'<figure class="field-linked-detail"><div class="field-detail-heading"><span>实拍细部</span><strong data-field-detail-name></strong></div><button type="button" class="field-detail-pick" data-field-detail-pick aria-label="在放大的实拍细部中选择位置"><canvas width="600" height="375" role="img" aria-label="当前观察区域的实拍放大"></canvas></button><figcaption data-field-detail-caption></figcaption></figure><button type="button" class="field-hint" data-field-hint aria-pressed="false">聚焦全图中的这一处</button>':''}
  ${a.type==='connect'?'<figure class="field-linked-detail field-scene-detail"><div class="field-detail-heading"><span>跟着问题看现场</span><strong data-field-detail-name></strong></div><img data-field-scene-image alt=""><figcaption data-field-detail-caption></figcaption><p class="field-photo-credit" data-field-scene-credit></p></figure>':''}
- ${a.type==='order'?'<button type="button" class="story-button" data-field-check>看看这条顺序 <span>→</span></button>':''}
+ ${a.type==='order'?'<div class="field-order-result" data-field-order-result role="status" aria-live="polite" aria-atomic="true"></div><button type="button" class="story-button" data-field-check>检查当前顺序 <span>→</span></button>':''}
  ${a.type==='palette'?'<div class="field-palette"></div><label class="field-main-label">让哪一种成为主色？<select data-field-main aria-label="配色的主色" disabled><option value="0">第 1 色</option><option value="1">第 2 色</option><option value="2">第 3 色</option></select></label><div class="field-color-balance" aria-label="六三一配色面积"></div><p class="field-balance-caption"></p>':''}
  <div class="field-feedback" aria-live="polite"><strong>从你的选择开始</strong><p>操作后的细节与反馈会留在这里。</p></div><div class="field-reason" hidden><label for="field-own-reason">为什么想留下它？<span>选填</span></label><div class="field-reason-chips">${a.reasons.map((reason,i)=>`<button type="button" data-field-reason="${i}" aria-pressed="false">${reason}</button>`).join('')}</div><input id="field-own-reason" maxlength="160" placeholder="也可以写下自己的理由"></div>
  <div class="field-save-row"><output data-field-status role="status"></output><button type="button" data-field-retry hidden>重试保存</button></div></div></div></section>`;
@@ -19,7 +20,7 @@ export function bindFieldLearning(article,clue){
  const root=article.querySelector('[data-field-clue]');if(!root)return()=>{};
  const a=fieldActivities[clue],saved=getDiscovery(clue),controller=new AbortController(),$=s=>root.querySelector(s),$$=s=>[...root.querySelectorAll(s)];
  const state={photo:saved?.photo||a.photos[0],target:saved?.target||null,point:saved?.point||null,choice:saved?.choice||null,pairs:[...(saved?.pairs||[])],question:0,order:saved?.order||['carve','look','finish','design'],colors:structuredClone(saved?.colors||[]),main:saved?.main||0,slot:0,reason:saved?.reason||'',hint:false,cursor:saved?.point||[.5,.5],keyboard:false};
- let draft=saved,dragged=null,pixelSource=null,reasonTimer=null,detailBounds=null;const image=$('[data-field-image]'),photoAction=$('.field-photo-action'),svg=$('.field-photo-surface svg');
+ let draft=saved,dragged=null,pixelSource=null,reasonTimer=null,detailBounds=null,orderChecked=!!saved,orderConfirmed=!!saved;const image=$('[data-field-image]'),photoAction=$('.field-photo-action'),svg=$('.field-photo-surface svg');
  const listen=(el,type,fn)=>el?.addEventListener(type,fn,{signal:controller.signal});
  function feedback(title,copy,trade=''){const box=$('.field-feedback');box.innerHTML=`<strong>${esc(title)}</strong><p>${esc(copy)}</p>${trade?`<div class="field-trade"><span>同时舍去了什么</span><p>${esc(trade)}</p></div>`:''}`;if(!matchMedia('(prefers-reduced-motion: reduce)').matches)box.animate?.([{opacity:.4},{opacity:1}],{duration:220});}
  function renderReason(){const box=$('.field-reason');box.hidden=!draft;$('#field-own-reason').value=state.reason;for(const b of $$('[data-field-reason]'))b.setAttribute('aria-pressed',String(a.reasons[+b.dataset.fieldReason]===state.reason));}
@@ -81,8 +82,18 @@ export function bindFieldLearning(article,clue){
   else box.innerHTML='<p>在照片上点击取色。选中色卡后，可以替换那个位置的颜色。</p>';
  }
  function orderList(focusId=null,direction=null){
-  const list=$('.field-order-list');list.innerHTML=state.order.map((id,i)=>{const s=a.steps.find(s=>s.id===id);return`<article draggable="true" tabindex="0" data-field-order="${id}" aria-label="第 ${i+1} 步：${s.label}"><div><img draggable="false" src="${fieldPhotos[s.photo].src}" alt="${s.label}的观察参考实拍"><span>0${i+1}</span></div><strong>${s.label}</strong><nav aria-label="移动${s.label}"><button data-field-move="-1" ${i===0?'disabled':''} aria-label="把${s.label}向前移">← 向前</button><button data-field-move="1" ${i===3?'disabled':''} aria-label="把${s.label}向后移">向后 →</button></nav><small>${esc(fieldPhotos[s.photo].credit)}</small></article>`;}).join('');
+  const list=$('.field-order-list');list.innerHTML=state.order.map((id,i)=>{const s=a.steps.find(s=>s.id===id),status=orderCardState(id,i,state.order,a.steps,orderChecked);return`<article draggable="true" tabindex="0" data-field-order="${id}" data-order-state="${status.kind}" aria-label="第 ${i+1} 步：${s.label}"><div><img draggable="false" src="${fieldPhotos[s.photo].src}" alt="${s.label}的观察参考实拍"><span>0${i+1}</span></div><strong>${s.label}</strong><p class="field-order-card-status">${esc(status.label)}</p><nav aria-label="移动${s.label}"><button data-field-move="-1" ${i===0?'disabled':''} aria-label="把${s.label}向前移">← 向前</button><button data-field-move="1" ${i===3?'disabled':''} aria-label="把${s.label}向后移">向后 →</button></nav><small>${esc(fieldPhotos[s.photo].credit)}</small></article>`;}).join('');
   if(focusId){const card=list.querySelector(`[data-field-order="${focusId}"]`),button=card.querySelector(`[data-field-move="${direction}"]:not(:disabled)`);(button||card).focus({preventScroll:true});}
+ }
+ function orderResult({pulse=false}={}){
+  const r=assessOrder(state.order,a.steps),box=$('[data-field-order-result]');box.dataset.state=!orderChecked?'pending':r.correct?'correct':'adjust';
+  box.innerHTML=renderOrderResult(state.order,a.steps,{checked:orderChecked,confirmed:orderConfirmed});
+  $('[data-field-check]').innerHTML=r.correct?(orderConfirmed?'再检查一次 <span>↻</span>':'确认这条观察思路 <span>✓</span>'):'检查当前顺序 <span>→</span>';
+  box.classList.remove('is-pulsing');if(pulse&&!matchMedia('(prefers-reduced-motion: reduce)').matches){void box.offsetWidth;box.classList.add('is-pulsing');}
+ }
+ function orderChanged(focusId=null,direction=null){
+  orderChecked=true;orderConfirmed=false;orderList(focusId,direction);orderResult({pulse:true});$('[data-field-status]').textContent='当前顺序尚未确认';
+  const r=assessOrder(state.order,a.steps);feedback(r.correct?'四步已连贯，再确认一次':`接下来，调整第 ${r.first+1} 步`,r.correct?'确认后，会更新这条线索的发现卡。':r.expected.why);
  }
  function palette(){
   $('.field-palette').innerHTML=[0,1,2].map(i=>`<button type="button" data-field-slot="${i}" aria-pressed="${state.slot===i}" style="--field-swatch:${state.colors[i]?.hex||'#e4dfd2'}"><span></span><strong>第 ${i+1} 色</strong><small>${state.colors[i]?.hex||'待取色'}</small></button>`).join('');
@@ -115,8 +126,9 @@ export function bindFieldLearning(article,clue){
   else if(b.hasAttribute('data-field-crop')){state.choice=b.dataset.fieldCrop;options();drawCrop();const c=a.choices.find(c=>c.id===state.choice);feedback(c.label,c.gain,c.trade);commit({choice:c.id});$('.field-options').querySelector(`[data-field-crop="${c.id}"]`).focus({preventScroll:true});}
   else if(b.hasAttribute('data-field-question')){state.question=+b.dataset.fieldQuestion;options();$$('[data-field-photo]').forEach(p=>p.setAttribute('aria-pressed','false'));showScene();$('.field-options').querySelector(`[data-field-question="${state.question}"]`).focus({preventScroll:true});}
   else if(b.hasAttribute('data-field-photo')){const q=a.questions[state.question],id=b.dataset.fieldPhoto;$$('[data-field-photo]').forEach(p=>p.setAttribute('aria-pressed',String(p===b)));if(id!==q.photo){feedback('这里也能继续了解',`这处实景更适合看${fieldPhotos[id].name}。如果想回答“${q.label}”，再比较一下${q.answer}。`);return;}state.pairs=[...new Set([...state.pairs,q.id])];options();feedback(q.answer,q.feedback);commit({pairs:state.pairs});}
-  else if(b.hasAttribute('data-field-move')){const id=b.closest('[data-field-order]').dataset.fieldOrder,i=state.order.indexOf(id),j=i+Number(b.dataset.fieldMove);if(j<0||j>3)return;[state.order[i],state.order[j]]=[state.order[j],state.order[i]];orderList(e.detail===0?id:null,b.dataset.fieldMove);feedback('顺序已经变化','看看相邻两步之间：哪一步为下一步提供了依据？');}
-  else if(b.hasAttribute('data-field-check')){const i=state.order.findIndex((id,i)=>id!==a.steps[i].id);if(i!==-1){feedback('从这一步，再想一想',`${a.steps[i].label}：${a.steps[i].why} 可以把这一步向前调整，再看看整条关系。`);return;}feedback('从观料到成器，依据连起来了',a.steps.map(s=>s.why).join(''));commit({order:state.order});}
+  else if(b.hasAttribute('data-field-move')){const id=b.closest('[data-field-order]').dataset.fieldOrder,i=state.order.indexOf(id),j=i+Number(b.dataset.fieldMove);if(j<0||j>3)return;[state.order[i],state.order[j]]=[state.order[j],state.order[i]];orderChanged(e.detail===0?id:null,b.dataset.fieldMove);}
+  else if(b.hasAttribute('data-field-fix')){const r=assessOrder(state.order,a.steps);if(r.correct)return;state.order.splice(r.first,0,state.order.splice(r.from,1)[0]);orderChanged(e.detail===0?r.expected.id:null,'-1');}
+  else if(b.hasAttribute('data-field-check')){orderChecked=true;const r=assessOrder(state.order,a.steps);orderConfirmed=r.correct;orderList();orderResult({pulse:true});document.dispatchEvent(new CustomEvent('agate-feedback',{detail:{kind:r.correct?'correct':'adjust'}}));if(!r.correct){feedback(`先看第 ${r.first+1} 步的依据`,r.expected.why);return;}feedback('从观料到成器，依据连起来了',a.steps.map(s=>s.why).join(''));commit({order:state.order});}
   else if(b.hasAttribute('data-field-slot')){state.slot=+b.dataset.fieldSlot;palette();$('.field-palette').querySelector(`[data-field-slot="${state.slot}"]`).focus({preventScroll:true});}
   else if(b.hasAttribute('data-field-reason')){state.reason=a.reasons[+b.dataset.fieldReason];if(draft)commit(draft);}
   else if(b.hasAttribute('data-field-retry')&&draft)commit(draft);
@@ -133,11 +145,16 @@ export function bindFieldLearning(article,clue){
  listen($('#field-own-reason'),'change',e=>{clearTimeout(reasonTimer);state.reason=e.target.value.slice(0,160);if(draft)commit(draft);});
  listen($('.field-order-list'),'dragstart',e=>{const card=e.target.closest('[data-field-order]');if(!card||e.target.closest('button')){e.preventDefault();return;}dragged=card.dataset.fieldOrder;e.dataTransfer.setData('text/plain',dragged);e.dataTransfer.effectAllowed='move';card.classList.add('field-dragging');});
  listen($('.field-order-list'),'dragover',e=>{if(dragged)e.preventDefault();});
- listen($('.field-order-list'),'drop',e=>{e.preventDefault();const card=e.target.closest('[data-field-order]'),from=state.order.indexOf(dragged),to=state.order.indexOf(card?.dataset.fieldOrder);if(from<0||to<0)return;state.order.splice(to,0,state.order.splice(from,1)[0]);dragged=null;orderList();});
+ listen($('.field-order-list'),'drop',e=>{e.preventDefault();const card=e.target.closest('[data-field-order]'),from=state.order.indexOf(dragged),to=state.order.indexOf(card?.dataset.fieldOrder);if(from<0||to<0)return;state.order.splice(to,0,state.order.splice(from,1)[0]);dragged=null;orderChanged();});
  listen($('.field-order-list'),'dragend',()=>{dragged=null;$$('.field-dragging').forEach(el=>el.classList.remove('field-dragging'));});
- options();if(a.type==='order')orderList();if(a.type==='palette')palette();if(a.type==='crop'){photoAction.tabIndex=-1;photoAction.setAttribute('aria-label','原料中的取形位置');drawCrop();}
+ options();if(a.type==='order'){orderList();orderResult();}if(a.type==='palette')palette();if(a.type==='crop'){photoAction.tabIndex=-1;photoAction.setAttribute('aria-label','原料中的取形位置');drawCrop();}
  if(saved){const d=describeDiscovery(saved);feedback(d.title,d.feedback,d.trade);$('[data-field-status]').textContent='✓ 已恢复这张发现卡';if(image){image.src=fieldPhotos[state.photo].src;image.alt=fieldPhotos[state.photo].name;}if($('.field-photo-credit'))$('.field-photo-credit').innerHTML=credit(state.photo);$$('[data-field-specimen]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.fieldSpecimen===state.photo)));}
  if(a.type==='point'){const t=a.targets[state.photo].find(t=>t.id===state.target);if(!saved)state.cursor=[t.x,t.y];showDetail({explain:!saved,motion:false});}
  if(a.type==='connect')showScene({motion:false});renderReason();paintMarks();
+ if(a.type==='order'){
+  const result=$('[data-field-order-result]'),check=$('[data-field-check]'),resultHome=document.createComment('order result home'),checkHome=document.createComment('order check home'),dock=document.createElement('div'),mobile=matchMedia('(max-width:750px)');
+  result.before(resultHome);check.before(checkHome);dock.className='field-order-mobile-dock';$('.field-media').prepend(dock);
+  const layout=()=>{if(mobile.matches)dock.append(result,check);else{resultHome.after(result);checkHome.after(check);}};listen(mobile,'change',layout);layout();
+ }
  return()=>{clearTimeout(reasonTimer);if(draft&&state.reason!==draft.reason)commit(draft);controller.abort();};
 }

@@ -11,7 +11,7 @@ function audioAllowed(){const music=window.agateMusic;return !muted&&!document.h
 function ensureAudio(){const Audio=window.AudioContext||window.webkitAudioContext;if(!Audio)return false;context||=new Audio();if(!analyser){analyser=context.createAnalyser();analyser.fftSize=1024;analyser.connect(context.destination);}return true;}
 
 // Short mineral-toned gestures: a tap, a paired selection, an opening and a saved result.
-const effectNotes={tap:[[0,760,.085,.38]],select:[[0,620,.10,.32],[.045,830,.13,.24]],navigate:[[0,523,.15,.30],[.065,784,.19,.23]],success:[[0,660,.18,.30],[.085,880,.21,.24],[.17,1100,.29,.19]]};
+const effectNotes={tap:[[0,760,.085,.38]],select:[[0,620,.10,.32],[.045,830,.13,.24]],navigate:[[0,523,.15,.30],[.065,784,.19,.23]],success:[[0,660,.18,.30],[.085,880,.21,.24],[.17,1100,.29,.19]],adjust:[[0,440,.14,.32],[.13,330,.19,.27]],correct:[[0,660,.18,.30],[.095,990,.22,.26],[.19,1320,.31,.21]]};
 export function scheduleInterfaceSound(audio,destination,kind='tap'){
  const notes=effectNotes[kind]||effectNotes.tap,now=audio.currentTime+.008,bus=audio.createGain(),nodes=[];let stopped=false;
  bus.gain.value=.11;bus.connect(destination);
@@ -30,8 +30,8 @@ export function scheduleInterfaceSound(audio,destination,kind='tap'){
 }
 export function playInterfaceSound(kind='tap'){
  if(!audioAllowed())return;
- const priority=kind==='success'?3:kind==='navigate'?2:1,now=performance.now();
- if(now-lastRequest<(lastPriority===3?220:65)&&priority<=lastPriority)return;
+ const priority=kind==='correct'?4:['success','adjust'].includes(kind)?3:kind==='navigate'?2:1,now=performance.now();
+ if(now-lastRequest<(lastPriority>=3?220:65)&&priority<=lastPriority)return;
  lastRequest=now;lastPriority=priority;const token=++effectGeneration;
  try{
   if(!ensureAudio())return;
