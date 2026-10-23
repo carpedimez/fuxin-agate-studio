@@ -40,7 +40,7 @@ function showGate(){
  if(entryRevealed||revealing)return;
  gateEpoch++;gate.classList.remove('leaving');gate.hidden=false;root.classList.add('film-entering');gate.dataset.state='preparing';
  gateHelp.hidden=true;gateActions.hidden=true;retry.textContent='重新准备';skip.disabled=false;
- gateQuality.textContent='先让高清开场就绪，再走进阜新';gateProgress(0,'正在点亮第一帧');
+ gateQuality.textContent='循着一缕石纹，走进阜新';gateProgress(0,'正在点亮第一帧');
  document.querySelectorAll('body>.header,body>main,body>footer,.home-screen-nav').forEach(el=>{if(!inertBefore.has(el))inertBefore.set(el,el.inert);el.inert=true;});
  gate.setAttribute('tabindex','-1');gate.focus({preventScroll:true});
  if(!entryTimer)entryTimer=setTimeout(()=>{entryTimer=0;reveal('slow-network');},media.entranceMaxWaitMs);
