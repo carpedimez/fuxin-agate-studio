@@ -16,18 +16,11 @@
 .field-reflection .field-reason-chips{margin:13px 0 0}
 .field-reflection .field-reason input{margin-top:13px}
 .field-reflection .field-save-row{margin-top:13px}
-.story-reading-column{display:grid;gap:22px;min-width:0;align-self:start}
-.atlas-story .story-reading-column>.story-lens{padding:25px;position:static}
-.atlas-story .story-reading-column>.story-sketch-section{padding:23px;margin:0;border:1px solid color-mix(in srgb,var(--story-color) 20%,transparent);border-radius:16px;background:#fffdf8}
-.story-reading-column .story-section-head>span{margin-bottom:8px;font-size:13px;letter-spacing:.6px}
-.atlas-story .story-reading-column .story-section-head h2{font-size:26px;line-height:1.5;letter-spacing:0;margin:0 0 10px}
-.story-reading-column .story-section-head>p{font-size:15px;line-height:1.9;margin-bottom:17px}
-.story-reading-column .story-sketch-paper canvas{height:225px}
-.story-reading-column .story-sketch-paper>span{font-size:12px;letter-spacing:0;left:13px}
-.story-reading-column .story-sketch-tools{gap:10px;margin-top:12px}
-.story-reading-column .story-sketch-tools button{font-size:14px;padding:9px 12px}
-.story-reading-column .story-sketch-tools output{font-size:13px;line-height:1.8;margin-left:0;flex-basis:100%}
-@media(min-width:751px) and (min-height:820px){.field-learning:not([data-field-type=order]) .field-media{position:sticky;top:90px;align-self:start}.linked-observation>.story-lens{position:sticky;top:88px}}
+/* Reading content stays in document flow on every viewport. */
+.atlas-story .story-reveal{transform:none;transition:opacity .35s}
+.field-learning .field-media,.atlas-story .linked-observation .story-lens{position:static}
+.field-learning[data-field-type=point]>.field-feedback{margin-top:22px;padding:20px 0 0}
+.atlas-story .story-sketch-section{width:100%;min-width:0}
 
 /* Finish the final clue with two distinct, useful destinations. */
 .atlas-story .story-end:has(.story-create){grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:24px;align-items:stretch}
@@ -60,10 +53,9 @@
 .arrival-orbit>i:nth-child(3){width:1240px;height:850px;transform:translate(-50%,-50%) rotate(-6deg)}
 .arrival-skip{position:absolute;right:36px;bottom:26px;display:flex;align-items:center;gap:24px;padding:12px 18px;min-height:44px;border:1px solid #9c865957;border-radius:8px;background:#fffaf0d9;color:#6d614a;font:15px/1.6 var(--sans);cursor:pointer}
 .arrival-skip:focus-visible{outline:3px solid #527759;outline-offset:4px}
-@media(max-width:1050px){.atlas-story .linked-observation{gap:23px}.story-reading-column{gap:18px}.atlas-story .story-reading-column>.story-lens{padding:22px}.atlas-story .story-reading-column>.story-sketch-section{padding:20px}.story-reading-column .story-sketch-paper canvas{height:200px}}
+@media(max-width:1050px){.atlas-story .linked-observation{gap:23px}}
 @media(max-width:750px){
- .atlas-story .story-section{margin-bottom:38px}.atlas-story .story-chapter-index{margin-bottom:28px}.atlas-story .linked-observation{gap:18px}.story-reading-column{width:100%;gap:18px}
- .atlas-story .story-reading-column>.story-sketch-section{margin:0}.atlas-story .story-reading-column .story-section-head h2{font-size:25px}.story-reading-column .story-sketch-paper canvas{height:210px}
+ .atlas-story .story-section{margin-bottom:38px}.atlas-story .story-chapter-index{margin-bottom:28px}.atlas-story .linked-observation{gap:18px}
  .field-reflection{margin-top:18px}.field-reflection .field-reason:not([hidden]){display:block}.field-reflection .field-reason-chips{margin:13px 0}.field-reflection .field-reason input{margin:0}
  .atlas-story .story-end:has(.story-create){grid-template-columns:1fr;gap:12px}.story-end .story-create{padding:22px}.story-create strong{font-size:23px}.story-end:has(.story-create)>a{padding:14px 0;font-size:16px}
  .studio-arrival{padding:24px 18px}.arrival-content{padding:10px 0 65px}.arrival-eyebrow{font-size:12px;letter-spacing:1px}.arrival-content>h2{font-size:36px;margin-top:18px}.arrival-content>p{font-size:15px;line-height:1.9}
