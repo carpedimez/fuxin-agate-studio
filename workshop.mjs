@@ -1,6 +1,7 @@
 import {createCraftTexture,createGrooveNormal,drawFinished,traceShape} from './craft.mjs';
 import {motifOutline} from './core.mjs';
 import {materialPreview} from './material-preview.mjs';
+import {createPrintExport} from './print-export.mjs';
 
 const steps=[
  {word:'先观\n纹色',title:'选一块喜欢的石',action:'点击左侧原料，观察它的天然条带。',tips:['可以换一块原料，或导入自己的照片。','选好后，点击下方“开始构形”。'],tools:['inspiration']},
@@ -68,9 +69,10 @@ export function createWorkshop(api){
  <div id="gallery-compare-tools" class="gallery-controls" hidden><span>只看成器</span><input id="gallery-compare" type="range" min="0" max="100" value="50" aria-label="原石与成器对照分界"><span>只看原料</span><small>移动分界线：画面左边看原料，右边看成器</small></div>
  <div id="gallery-replay-tools" class="gallery-controls" hidden><button id="gallery-replay-toggle" aria-pressed="false">▷ 播放回看</button><input id="gallery-replay-position" type="range" min="0" max="0" value="0" aria-label="实际创作快照进度"><span id="gallery-replay-label"></span></div>
  <p id="gallery-credit" class="gallery-credit"></p></section>
- <aside class="gallery-exports"><p class="eyebrow">TAKE IT WITH YOU</p><h3>让作品，<br><span>继续被看见。</span></h3><p>保存可继续编辑的方案，或带走能转动、能回看的作品页。</p>
+ <aside class="gallery-exports"><p class="eyebrow">TAKE IT WITH YOU</p><h3>让想法，<br><span>走出屏幕。</span></h3><p>保存数字方案，或导出模型制作实体样件。</p>
  <button id="gallery-save">✓ 更新我的作品<small>入展自动保存 · 修改后可更新同一记录</small></button><button id="gallery-project">↗ 完整创作方案<small>JSON · 原料、轮廓、刻线与实际快照</small></button><button id="gallery-offline">↗ 可交互作品页<small>独立 HTML · 离线转动、对照与回看</small></button><button id="gallery-video">▷ 录制旋转短片<small>约 6 秒 · 1280×720 · 保留素材署名</small></button><button id="gallery-screenshot">↗ 保存当前 3D 视角<small>PNG · 包含当前搭配与来源</small></button><div class="gallery-paper-exports"><button id="gallery-card">方案卡 PNG</button></div><p id="gallery-status" role="status" aria-live="polite">先转动欣赏，也可以回到创作继续修改。</p></aside></div>`;
  document.body.append(gallery);$('.gallery-paper-exports').append(posterEntry);
+ createPrintExport({state,download,gallery});
  $('#open-poster').innerHTML='纪念海报 PNG';
  const previewHome=document.createComment('studio 3D preview');$('#preview-scene').before(previewHome);
  $('#gallery-close').onclick=()=>gallery.close();gallery.addEventListener('cancel',()=>finishRecording(true));
@@ -104,7 +106,7 @@ export function createWorkshop(api){
   $('#caption-text').textContent=['先观察纹色，选好后开始构形。','轮廓和取形预览会随操作实时更新。','刻线与落款会同步保留在三维作品中。','作品已进入三维预览，完成后可进入展厅。'][n];
   if(n===3)$('#next-step').innerHTML='进入作品展厅 <span>↗</span>';
   if(n===1)$('#next-step').innerHTML='确认取色位置，去刻线 <span>→</span>';
-  $('#work-feedback').textContent=['当前原料：'+$('#canvas-sample-name').textContent,'拖动轮廓，右下角查看实时取形。',state.strokes.length?`已留下 ${state.strokes.length} 道刻线，可继续添加或撤销。`:'试着在作品上拖动，或先添一组筋线。','完成后进入展厅，有 6 种成果保存方式。'][n];
+  $('#work-feedback').textContent=['当前原料：'+$('#canvas-sample-name').textContent,'拖动轮廓，右下角查看实时取形。',state.strokes.length?`已留下 ${state.strokes.length} 道刻线，可继续添加或撤销。`:'试着在作品上拖动，或先添一组筋线。','完成后进入展厅，可以保存作品或导出3D打印文件。'][n];
   // Restrict preview modes to the current task, while preserving their handlers.
   $('#view-color').hidden=n>=2;$('#view-carved').hidden=n===0||n===3;$('#view-preview').hidden=n!==3;
   $('#toggle-overlay').hidden=n!==1;

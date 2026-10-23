@@ -1,0 +1,20 @@
+.print-dialog{width:min(1050px,calc(100vw - 40px));max-width:calc(100vw - 40px);max-height:calc(100svh - 40px);padding:0;border:1px solid #d7c3a6;border-radius:12px;background:#fbf7ef;color:#493d2d;box-shadow:0 28px 110px #152d2955;overflow:auto}
+.print-dialog::backdrop{background:#142b27b8;backdrop-filter:blur(5px)}
+.print-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;padding:26px 30px 18px;border-bottom:1px solid #e7dbc8}
+.print-heading .eyebrow{font-size:11px;letter-spacing:1.4px;color:#8d7152;margin:0 0 10px}.print-heading h2{font:700 30px/1.4 'Microsoft YaHei','PingFang SC',sans-serif;color:#365f53;margin:0 0 7px}.print-heading p{font-size:14px;line-height:1.7;margin:0;color:#7b6851}
+#print-close{flex:none;width:38px;height:38px;padding:0;border:1px solid #d8c5a9;background:#fffaf1;color:#786047;border-radius:50%;font-size:25px}
+.print-layout{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(300px,1fr);gap:24px;padding:24px 30px 28px}.print-visual{min-width:0;align-self:start;border:1px solid #d6d9cb;border-radius:9px;overflow:hidden;background:#e7e8df}
+#print-preview{height:370px;position:relative;touch-action:none}#print-preview canvas{display:block;width:100%;height:100%}
+.print-view-tools{display:flex;align-items:center;gap:7px;flex-wrap:wrap;padding:12px;background:#f3f3e9;border-top:1px solid #d6d9cb}.print-view-tools button{border:1px solid #bdc9b8;background:#fcfcf5;color:#3c6556;border-radius:4px;font-size:13px;padding:7px 10px}.print-view-tools span{font-size:12px;color:#586b59;flex:1;text-align:right;white-space:nowrap}
+.print-controls{min-width:0}.print-work-title{font-size:17px;font-weight:700;color:#3b6053;margin:0 0 18px;overflow-wrap:anywhere}
+.print-input-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}.print-input-row label{display:block;font-size:14px;color:#70573f;line-height:1.6}.print-input-row label>span{color:#917e65;font-size:12px;float:right}
+.print-input-row input,.print-input-row select{box-sizing:border-box;width:100%;margin-top:7px;min-height:43px;padding:9px 11px;border:1px solid #d7c3a6;border-radius:5px;background:#fffdf7;color:#493d2d;font-size:16px}.print-input-row select option{background:#fffdf7;color:#493d2d}
+.print-check{display:flex;align-items:center;gap:9px;margin:2px 0 18px;font-size:14px;color:#3c6556}.print-check input{width:18px;height:18px;accent-color:#3c6556}.print-detail-scale{font-size:12px;line-height:1.75;color:#876e50;margin:0 0 15px;min-height:42px}
+.print-progress{height:3px;background:#e7e2d4;border-radius:2px;overflow:hidden}.print-progress i{height:100%;display:block;width:0;background:#4c7960;transition:width .2s}
+.print-status{font-size:13px;line-height:1.7;min-height:43px;margin:12px 0;color:#83714e}.print-status[data-kind=ready]{color:#31674f}.print-status[data-kind=error]{color:#a34b35}
+#print-download{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:48px;font-size:16px;border-radius:5px;padding:12px 16px;background:#3d6859;color:#fff9e8;border:1px solid #3d6859}#print-download:disabled{opacity:.5;cursor:wait}
+.print-material-note{font-size:12px;line-height:1.8;color:#8b775d;margin:14px 0 0}.print-dialog :focus-visible{outline:2px solid #5a806a;outline-offset:3px}
+#gallery-print{border-color:#60907a;background:#eaf0e2;color:#345e4e}
+@media(max-width:760px){.print-dialog{width:calc(100vw - 20px);max-width:calc(100vw - 20px);max-height:calc(100svh - 20px)}.print-heading{padding:20px}.print-heading h2{font-size:25px}.print-layout{display:block;padding:18px 20px 22px}.print-visual{margin-bottom:20px}#print-preview{height:290px}.print-detail-scale{min-height:0}.print-controls .print-status{min-height:25px}.print-input-row{margin-bottom:16px}}
+@media(max-width:370px){.print-heading{padding:16px}.print-heading h2{font-size:23px}.print-heading .eyebrow{font-size:9px}.print-layout{padding:14px 16px 20px}.print-view-tools span{width:100%;flex:auto;text-align:left}#print-preview{height:245px}}
+@media(prefers-reduced-motion:reduce){.print-progress i{transition:none}}

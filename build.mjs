@@ -19,6 +19,7 @@ await build({absWorkingDir:root,entryPoints:['offline-viewer.mjs'],bundle:true,f
  builder.onResolve({filter:/^three\/addons\/controls\/OrbitControls\.js$/},()=>({path:path.join(root,'vendor/OrbitControls.js')}));
 }}]});
 const cssFiles=['styles.css','experience.css','expansion.css','playground.css','music.css','mineral.css','gallery.css','formation.css','journey.css','home-cinema.css','page-snap.css','home-overview.css','explore.css','warm-light.css','guide-posters.css','workshop.css','workshop-refinements.css','home-poster.css','atlas.css','atlas-stories.css','atlas-vivid.css','appreciation.css','narrative.css','linked-scenes.css','photo-routes.css','readability-feedback.css','field-learning.css','exploration-flow.css'];
+cssFiles.push('print-export.css');
 const css=(await Promise.all(cssFiles.map(name=>readFile(path.join(root,name),'utf8')))).join('\n');
 const compiled=await transform(css,{loader:'css',minify:true,target:'es2022',legalComments:'eof'});
 await writeFile(path.join(root,'site.bundle.css'),compiled.code);
