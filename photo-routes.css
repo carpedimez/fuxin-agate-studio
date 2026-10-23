@@ -1,8 +1,22 @@
 /* Keep route navigation beside the map, with no overlays on the painting. */
 .atlas-map-panel{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto auto;--active-route:#b64e25}
 .atlas-map-panel .atlas-viewport{grid-column:1;grid-row:1;width:100%;height:100%;min-width:0;min-height:0}
+/* The overview contains all artwork; marker labels stay beside their photo anchors. */
+.atlas-map-panel .atlas-viewport{background:radial-gradient(ellipse at center,#fffaf0,#e9e3d3)}
+.atlas-world .atlas-painted{box-shadow:0 5px 24px #41503c16}
+.atlas-world .atlas-pin{width:53px;max-width:none;min-height:53px;justify-content:center}
+.atlas-world .atlas-pin-icon{flex:none}
+.atlas-world .atlas-pin-label{position:absolute;left:calc(100% - 3px);top:50%;transform:translateY(-50%);margin:0;max-width:none}
+.atlas-world .atlas-pin:is([data-atlas-node=studio],[data-atlas-node=market],[data-atlas-node=water]) .atlas-pin-label{left:auto;right:calc(100% - 3px);border-left:1px solid #b6a47752;border-right:0;border-radius:5px 0 0 5px;padding:5px 14px 6px 11px}
+.atlas-map-compact .atlas-pin{width:44px;min-height:44px}
+.atlas-map-compact .atlas-pin-icon{width:44px;height:44px}
+.atlas-map-compact .atlas-pin:not([aria-pressed=true]):not(:hover):not(:focus-visible) .atlas-pin-label{display:none}
 .atlas-map-help{grid-column:1;grid-row:2;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:3px 12px;min-height:34px}
-.atlas-map-help>#atlas-about{font-size:12px;line-height:1.7;padding:2px 0}
+.atlas-map-actions>#atlas-about{font-size:12px;line-height:1.7;padding:2px 0}
+.atlas-map-actions{display:flex;align-items:center;gap:16px;min-width:0}
+.atlas-map-actions>#atlas-expand{font-size:12px;line-height:1.7;padding:2px 7px;border:1px solid #b7a07055;border-radius:4px;color:#496b56;white-space:nowrap}
+.atlas-layout:fullscreen{width:100vw;height:100dvh;padding:12px;box-sizing:border-box;grid-template-columns:minmax(0,1fr) 320px;gap:12px;background:#f5eedf}
+@media(max-width:850px){#atlas-expand{display:none}.atlas-layout:fullscreen{display:block;overflow:auto}}
 .atlas-map-help .atlas-zoom{flex:none;box-shadow:none}
 .atlas-map-help .atlas-zoom button{width:28px;min-height:26px;font-size:18px}
 .atlas-node-list{grid-column:1;grid-row:3;flex:none}
