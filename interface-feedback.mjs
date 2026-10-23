@@ -19,7 +19,7 @@ function pulse(button,event){
 document.addEventListener('click',event=>{
  if(!event.isTrusted||event.detail>1||!(event.target instanceof Element))return;
  const button=event.target.closest('button,a[href],summary,input[type=checkbox],input[type=radio],[role=button]');
- if(!button||button.matches(':disabled,[aria-disabled=true]')||button.closest('[inert]')||button.matches('[data-explore-sound],[data-interaction-sound],#begin-exploration')||button.closest('.entry-gate'))return;
+ if(!button||button.matches(':disabled,[aria-disabled=true]')||button.closest('[inert]')||button.matches('[data-explore-sound],[data-interaction-sound],[data-story-create],#begin-exploration')||button.closest('.entry-gate'))return;
  const kind=button.matches(navigation)?'navigate':button.matches(selection)||button.matches('input,summary')?'select':'tap';
  pulse(button,event);queueMicrotask(()=>playInterfaceSound(kind));
 },{capture:true});

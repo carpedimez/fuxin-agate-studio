@@ -84,5 +84,5 @@ export function bindSoundControls(){
 bindSoundControls();
 document.addEventListener('visibilitychange',()=>{if(document.hidden)stopAll();});
 document.addEventListener('agate-media-start',stopAll);
-window.addEventListener('hashchange',event=>{if(event.agateExploration)return;generation++;active?.stop();active=null;});
+window.addEventListener('hashchange',event=>{if(event.agateExploration||event.agateStudioArrival)return;generation++;active?.stop();active=null;});
 window.agateSound={getState(){let rms=0;if(analyser){const values=new Float32Array(analyser.fftSize);analyser.getFloatTimeDomainData(values);rms=Math.sqrt(values.reduce((sum,n)=>sum+n*n,0)/values.length);}return{muted,contextState:context?.state||'uncreated',plays,effectPlays,lastEffect,rms};}};
